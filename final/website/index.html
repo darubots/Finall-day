@@ -90,50 +90,38 @@
     .status-readout { display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 10px/1.2 "IBM Plex Sans",sans-serif; }
     @media (max-width:1023px) {
       main { padding-top:116px !important; }
-      .sensor-grid > .sensor-panel { grid-column:span 6; }
-      .sensor-grid > .sensor-panel:nth-child(9) { grid-column:1/-1; }
+      .sensor-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; gap:12px; }
+      .sensor-grid > .sensor-panel { grid-column:span 1 !important; }
+      .sensor-grid > .sensor-panel:last-child { grid-column:1/-1 !important; }
+      .sensor-grid > .sensor-group-label { grid-column:1/-1 !important; }
       .system-state { min-width:150px; }
     }
-    @media (max-width:700px) {
+    @media (max-width:640px) {
       header > div { height:60px !important; padding-left:12px !important; padding-right:12px !important; }
-      main { padding-top:108px !important; padding-bottom:24px !important; }
-      .sensor-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
-      .sensor-grid > .sensor-panel { grid-column:span 1; }
-      .sensor-grid > .sensor-panel:nth-child(n) { grid-column:span 1; }
-      .sensor-grid > .sensor-group-label { grid-column:1/-1; }
-      .sensor-panel { min-height:auto; padding:14px !important; }
+      main { padding-top:108px !important; padding-bottom:24px !important; padding-left:12px !important; padding-right:12px !important; }
+      .sensor-grid { grid-template-columns:1fr !important; gap:12px !important; }
+      .sensor-grid > .sensor-panel { grid-column:1/-1 !important; min-height:auto; padding:16px !important; }
+      .sensor-grid > .sensor-group-label { grid-column:1/-1 !important; margin-top:12px; }
       .system-state { width:100%; padding:10px 0 0; border-left:0; border-top:1px solid var(--color-card-border); }
       header .header-brand-copy { display:none; }
       header img { width:30px !important; height:30px !important; }
       #themeToggleBtn { width:32px; height:32px; padding:0 !important; justify-content:center; }
-      .sensor-panel .font-headline-metric { font-size:1.6rem; }
-      #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:12px !important; }
-      .trend-panel { padding:14px !important; }
+      .sensor-panel .font-headline-metric { font-size:2.2rem; }
+      #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:16px !important; }
+      .trend-panel { padding:16px !important; }
+      .status-readout { padding:4px 8px; font-size:10px; }
+      .sensor-panel .text-sm { font-size:12px; }
+      .sensor-panel .text-xs { font-size:11px; }
+      .sensor-panel .text-\[10px\] { font-size:10px; }
+    }
+    @media (max-width:380px) {
+      main { padding-left:8px !important; padding-right:8px !important; }
+      .sensor-grid { gap:10px !important; }
+      .sensor-panel { padding:14px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.85rem; }
       .status-readout { padding:3px 6px; font-size:9px; }
-      .sensor-panel .text-sm { font-size:11px; }
-      .sensor-panel .text-xs { font-size:10px; }
-      .sensor-panel .text-\[10px\] { font-size:9px; }
-    }
-    @media (max-width:430px) {
-      main { padding-top:100px !important; padding-left:8px !important; padding-right:8px !important; }
-      .sensor-grid { gap:8px !important; }
-      .sensor-panel { padding:12px !important; }
-      .sensor-panel .font-headline-metric { font-size:1.5rem; }
-      .telemetry-card { padding:12px !important; }
-      .status-readout { padding:3px 5px; font-size:8px; }
-      #sectionTraffic .grid-cols-2 { grid-template-columns:1fr 1fr; gap:8px; }
-      #sectionTraffic .grid-cols-2 > div { padding:10px !important; }
-      #sectionTraffic .grid-cols-2 .font-headline-metric { font-size:1.3rem; }
-      #cctvPlayerWrapper { height:240px !important; }
-      .trend-panel svg { height:200px !important; }
-      footer { padding:12px 8px !important; font-size:10px; }
-    }
-    @media (max-width:360px) {
-      header > div { padding-left:8px !important; padding-right:8px !important; }
       header img { width:26px !important; height:26px !important; }
-      .sensor-panel .font-headline-metric { font-size:1.35rem; }
-      #sectionTraffic .grid-cols-2 { grid-template-columns:1fr; }
-      .nav-tab { font-size:9px !important; padding:4px 2px !important; }
+      footer { padding:12px 8px !important; font-size:11px; }
     }
   </style>
 
@@ -497,12 +485,12 @@
 
           <!-- TDS -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex flex-col gap-2">
-              <div class="flex flex-col">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col min-w-0">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor TDS · Pin A2</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Air (TDS)</h3>
               </div>
-              <span id="badgeTdsStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+              <span id="badgeTdsStatus" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-xs uppercase font-semibold shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
@@ -512,37 +500,40 @@
             </div>
             <div class="flex items-center justify-between pt-2">
               <span class="font-label-caption text-xs text-on-surface-variant">Batas: &lt; 300 ppm</span>
-              <span class="font-label-caption font-mono text-on-surface-variant">ADC: <span id="valTdsRaw">--</span></span>
+              <span class="font-label-caption font-mono text-xs text-on-surface-variant">ADC: <span id="valTdsRaw">--</span></span>
             </div>
           </div>
 
           <!-- Water Level -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex flex-col gap-2">
-              <div class="flex flex-col">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col min-w-0">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Water Level · Pin A0</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Ketinggian Air &amp; Pompa</h3>
               </div>
-              <span id="badgeWaterStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+              <span id="badgeWaterStatus" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-xs uppercase font-semibold shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
             <div class="my-4 flex flex-col gap-2">
-              <div class="flex items-baseline gap-2">
-                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
-                <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
-                <div class="status-readout ml-auto">
+              <div class="flex items-baseline justify-between gap-2">
+                <div class="flex items-baseline gap-2">
+                  <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
+                  <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
+                </div>
+                <div class="status-readout shrink-0">
                   <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
-                  <span class="font-label-telemetry text-[9px] uppercase text-on-surface" id="textPump">STANDBY</span>
+                  <span class="font-label-telemetry text-[10px] uppercase text-on-surface" id="textPump">STANDBY</span>
                 </div>
               </div>
-            <div class="flex flex-col gap-2 pt-1">
-              <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
-                <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
-              </div>
-              <div class="flex justify-between font-label-caption text-on-surface-variant">
-                <span>Threshold: &gt; 500</span>
-                <span class="font-mono">ADC: <span id="valWaterRaw">--</span></span>
+              <div class="flex flex-col gap-2 pt-1">
+                <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
+                  <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
+                </div>
+                <div class="flex justify-between font-label-caption text-xs text-on-surface-variant">
+                  <span>Threshold: &gt; 500</span>
+                  <span class="font-mono">ADC: <span id="valWaterRaw">--</span></span>
+                </div>
               </div>
             </div>
           </div>
@@ -551,21 +542,21 @@
 
           <!-- MQ Gas -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex flex-col gap-2">
-              <div class="flex flex-col">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col min-w-0">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor MQ-2 · Pin A5</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Udara &amp; Gas</h3>
               </div>
-              <span id="badgeAqiStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+              <span id="badgeAqiStatus" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-xs uppercase font-semibold shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
-            <div class="my-5 flex flex-col gap-3">
+            <div class="my-5 flex items-center justify-between gap-2">
               <div class="flex items-baseline gap-2">
                 <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valAqi">--</span>
                 <span class="font-headline-sm text-sm text-on-surface-variant font-medium">indeks</span>
               </div>
-              <div class="relative w-12 h-12 flex items-center justify-center self-end">
+              <div class="relative w-12 h-12 flex items-center justify-center shrink-0">
                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                   <path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
                   <path id="circleAqi" class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="0, 100" stroke-width="3.5"></path>
@@ -573,19 +564,19 @@
               </div>
             </div>
             <div class="flex items-center justify-between pt-2">
-              <span class="font-label-caption text-on-surface-variant">Pin A5</span>
-              <span class="font-label-caption font-mono text-on-surface-variant">ADC: <span id="valMqRaw">--</span></span>
+              <span class="font-label-caption text-xs text-on-surface-variant">Pin A5</span>
+              <span class="font-label-caption font-mono text-xs text-on-surface-variant">ADC: <span id="valMqRaw">--</span></span>
             </div>
           </div>
 
           <!-- Temperature -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex flex-col gap-2">
-              <div class="flex flex-col">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col min-w-0">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor NTC · Pin A3</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Suhu Lingkungan</h3>
               </div>
-              <span id="badgeTempStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+              <span id="badgeTempStatus" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-xs uppercase font-semibold shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
@@ -597,7 +588,7 @@
               <div class="relative w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
                 <div id="tempBar" class="absolute left-0 top-0 bottom-0 bg-primary-container rounded-full transition-all duration-500" style="width:0%;"></div>
               </div>
-              <div class="flex justify-between font-label-caption text-on-surface-variant">
+              <div class="flex justify-between font-label-caption text-xs text-on-surface-variant">
                 <span>Rentang: 20°C - 45°C</span>
                 <span class="font-mono">ADC: <span id="valNtcRaw">--</span></span>
               </div>
@@ -606,12 +597,12 @@
 
           <!-- Humidity -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex flex-col gap-2">
-              <div class="flex flex-col">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col min-w-0">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Nilai estimasi · bukan sensor RH</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelembaban Relatif</h3>
               </div>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-xs uppercase font-semibold shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Estimasi
               </span>
             </div>
@@ -620,8 +611,8 @@
               <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">% RH</span>
             </div>
             <div class="flex items-center justify-between pt-2">
-              <span class="font-label-caption text-on-surface-variant">Turunan dari NTC</span>
-              <span class="text-[10px] uppercase tracking-wider text-amber-500">Derived</span>
+              <span class="font-label-caption text-xs text-on-surface-variant">Turunan dari NTC</span>
+              <span class="text-[10px] uppercase tracking-wider text-amber-500 font-semibold">Derived</span>
             </div>
           </div>
 
@@ -629,16 +620,16 @@
 
           <!-- PLTS -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex flex-col gap-2">
-              <div class="flex flex-col">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex flex-col min-w-0">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Node energi · Firmware</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelistrikan PLTS DC</h3>
               </div>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-500/15 text-amber-500 font-label-telemetry text-label-telemetry uppercase font-semibold border border-amber-500/30">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/15 text-amber-500 font-label-telemetry text-xs uppercase font-semibold border border-amber-500/30 shrink-0">
                 <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Simulasi
               </span>
             </div>
-            <div class="my-4 grid grid-cols-3 gap-2 p-3 bg-surface-container-low border border-[var(--color-card-border)]">
+            <div class="my-4 grid grid-cols-3 gap-2 p-3 rounded bg-surface-container-low border border-[var(--color-card-border)]">
               <div class="flex flex-col items-center">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">VOLT</span>
                 <span class="font-headline-md text-on-surface font-bold"><span id="valVoltage">--</span> <span class="text-[10px] font-normal text-on-surface-variant">V</span></span>
@@ -653,8 +644,8 @@
               </div>
             </div>
             <div class="flex items-center justify-between pt-1">
-              <span class="font-label-caption text-on-surface-variant">Rentang 4-5V &amp; 2-3A</span>
-              <span class="font-label-telemetry text-on-surface-variant font-semibold">DC PLTS</span>
+              <span class="font-label-caption text-xs text-on-surface-variant">Rentang 4-5V &amp; 2-3A</span>
+              <span class="font-label-telemetry text-xs text-on-surface-variant font-semibold">DC PLTS</span>
             </div>
           </div>
         </div>
