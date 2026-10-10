@@ -1,0 +1,29 @@
+{
+  "hosting": {
+    "public": "website",
+    "ignore": [],
+    "rewrites": [
+      {
+        "source": "/",
+        "destination": "/public.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "**/*.html",
+        "headers": [
+          { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        ]
+      },
+      {
+        "source": "**/*.{js,css,png,jpg,jfif,svg,webp}",
+        "headers": [
+          { "key": "Cache-Control", "value": "max-age=3600" }
+        ]
+      }
+    ]
+  },
+  "database": {
+    "rules": "database.rules.json"
+  }
+}

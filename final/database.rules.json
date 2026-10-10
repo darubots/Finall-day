@@ -1,0 +1,34 @@
+{
+  "rules": {
+    "monitoring": {
+      "realtime": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "logs": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "waste_latest": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "waste_events": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "traffic": {
+        ".read": true,
+        ".write": "auth != null"
+      },
+      "commands": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+      },
+      "gateway_status": {
+        ".read": true,
+        ".write": "auth != null"
+      }
+    }
+  }
+}
