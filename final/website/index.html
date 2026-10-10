@@ -87,7 +87,7 @@
     .live-badge.is-live { color:#10b981; border-color:rgba(16,185,129,0.3); }
     .live-badge.is-offline { color:var(--color-outline); }
     .live-dot { width:7px; height:7px; border-radius:50%; background:currentColor; flex:none; }
-    .status-readout { display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 11px/1.2 "IBM Plex Sans",sans-serif; white-space:nowrap; }
+    .status-readout { display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 10px/1.2 "IBM Plex Sans",sans-serif; }
     @media (max-width:1023px) {
       main { padding-top:116px !important; }
       .sensor-grid > .sensor-panel { grid-column:span 6; }
@@ -497,7 +497,7 @@
 
           <!-- TDS -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
               <div class="flex flex-col">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor TDS · Pin A2</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Air (TDS)</h3>
@@ -518,7 +518,7 @@
 
           <!-- Water Level -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
               <div class="flex flex-col">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Water Level · Pin A0</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Ketinggian Air &amp; Pompa</h3>
@@ -527,16 +527,15 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
-            <div class="my-4 flex items-baseline justify-between gap-3">
+            <div class="my-4 flex flex-col gap-2">
               <div class="flex items-baseline gap-2">
                 <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
                 <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
+                <div class="status-readout ml-auto">
+                  <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
+                  <span class="font-label-telemetry text-[9px] uppercase text-on-surface" id="textPump">STANDBY</span>
+                </div>
               </div>
-              <div class="status-readout">
-                <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
-                <span class="font-label-telemetry text-[10px] uppercase text-on-surface" id="textPump">STANDBY</span>
-              </div>
-            </div>
             <div class="flex flex-col gap-2 pt-1">
               <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
                 <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
@@ -552,7 +551,7 @@
 
           <!-- MQ Gas -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
               <div class="flex flex-col">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor MQ-2 · Pin A5</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Udara &amp; Gas</h3>
@@ -561,17 +560,16 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
-            <div class="my-5 flex items-center justify-between">
+            <div class="my-5 flex flex-col gap-3">
               <div class="flex items-baseline gap-2">
                 <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valAqi">--</span>
                 <span class="font-headline-sm text-sm text-on-surface-variant font-medium">indeks</span>
               </div>
-              <div class="relative w-14 h-14 flex items-center justify-center">
+              <div class="relative w-12 h-12 flex items-center justify-center self-end">
                 <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
                   <path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
                   <path id="circleAqi" class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="0, 100" stroke-width="3.5"></path>
                 </svg>
-                
               </div>
             </div>
             <div class="flex items-center justify-between pt-2">
@@ -582,7 +580,7 @@
 
           <!-- Temperature -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
               <div class="flex flex-col">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor NTC · Pin A3</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Suhu Lingkungan</h3>
@@ -608,7 +606,7 @@
 
           <!-- Humidity -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
               <div class="flex flex-col">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Nilai estimasi · bukan sensor RH</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelembaban Relatif</h3>
@@ -631,7 +629,7 @@
 
           <!-- PLTS -->
           <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
+            <div class="flex flex-col gap-2">
               <div class="flex flex-col">
                 <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Node energi · Firmware</span>
                 <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelistrikan PLTS DC</h3>
