@@ -87,7 +87,7 @@
     .live-badge.is-live { color:#10b981; border-color:rgba(16,185,129,0.3); }
     .live-badge.is-offline { color:var(--color-outline); }
     .live-dot { width:7px; height:7px; border-radius:50%; background:currentColor; flex:none; }
-    .status-readout { display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 12px/1.3 "IBM Plex Sans",sans-serif; }
+    .status-readout { display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 11px/1.2 "IBM Plex Sans",sans-serif; white-space:nowrap; }
     @media (max-width:1023px) {
       main { padding-top:116px !important; }
       .sensor-grid > .sensor-panel { grid-column:span 6; }
@@ -112,6 +112,7 @@
       .sensor-panel { padding:14px !important; }
       .sensor-panel .font-headline-metric { font-size:1.75rem; }
       .telemetry-card { padding:14px !important; }
+      .status-readout { padding:4px 8px; font-size:10px; }
       #sectionTraffic .grid-cols-2 { grid-template-columns:1fr 1fr; gap:8px; }
       #sectionTraffic .grid-cols-2 > div { padding:12px !important; }
       #sectionTraffic .grid-cols-2 .font-headline-metric { font-size:1.5rem; }
@@ -246,7 +247,7 @@
       document.getElementById('waterLevelBar').style.width = displayWaterPct + '%';
 
       const pumpState = Number(data.pump) === 1;
-      document.getElementById('textPump').textContent = pumpState ? 'POMPA: AKTIF' : 'POMPA: STANDBY';
+      document.getElementById('textPump').textContent = pumpState ? 'POMPA AKTIF' : 'STANDBY';
       document.getElementById('dotPump').className = pumpState ? 'w-2 h-2 rounded-full bg-emerald-500' : 'w-2 h-2 rounded-full bg-outline';
 
       // TDS
@@ -518,17 +519,18 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
-            <div class="my-4 flex items-baseline justify-between">
-              <div class="flex items-baseline gap-2">
-                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
-                <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
+            <div class="my-4 flex flex-col gap-3">
+              <div class="flex items-baseline justify-between gap-3">
+                <div class="flex items-baseline gap-2">
+                  <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
+                  <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
+                </div>
+                <div class="status-readout shrink-0">
+                  <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
+                  <span class="font-label-telemetry text-[10px] sm:text-xs uppercase text-on-surface" id="textPump">STANDBY</span>
+                </div>
               </div>
-              <div class="status-readout">
-                <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
-                <span class="font-label-telemetry uppercase text-on-surface" id="textPump">POMPA: STANDBY</span>
-              </div>
-            </div>
-            <div class="flex flex-col gap-2 pt-1">
+              <div class="flex flex-col gap-2 pt-1">
               <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
                 <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
               </div>
