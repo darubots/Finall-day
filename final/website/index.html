@@ -97,33 +97,41 @@
     @media (max-width:700px) {
       header > div { height:60px !important; padding-left:12px !important; padding-right:12px !important; }
       main { padding-top:108px !important; padding-bottom:24px !important; }
-      .sensor-grid > .sensor-panel { grid-column:1/-1; }
-      .sensor-panel { min-height:auto; padding:17px !important; }
+      .sensor-grid { grid-template-columns:repeat(2,minmax(0,1fr)) !important; }
+      .sensor-grid > .sensor-panel { grid-column:span 1; }
+      .sensor-grid > .sensor-panel:nth-child(n) { grid-column:span 1; }
+      .sensor-grid > .sensor-group-label { grid-column:1/-1; }
+      .sensor-panel { min-height:auto; padding:14px !important; }
       .system-state { width:100%; padding:10px 0 0; border-left:0; border-top:1px solid var(--color-card-border); }
       header .header-brand-copy { display:none; }
       header img { width:30px !important; height:30px !important; }
       #themeToggleBtn { width:32px; height:32px; padding:0 !important; justify-content:center; }
-      .sensor-panel .font-headline-metric { font-size:2rem; }
-      #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:16px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.6rem; }
+      #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:12px !important; }
       .trend-panel { padding:14px !important; }
+      .status-readout { padding:3px 6px; font-size:9px; }
+      .sensor-panel .text-sm { font-size:11px; }
+      .sensor-panel .text-xs { font-size:10px; }
+      .sensor-panel .text-\[10px\] { font-size:9px; }
     }
     @media (max-width:430px) {
-      main { padding-top:100px !important; padding-left:10px !important; padding-right:10px !important; }
-      .sensor-panel { padding:14px !important; }
-      .sensor-panel .font-headline-metric { font-size:1.75rem; }
-      .telemetry-card { padding:14px !important; }
-      .status-readout { padding:4px 8px; font-size:10px; }
+      main { padding-top:100px !important; padding-left:8px !important; padding-right:8px !important; }
+      .sensor-grid { gap:8px !important; }
+      .sensor-panel { padding:12px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.5rem; }
+      .telemetry-card { padding:12px !important; }
+      .status-readout { padding:3px 5px; font-size:8px; }
       #sectionTraffic .grid-cols-2 { grid-template-columns:1fr 1fr; gap:8px; }
-      #sectionTraffic .grid-cols-2 > div { padding:12px !important; }
-      #sectionTraffic .grid-cols-2 .font-headline-metric { font-size:1.5rem; }
+      #sectionTraffic .grid-cols-2 > div { padding:10px !important; }
+      #sectionTraffic .grid-cols-2 .font-headline-metric { font-size:1.3rem; }
       #cctvPlayerWrapper { height:240px !important; }
       .trend-panel svg { height:200px !important; }
-      footer { padding:14px 10px !important; font-size:10px; }
+      footer { padding:12px 8px !important; font-size:10px; }
     }
     @media (max-width:360px) {
       header > div { padding-left:8px !important; padding-right:8px !important; }
       header img { width:26px !important; height:26px !important; }
-      .sensor-panel .font-headline-metric { font-size:1.6rem; }
+      .sensor-panel .font-headline-metric { font-size:1.35rem; }
       #sectionTraffic .grid-cols-2 { grid-template-columns:1fr; }
       .nav-tab { font-size:9px !important; padding:4px 2px !important; }
     }
@@ -519,18 +527,17 @@
                 <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
               </span>
             </div>
-            <div class="my-4 flex flex-col gap-3">
-              <div class="flex items-baseline justify-between gap-3">
-                <div class="flex items-baseline gap-2">
-                  <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
-                  <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
-                </div>
-                <div class="status-readout shrink-0">
-                  <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
-                  <span class="font-label-telemetry text-[10px] sm:text-xs uppercase text-on-surface" id="textPump">STANDBY</span>
-                </div>
+            <div class="my-4 flex items-baseline justify-between gap-3">
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
               </div>
-              <div class="flex flex-col gap-2 pt-1">
+              <div class="status-readout">
+                <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
+                <span class="font-label-telemetry text-[10px] uppercase text-on-surface" id="textPump">STANDBY</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 pt-1">
               <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
                 <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
               </div>
