@@ -2,12 +2,7 @@
   "hosting": {
     "public": "website",
     "ignore": [],
-    "rewrites": [
-      {
-        "source": "/",
-        "destination": "/public.html"
-      }
-    ],
+    "cleanUrls": true,
     "headers": [
       {
         "source": "**/*.html",

@@ -7,8 +7,8 @@
   <meta content="#091217" name="theme-color"/>
   <meta content="yes" name="apple-mobile-web-app-capable"/>
   <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
-  <meta content="Smart City Dashboard" name="apple-mobile-web-app-title"/>
-  <title>Smart City Dashboard — PLTS, AI Pemilah Sampah &amp; CCTV Lalu Lintas</title>
+  <meta content="Smart City Live Monitor" name="apple-mobile-web-app-title"/>
+  <title>Smart City Live — Monitoring Publik</title>
   <link rel="icon" type="image/png" href="./asset/logo.png"/>
   <link rel="apple-touch-icon" href="./asset/logo.png"/>
 
@@ -18,200 +18,113 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
 
-  <!-- Theme Color Palette Definitions (Light & Dark) -->
+  <!-- Theme Color Palette -->
   <style>
     :root {
-      --color-surface: #f3f6f7;
-      --color-surface-dim: #e4e9eb;
-      --color-surface-bright: #ffffff;
-      --color-surface-container-lowest: #ffffff;
-      --color-surface-container-low: #edf1f2;
-      --color-surface-container: #e4eaec;
-      --color-surface-container-high: #d9e1e3;
-      --color-surface-container-highest: #cdd8db;
-      --color-on-surface: #182326;
-      --color-on-surface-variant: #526267;
-      --color-primary: #087f82;
-      --color-primary-container: #087f82;
-      --color-secondary: #157d83;
-      --color-secondary-container: rgba(8, 127, 130, 0.12);
-      --color-on-secondary-container: #075f62;
-      --color-tertiary: #326b78;
-      --color-outline: #718186;
-      --color-outline-variant: #c5d0d3;
-      --color-card-border: #d3dcde;
-      --color-chart-grid: #dce4e6;
-      --color-header-bg: var(--color-surface);
-      --color-header-border: var(--color-card-border);
-      --color-pill-bg: transparent;
+      --color-surface: #f3f6f7; --color-surface-dim: #e4e9eb; --color-surface-bright: #ffffff;
+      --color-surface-container-lowest: #ffffff; --color-surface-container-low: #edf1f2;
+      --color-surface-container: #e4eaec; --color-surface-container-high: #d9e1e3; --color-surface-container-highest: #cdd8db;
+      --color-on-surface: #182326; --color-on-surface-variant: #526267;
+      --color-primary: #087f82; --color-primary-container: #087f82; --color-secondary: #157d83;
+      --color-secondary-container: rgba(8,127,130,0.12); --color-on-secondary-container: #075f62;
+      --color-tertiary: #326b78; --color-outline: #718186; --color-outline-variant: #c5d0d3;
+      --color-card-border: #d3dcde; --color-chart-grid: #dce4e6;
+      --color-header-bg: var(--color-surface); --color-pill-bg: transparent;
     }
-
     html.dark {
-      --color-surface: #091217;
-      --color-surface-dim: #071015;
-      --color-surface-bright: #17262c;
-      --color-surface-container-lowest: #0d181e;
-      --color-surface-container-low: #111e24;
-      --color-surface-container: #16252b;
-      --color-surface-container-high: #1c2d34;
-      --color-surface-container-highest: #24373e;
-      --color-on-surface: #dbe5e7;
-      --color-on-surface-variant: #91a4aa;
-      --color-primary: #42b8b5;
-      --color-primary-container: #248d8c;
-      --color-secondary: #57b7bd;
-      --color-secondary-container: rgba(66, 184, 181, 0.12);
-      --color-on-secondary-container: #7bc8c6;
-      --color-tertiary: #75abb7;
-      --color-outline: #64777c;
-      --color-outline-variant: #293b42;
-      --color-card-border: #24353b;
-      --color-chart-grid: #203138;
-      --color-header-bg: var(--color-surface);
-      --color-header-border: var(--color-card-border);
-      --color-pill-bg: transparent;
+      --color-surface: #091217; --color-surface-dim: #071015; --color-surface-bright: #17262c;
+      --color-surface-container-lowest: #0d181e; --color-surface-container-low: #111e24;
+      --color-surface-container: #16252b; --color-surface-container-high: #1c2d34; --color-surface-container-highest: #24373e;
+      --color-on-surface: #dbe5e7; --color-on-surface-variant: #91a4aa;
+      --color-primary: #42b8b5; --color-primary-container: #248d8c; --color-secondary: #57b7bd;
+      --color-secondary-container: rgba(66,184,181,0.12); --color-on-secondary-container: #7bc8c6;
+      --color-tertiary: #75abb7; --color-outline: #64777c; --color-outline-variant: #293b42;
+      --color-card-border: #24353b; --color-chart-grid: #203138;
+      --color-header-bg: var(--color-surface); --color-pill-bg: transparent;
     }
-
-    @layer base {
-      html, body {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        overscroll-behavior: none;
-      }
+    html,body { margin:0; padding:0; }
+    body { overscroll-behavior:none; letter-spacing:0; }
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-thumb { background:rgba(100,100,100,0.3); border-radius:999px; }
+    .theme-transition { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+    .telemetry-card { transition: background-color 0.2s ease, border-color 0.2s ease; border:1px solid var(--color-card-border); border-radius:6px; }
+    .nav-tab-active { background-color:var(--color-surface-container-high) !important; color:var(--color-on-surface) !important; box-shadow:inset 0 -2px 0 var(--color-primary) !important; font-weight:600 !important; }
+    #tempBar,#waterLevelBar { transition:width 0.9s cubic-bezier(0.25,1,0.5,1) !important; will-change:width; }
+    #pathTempLine,#pathHumLine,#pathAqiLine,#pathTempArea,#pathHumArea,#pathAqiArea { transition:d 0.3s ease-out; }
+    header { backdrop-filter:none !important; box-shadow:none !important; }
+    header > div { height:64px !important; }
+    header img { filter:none !important; }
+    header button,header nav { border-radius:4px !important; box-shadow:none !important; }
+    .nav-tab { min-height:38px; border-radius:2px !important; cursor:pointer; }
+    main { padding-top:92px !important; padding-bottom:40px !important; }
+    #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:24px !important; }
+    .sensor-grid { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:12px; }
+    .sensor-group-label { grid-column:1/-1; display:flex; align-items:center; gap:10px; margin-top:8px; padding-bottom:7px; border-bottom:1px solid var(--color-card-border); color:var(--color-on-surface-variant); font:600 11px/1 "IBM Plex Sans",sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+    .sensor-group-label:first-child { margin-top:0; }
+    .sensor-group-label .material-symbols-outlined { font-size:16px; color:var(--color-on-surface-variant); }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20; color:var(--color-on-surface-variant); font-size:19px; }
+    .sensor-group-label::before { display:none; }
+    .sensor-panel { padding:20px !important; min-height:184px; grid-column:span 4; }
+    .sensor-grid > .sensor-panel:nth-child(2), .sensor-grid > .sensor-panel:nth-child(3) { grid-column:span 6; }
+    .sensor-grid > .sensor-panel:nth-child(9) { grid-column:1/-1; min-height:154px; }
+    .sensor-panel [id^="val"] { font-variant-numeric:tabular-nums; }
+    .sensor-panel .font-headline-metric { font-size:clamp(2.1rem,3vw,3.25rem); line-height:1; }
+    .system-strip { border-left:3px solid var(--color-outline-variant) !important; border-radius:3px !important; padding:14px 16px !important; }
+    .system-state { display:inline-flex; align-items:center; gap:8px; min-width:175px; padding-left:16px; border-left:1px solid var(--color-card-border); }
+    .system-state-label { color:var(--color-on-surface-variant); font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
+    .system-state-value { color:var(--color-on-surface); font:600 12px/1.3 "IBM Plex Sans",sans-serif; }
+    .status-dot { width:7px; height:7px; border-radius:50%; background:var(--color-outline); flex:none; }
+    .status-dot.is-active { background:var(--color-primary); }
+    #waterLevelBar,#tempBar { border-radius:1px !important; background:var(--color-primary-container) !important; }
+    #circleAqi { stroke-linecap:butt; }
+    button:focus-visible,a:focus-visible { outline:2px solid var(--color-primary); outline-offset:2px; }
+    .trend-panel { border-top:2px solid var(--color-outline-variant) !important; }
+    .trend-empty { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--color-on-surface-variant); font-size:12px; }
+    .trend-empty.hidden { display:none; }
+    footer { padding-top:18px !important; padding-bottom:18px !important; }
+    .live-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:4px; background:var(--color-surface-container); border:1px solid var(--color-card-border); font:600 11px/1 "IBM Plex Sans",sans-serif; text-transform:uppercase; letter-spacing:.06em; color:var(--color-on-surface-variant); }
+    .live-badge.is-live { color:#10b981; border-color:rgba(16,185,129,0.3); }
+    .live-badge.is-offline { color:var(--color-outline); }
+    .live-dot { width:7px; height:7px; border-radius:50%; background:currentColor; flex:none; }
+    .status-readout { display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 12px/1.3 "IBM Plex Sans",sans-serif; }
+    @media (max-width:1023px) {
+      main { padding-top:116px !important; }
+      .sensor-grid > .sensor-panel { grid-column:span 6; }
+      .sensor-grid > .sensor-panel:nth-child(9) { grid-column:1/-1; }
+      .system-state { min-width:150px; }
     }
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    @media (max-width:700px) {
+      header > div { height:60px !important; padding-left:12px !important; padding-right:12px !important; }
+      main { padding-top:108px !important; padding-bottom:24px !important; }
+      .sensor-grid > .sensor-panel { grid-column:1/-1; }
+      .sensor-panel { min-height:auto; padding:17px !important; }
+      .system-state { width:100%; padding:10px 0 0; border-left:0; border-top:1px solid var(--color-card-border); }
+      header .header-brand-copy { display:none; }
+      header img { width:30px !important; height:30px !important; }
+      #themeToggleBtn { width:32px; height:32px; padding:0 !important; justify-content:center; }
+      .sensor-panel .font-headline-metric { font-size:2rem; }
+      #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:16px !important; }
+      .trend-panel { padding:14px !important; }
     }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.05);
+    @media (max-width:430px) {
+      main { padding-top:100px !important; padding-left:10px !important; padding-right:10px !important; }
+      .sensor-panel { padding:14px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.75rem; }
+      .telemetry-card { padding:14px !important; }
+      #sectionTraffic .grid-cols-2 { grid-template-columns:1fr 1fr; gap:8px; }
+      #sectionTraffic .grid-cols-2 > div { padding:12px !important; }
+      #sectionTraffic .grid-cols-2 .font-headline-metric { font-size:1.5rem; }
+      #cctvPlayerWrapper { height:240px !important; }
+      .trend-panel svg { height:200px !important; }
+      footer { padding:14px 10px !important; font-size:10px; }
     }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(100, 100, 100, 0.3);
-      border-radius: 999px;
-    }
-    .telemetry-card {
-      transition: background-color 0.2s ease, border-color 0.2s ease;
-      border: 1px solid var(--color-card-border);
-    }
-    .theme-transition {
-      transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    }
-    .nav-tab-active {
-      background-color: var(--color-surface-container-high) !important;
-      color: var(--color-on-surface) !important;
-      box-shadow: inset 0 -2px 0 var(--color-primary) !important;
-      font-weight: 600 !important;
-    }
-    #tempBar, #waterLevelBar {
-      transition: width 0.9s cubic-bezier(0.25, 1, 0.5, 1) !important;
-      will-change: width;
-    }
-    #pathTempLine, #pathHumLine, #pathAqiLine, #pathTempArea, #pathHumArea, #pathAqiArea {
-      transition: d 0.3s ease-out;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      #pathTempLine, #pathHumLine, #pathAqiLine, #pathTempArea, #pathHumArea, #pathAqiArea {
-        transition: none;
-      }
-    }
-
-    /* Industrial monitoring system — deliberately restrained, dense, and functional. */
-    body { letter-spacing: 0; }
-    header { backdrop-filter: none !important; box-shadow: none !important; }
-    header > div { height: 64px !important; }
-    header img { filter: none !important; }
-    header button, header nav { border-radius: 4px !important; box-shadow: none !important; }
-    /* Icon netral — bukan warna asli Google Material, agar tidak terlihat AI slop */
-    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 20; color: var(--color-on-surface-variant); font-size: 19px; }
-    .sensor-group-label .material-symbols-outlined { font-size: 16px; color: var(--color-on-surface-variant); }
-    .sensor-group-label::before { display: none; }
-    .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .nav-tab { min-height: 38px; border-radius: 2px !important; }
-    main { padding-top: 92px !important; padding-bottom: 40px !important; }
-    #sectionTelemetry, #sectionWaste, #sectionTraffic { gap: 24px !important; }
-    .telemetry-card { border-radius: 6px !important; box-shadow: none !important; }
-    .sensor-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; }
-    .sensor-group-label { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; margin-top: 8px; padding-bottom: 7px; border-bottom: 1px solid var(--color-card-border); color: var(--color-on-surface-variant); font: 600 11px/1 "IBM Plex Sans", sans-serif; letter-spacing: .12em; text-transform: uppercase; }
-    .sensor-group-label:first-child { margin-top: 0; }
-    .sensor-group-label::before { content: ""; display:inline-block; width:4px; height:14px; background:var(--color-primary); border-radius:1px; }
-    .sensor-panel { padding: 20px !important; min-height: 184px; }
-    .sensor-panel { grid-column: span 4; }
-    .sensor-grid > .sensor-panel:nth-child(2), .sensor-grid > .sensor-panel:nth-child(3) { grid-column: span 6; }
-    .sensor-grid > .sensor-panel:nth-child(9) { grid-column: 1 / -1; min-height: 154px; }
-    .sensor-panel [id^="val"] { font-variant-numeric: tabular-nums; }
-    .sensor-panel .font-headline-metric { font-size: clamp(2.1rem, 3vw, 3.25rem); line-height: 1; }
-    .system-strip { border-left: 3px solid var(--color-outline-variant) !important; border-radius: 3px !important; padding: 14px 16px !important; box-shadow: none !important; }
-    .system-state { display: inline-flex; align-items: center; gap: 8px; min-width: 175px; padding-left: 16px; border-left: 1px solid var(--color-card-border); }
-    .system-state-label { color: var(--color-on-surface-variant); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
-    .system-state-value { color: var(--color-on-surface); font: 600 12px/1.3 "IBM Plex Sans", sans-serif; }
-    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-outline); flex: none; }
-    .status-dot.is-active { background: var(--color-primary); }
-    #waterLevelBar, #tempBar { border-radius: 1px !important; background: var(--color-primary-container) !important; }
-    #circleAqi { stroke-linecap: butt; }
-    button { box-shadow: none !important; }
-    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
-    .control-panel { border-top: 2px solid var(--color-outline-variant) !important; }
-    .trend-panel { border-top: 2px solid var(--color-outline-variant) !important; }
-    .source-label { display: inline-flex; align-items: center; gap: 7px; color: var(--color-on-surface-variant); font-size: 11px; }
-    .trend-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--color-on-surface-variant); font-size: 12px; background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--color-surface-container-lowest) 65%, transparent)); }
-    .trend-empty.hidden { display: none; }
-    #modalFirebase > div, #modalTerminal > div { border-radius: 6px !important; box-shadow: 0 18px 50px rgba(0,0,0,.35) !important; }
-    footer { padding-top: 18px !important; padding-bottom: 18px !important; }
-    @media (max-width: 1023px) {
-      main { padding-top: 116px !important; }
-      .sensor-grid > .sensor-panel { grid-column: span 6; }
-      .sensor-grid > .sensor-panel:nth-child(9) { grid-column: 1 / -1; }
-      .system-state { min-width: 150px; }
-    }
-    @media (max-width: 700px) {
-      header > div { height: 60px !important; padding-left: 12px !important; padding-right: 12px !important; }
-      main { padding-top: 108px !important; padding-bottom: 24px !important; }
-      .sensor-grid > .sensor-panel { grid-column: 1 / -1; }
-      .sensor-panel { min-height: auto; padding: 17px !important; }
-      .system-state { width: 100%; padding: 10px 0 0; border-left: 0; border-top: 1px solid var(--color-card-border); }
-      .header-actions { gap: 4px; }
-      header .header-brand-copy { display: none; }
-      header img { width: 30px !important; height: 30px !important; }
-      #btnSerialConnect { padding: 7px 8px !important; }
-      #btnSerialConnect #textSerialBtn { display: none; }
-      #btnOpenFirebaseModal, #btnOpenTerminal, #themeToggleBtn { width: 32px; height: 32px; padding: 0 !important; justify-content: center; }
-      .sensor-panel .font-headline-metric { font-size: 2rem; }
-      #sectionTelemetry, #sectionWaste, #sectionTraffic { gap: 16px !important; }
-      .trend-panel { padding: 14px !important; }
-      .control-panel { padding: 14px !important; }
-      .control-panel .grid-cols-3 { grid-template-columns: 1fr !important; }
-      .control-panel > div { padding: 14px !important; }
-    }
-    @media (max-width: 430px) {
-      main { padding-top: 100px !important; padding-left: 10px !important; padding-right: 10px !important; }
-      .sensor-panel { padding: 14px !important; }
-      .sensor-panel .font-headline-metric { font-size: 1.75rem; }
-      .telemetry-card { padding: 14px !important; }
-      .control-panel .grid-cols-3 { grid-template-columns: 1fr !important; }
-      .control-panel > div { padding: 12px !important; }
-      .control-panel button { font-size: 10px !important; padding: 8px 6px !important; }
-      #sectionTraffic .grid-cols-2 { grid-template-columns: 1fr 1fr; gap: 8px; }
-      #sectionTraffic .grid-cols-2 > div { padding: 12px !important; }
-      #sectionTraffic .grid-cols-2 .font-headline-metric { font-size: 1.5rem; }
-      #cctvPlayerWrapper { height: 240px !important; }
-      .trend-panel .flex-wrap { gap: 8px; }
-      .trend-panel svg { height: 200px !important; }
-      #sectionWaste .lg\:col-span-7, #sectionWaste .lg\:col-span-5 { grid-column: 1 / -1; }
-      #imgStreamWaste { height: 240px !important; }
-      footer { padding: 14px 10px !important; font-size: 10px; }
-      footer .gap-4 { gap: 6px; }
-    }
-    @media (max-width: 360px) {
-      header > div { padding-left: 8px !important; padding-right: 8px !important; }
-      header img { width: 26px !important; height: 26px !important; }
-      #btnSerialConnect { padding: 6px 6px !important; }
-      #btnOpenFirebaseModal, #btnOpenTerminal, #themeToggleBtn { width: 28px; height: 28px; }
-      .sensor-panel .font-headline-metric { font-size: 1.6rem; }
-      #sectionTraffic .grid-cols-2 { grid-template-columns: 1fr; }
-      .nav-tab { font-size: 9px !important; padding: 4px 2px !important; }
+    @media (max-width:360px) {
+      header > div { padding-left:8px !important; padding-right:8px !important; }
+      header img { width:26px !important; height:26px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.6rem; }
+      #sectionTraffic .grid-cols-2 { grid-template-columns:1fr; }
+      .nav-tab { font-size:9px !important; padding:4px 2px !important; }
     }
   </style>
 
@@ -223,1075 +136,50 @@
       theme: {
         extend: {
           colors: {
-            "surface": "var(--color-surface)",
-            "surface-dim": "var(--color-surface-dim)",
-            "surface-bright": "var(--color-surface-bright)",
-            "surface-container-lowest": "var(--color-surface-container-lowest)",
-            "surface-container-low": "var(--color-surface-container-low)",
-            "surface-container": "var(--color-surface-container)",
-            "surface-container-high": "var(--color-surface-container-high)",
-            "surface-container-highest": "var(--color-surface-container-highest)",
-            "on-surface": "var(--color-on-surface)",
-            "on-surface-variant": "var(--color-on-surface-variant)",
-            "primary": "var(--color-primary)",
-            "primary-container": "var(--color-primary-container)",
-            "secondary": "var(--color-secondary)",
-            "secondary-container": "var(--color-secondary-container)",
-            "on-secondary-container": "var(--color-on-secondary-container)",
-            "tertiary": "var(--color-tertiary)",
-            "outline": "var(--color-outline)",
-            "outline-variant": "var(--color-outline-variant)"
+            "surface":"var(--color-surface)","surface-dim":"var(--color-surface-dim)","surface-bright":"var(--color-surface-bright)",
+            "surface-container-lowest":"var(--color-surface-container-lowest)","surface-container-low":"var(--color-surface-container-low)",
+            "surface-container":"var(--color-surface-container)","surface-container-high":"var(--color-surface-container-high)",
+            "surface-container-highest":"var(--color-surface-container-highest)","on-surface":"var(--color-on-surface)",
+            "on-surface-variant":"var(--color-on-surface-variant)","primary":"var(--color-primary)","primary-container":"var(--color-primary-container)",
+            "secondary":"var(--color-secondary)","secondary-container":"var(--color-secondary-container)",
+            "on-secondary-container":"var(--color-on-secondary-container)","tertiary":"var(--color-tertiary)",
+            "outline":"var(--color-outline)","outline-variant":"var(--color-outline-variant)"
           },
           fontFamily: {
-            "headline-metric":["IBM Plex Mono","monospace"],
-            "headline-lg":["IBM Plex Sans","sans-serif"],
-            "headline-md":["IBM Plex Sans","sans-serif"],
-            "headline-sm":["IBM Plex Sans","sans-serif"],
-            "body-lg":["IBM Plex Sans","sans-serif"],
-            "body-md":["IBM Plex Sans","sans-serif"],
-            "body-sm":["IBM Plex Sans","sans-serif"],
-            "label-telemetry":["IBM Plex Sans","sans-serif"],
-            "label-caption":["IBM Plex Sans","sans-serif"]
+            "headline-metric":["IBM Plex Mono","monospace"],"headline-lg":["IBM Plex Sans","sans-serif"],
+            "headline-md":["IBM Plex Sans","sans-serif"],"headline-sm":["IBM Plex Sans","sans-serif"],
+            "body-lg":["IBM Plex Sans","sans-serif"],"body-md":["IBM Plex Sans","sans-serif"],"body-sm":["IBM Plex Sans","sans-serif"],
+            "label-telemetry":["IBM Plex Sans","sans-serif"],"label-caption":["IBM Plex Sans","sans-serif"]
           }
         }
       }
     };
   </script>
 
-  <!-- Firebase JavaScript SDK CDN (Compat) -->
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-
-  <!-- Custom Scripts: Firebase Config, Web Serial, and Firebase Service -->
-  <script src="./firebase-config.js"></script>
-  <script src="./serial-service.js"></script>
-  <script src="./firebase-service.js"></script>
-</head>
-
-<body class="bg-surface font-body-md text-on-surface antialiased theme-transition min-h-screen flex flex-col">
-
-  <!-- ==========================================
-       TOP NAVIGATION BAR
-       ========================================== -->
-  <header class="fixed top-0 left-0 right-0 z-50 theme-transition border-b border-[var(--color-card-border)]" style="background-color: var(--color-header-bg);">
-    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-      
-      <!-- Left: Brand Logo & Title -->
-      <div class="flex items-center gap-3 shrink-0">
-        <img alt="Skatelplus Smart City Logo" class="h-9 sm:h-11 w-auto object-contain transition-transform hover:scale-105" src="./asset/logo.png" onerror="this.src='./asset/logo.jfif'"/>
-        <div class="header-brand-copy flex flex-col">
-          <div class="flex items-center gap-2">
-            <span class="font-headline-sm text-sm sm:text-base font-semibold text-on-surface tracking-tight leading-none theme-transition">SKATELPLUS SMART CITY</span>
-            <span class="hidden md:inline-block px-1.5 py-0.5 rounded-sm text-[9px] font-mono font-semibold bg-surface-container text-on-surface-variant border border-[var(--color-card-border)]">SC-01</span>
-          </div>
-          <span class="hidden sm:inline font-label-caption text-[10px] text-on-surface-variant mt-1 theme-transition">Monitoring lapangan · Arduino Uno · AI Vision</span>
-        </div>
-      </div>
-
-      <!-- Center: Main Navigation Tabs (Desktop) -->
-      <nav class="hidden lg:flex items-center border-x border-[var(--color-card-border)]" style="background-color: var(--color-pill-bg);" aria-label="Navigasi utama">
-        <button type="button" id="tabBtnTelemetry" class="nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider transition-all nav-tab-active cursor-pointer">
-          Telemetri &amp; PLTS
-        </button>
-        <button type="button" id="tabBtnWaste" class="nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-all cursor-pointer">
-          Pemilah Sampah
-        </button>
-        <button type="button" id="tabBtnTraffic" class="nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-all cursor-pointer">
-          CCTV Lalu Lintas
-        </button>
-      </nav>
-
-      <!-- Right: Action Controls (Web Serial, Firebase, Terminal, Theme) -->
-      <div class="header-actions">
-        
-        <!-- BUTTON: Sambungkan Arduino (Web Serial USB) -->
-        <button id="btnSerialConnect" type="button" class="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-label-telemetry text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer" title="Hubungkan Laptop ke Arduino Uno via USB">
-          <span class="material-symbols-outlined text-[18px]" id="iconSerialBtn">cable</span>
-          <span id="textSerialBtn">Hubungkan USB</span>
-        </button>
-
-        <!-- BUTTON: Firebase Status / Modal -->
-        <button id="btnOpenFirebaseModal" type="button" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-telemetry text-xs uppercase border border-[var(--color-card-border)] transition-colors cursor-pointer" title="Konfigurasi Firebase Realtime Database">
-          <span class="material-symbols-outlined text-[18px]">cloud</span>
-          <span id="textFirebaseBadge" class="hidden xl:inline">Firebase</span>
-        </button>
-
-        <!-- BUTTON: Terminal Log -->
-        <button id="btnOpenTerminal" type="button" class="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded bg-surface-container-low hover:bg-surface-container text-on-surface font-label-telemetry text-xs uppercase border border-[var(--color-card-border)] transition-colors cursor-pointer" title="Buka Log Serial Terminal">
-          <span class="material-symbols-outlined text-[18px]">terminal</span>
-          <span class="hidden xl:inline">Terminal</span>
-        </button>
-
-        <!-- Clock -->
-        <div class="hidden 2xl:inline-flex items-center px-3 py-2 rounded bg-surface-container-low text-on-surface-variant font-label-telemetry text-xs font-mono border border-[var(--color-card-border)]">
-          <span class="font-mono text-on-surface font-semibold" id="lastUpdatedClock">00:00:00</span>
-        </div>
-
-        <!-- Dark/Light Mode Toggle -->
-        <button id="themeToggleBtn" class="flex items-center justify-center w-9 h-9 rounded bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors border border-[var(--color-card-border)] cursor-pointer" title="Toggle Tema">
-          <span class="material-symbols-outlined text-[19px]" id="themeToggleIcon">dark_mode</span>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- Mobile Sub-Nav -->
-  <div class="lg:hidden fixed top-[60px] sm:top-16 left-0 right-0 z-40 bg-surface border-b border-[var(--color-card-border)] px-3 py-1.5 grid grid-cols-3">
-    <button type="button" id="tabMobileTelemetry" class="nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase nav-tab-active">Telemetri</button>
-    <button type="button" id="tabMobileWaste" class="nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase text-on-surface-variant">Sampah</button>
-    <button type="button" id="tabMobileTraffic" class="nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase text-on-surface-variant">CCTV</button>
-  </div>
-
-  <!-- ==========================================
-       MAIN CONTAINER
-       ========================================== -->
-  <main class="w-full pt-32 sm:pt-36 lg:pt-28 pb-16 flex-1 theme-transition">
-    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
-      
-      <!-- ==========================================
-           TAB 1: IOT TELEMETRY & PLTS MONITORING
-           ========================================== -->
-      <div id="sectionTelemetry" class="flex flex-col gap-8">
-        
-        <!-- EMERGENCY HAZARD ALERTS (FIRE & TILT) -->
-        <div id="alertsContainer" class="flex flex-col gap-3 w-full">
-          <!-- FIRE ALARM ALERT -->
-          <div id="alertFireBanner" class="hidden w-full bg-red-600/10 border border-red-500 p-4 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded bg-red-600 flex items-center justify-center text-white shrink-0">
-                <span class="material-symbols-outlined text-[26px]">local_fire_department</span>
-              </div>
-              <div>
-                <h3 class="font-headline-sm text-base text-red-500 font-semibold tracking-tight">Bahaya kebakaran terdeteksi</h3>
-                <p class="font-body-sm text-sm text-on-surface">Sensor flame D7 mendeteksi nyala api. Periksa status buzzer dan lokasi perangkat.</p>
-              </div>
-            </div>
-            <span class="px-3.5 py-1.5 rounded-full bg-red-600 text-white font-label-telemetry text-label-telemetry font-bold uppercase tracking-wider shrink-0">CRITICAL ALARM</span>
-          </div>
-
-          <!-- TILT / EARTHQUAKE ALERT -->
-          <div id="alertTiltBanner" class="hidden w-full bg-amber-500/10 border border-amber-500 p-4 flex items-center justify-between gap-4">
-            <div class="flex items-center gap-4">
-              <div class="w-12 h-12 rounded bg-amber-600 flex items-center justify-center text-white shrink-0">
-                <span class="material-symbols-outlined text-[26px]">vibration</span>
-              </div>
-              <div>
-                <h3 class="font-headline-sm text-base text-amber-500 font-semibold tracking-tight">Peringatan guncangan atau kemiringan</h3>
-                <p class="font-body-sm text-sm text-on-surface">Sensor tilt D8 aktif. Periksa posisi miniatur dan status buzzer.</p>
-              </div>
-            </div>
-            <span class="px-3.5 py-1.5 rounded-full bg-amber-500 text-white font-label-telemetry text-label-telemetry font-bold uppercase tracking-wider shrink-0">TILT WARNING</span>
-          </div>
-        </div>
-
-        <!-- System connection strip -->
-        <div id="connectionPromptBanner" class="system-strip w-full bg-surface-container-low border border-[var(--color-card-border)] flex flex-col md:flex-row items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 bg-primary/10 text-primary flex items-center justify-center shrink-0">
-              
-            </div>
-            <div>
-              <h4 class="font-headline-sm text-sm text-on-surface font-semibold">Gateway perangkat belum terhubung</h4>
-              <p class="font-body-sm text-xs text-on-surface-variant mt-0.5">Gunakan Web Serial untuk data perangkat fisik, atau aktifkan simulasi untuk demonstrasi.</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3 shrink-0">
-            <button id="btnDemoModeToggle" type="button" class="px-3.5 py-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-telemetry text-xs uppercase border border-[var(--color-card-border)] transition-colors cursor-pointer">
-              Mulai Simulasi
-            </button>
-            <button id="btnQuickConnect" type="button" class="px-4 py-2 rounded bg-primary hover:opacity-90 text-white font-label-telemetry text-xs uppercase font-semibold transition-colors cursor-pointer">
-              Hubungkan Perangkat
-            </button>
-          </div>
-        </div>
-
-        <!-- Section Title & system state -->
-        <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4 border-b border-[var(--color-card-border)] pb-4">
-          <div>
-            <span class="font-label-telemetry text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">Node lapangan / 01</span>
-            <h2 class="font-headline-lg text-2xl text-on-surface tracking-tight mt-1">Telemetri lingkungan dan energi</h2>
-            <p class="font-body-md text-sm text-on-surface-variant mt-1">Pembacaan langsung Arduino Uno. Nilai turunan dan simulasi ditandai pada masing-masing modul.</p>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-3 sm:gap-0">
-            <div class="system-state">
-              <span class="status-dot" id="dotMesh"></span>
-              <div><div class="system-state-label">Arduino / sumber data</div><div class="system-state-value" id="labelMeshStatus">Belum terhubung</div></div>
-            </div>
-            <div class="system-state">
-              <span class="status-dot" id="dotFirebaseSystem"></span>
-              <div><div class="system-state-label">Firebase RTDB</div><div class="system-state-value" id="labelFirebaseSystem">Belum dikonfigurasi</div></div>
-            </div>
-            <div class="system-state">
-              <span class="status-dot" id="dotSimulationSystem"></span>
-              <div><div class="system-state-label">Mode operasi</div><div class="system-state-value" id="labelSimulationSystem">Perangkat fisik</div></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sensor groups -->
-        <div class="sensor-grid">
-           <div class="sensor-group-label"><span class="material-symbols-outlined">water_drop</span>Kualitas dan distribusi air</div>
-
-          <!-- CARD 1: WATER QUALITY (TDS Pin A2) -->
-          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col">
-                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor TDS · Pin A2</span>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Air (TDS)</h3>
-              </div>
-              <span id="badgeTdsStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                 Menunggu data
-              </span>
-            </div>
-
-            <div class="my-5 flex items-baseline gap-2">
-               <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valTds">--</span>
-              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">ppm</span>
-            </div>
-
-            <div class="flex items-center justify-between pt-2">
-              <div class="flex items-center gap-2">
-                
-                <span class="font-label-caption text-xs text-on-surface-variant">Indikasi batas: &lt; 300 ppm</span>
-              </div>
-               <span class="font-label-caption text-label-caption font-mono text-on-surface-variant">ADC: <span id="valTdsRaw">--</span></span>
-            </div>
-          </div>
-
-          <!-- CARD 2: WATER LEVEL & POMPA (Pin A0 & Pin 6) -->
-          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col">
-                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Water Level · Pin A0</span>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Ketinggian Air &amp; Pompa</h3>
-              </div>
-              <span id="badgeWaterStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                 Menunggu data
-              </span>
-            </div>
-
-            <div class="my-4 flex items-baseline justify-between">
-              <div class="flex items-baseline gap-2">
-                 <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
-                <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
-              </div>
-              <div class="flex items-center gap-1.5 px-3 py-1 rounded bg-surface-container border border-[var(--color-card-border)]" id="pumpPill">
-                <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
-                <span class="font-label-telemetry text-label-telemetry uppercase font-bold text-on-surface" id="textPump">POMPA: STANDBY</span>
-              </div>
-            </div>
-
-            <div class="flex flex-col gap-2 pt-1">
-              <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
-                <div id="waterLevelBar" class="h-full transition-all duration-500" style="width: 0%;"></div>
-              </div>
-              <div class="flex justify-between font-label-caption text-label-caption text-on-surface-variant">
-                <span>Threshold Pompa: &gt; 500</span>
-                 <span class="font-mono">ADC: <span id="valWaterRaw">--</span></span>
-              </div>
-            </div>
-          </div>
-
-          <div class="sensor-group-label"><span class="material-symbols-outlined">air</span>Kondisi lingkungan</div>
-
-          <!-- CARD 3: AIR QUALITY (MQ GAS SENSOR PIN A1) -->
-          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col">
-                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor MQ-2 · Pin A5</span>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Udara &amp; Gas</h3>
-              </div>
-              <span id="badgeAqiStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                 Menunggu data
-              </span>
-            </div>
-
-            <div class="my-5 flex items-center justify-between">
-              <div class="flex items-baseline gap-2">
-                 <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valAqi">--</span>
-                <span class="font-headline-sm text-sm text-on-surface-variant font-medium">indeks relatif</span>
-              </div>
-              <!-- Circular Gauge -->
-              <div class="relative w-14 h-14 flex items-center justify-center">
-                <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                  <path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
-                  <path id="circleAqi" class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="42, 100" stroke-linecap="round" stroke-width="3.5"></path>
-                </svg>
-                
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between pt-2">
-              <span class="font-label-caption text-label-caption text-on-surface-variant">Pin A5 (MQ Gas Sensor)</span>
-               <span class="font-label-caption text-label-caption font-mono text-on-surface-variant">ADC: <span id="valMqRaw">--</span></span>
-            </div>
-          </div>
-
-          <!-- CARD 4: TEMPERATURE (NTC SENSOR PIN A3) -->
-          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col">
-                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor NTC · Pin A3</span>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Suhu Lingkungan</h3>
-              </div>
-              <span id="badgeTempStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                Normal
-              </span>
-            </div>
-
-            <div class="my-5 flex items-baseline gap-2">
-               <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valTemp">--</span>
-              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">°C</span>
-            </div>
-
-            <div class="flex flex-col gap-2 pt-1">
-              <div class="relative w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
-                 <div id="tempBar" class="absolute left-0 top-0 bottom-0 bg-primary-container rounded-full transition-all duration-500" style="width: 0%;"></div>
-              </div>
-              <div class="flex justify-between font-label-caption text-label-caption text-on-surface-variant">
-                <span>Rentang: 20°C - 45°C</span>
-                 <span class="font-mono">ADC: <span id="valNtcRaw">--</span></span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CARD 5: HUMIDITY -->
-          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col">
-                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Nilai estimasi · bukan sensor RH</span>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelembaban Relatif</h3>
-              </div>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
-                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
-                 Estimasi
-              </span>
-            </div>
-
-            <div class="my-5 flex items-baseline gap-2">
-               <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valHum">--</span>
-              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">% RH</span>
-            </div>
-
-            <div class="flex items-center justify-between pt-2">
-              <div class="flex items-center gap-1.5">
-                
-                <span class="font-label-caption text-label-caption text-on-surface-variant">Mikroklimat Greenhouse</span>
-              </div>
-              <span class="text-[10px] uppercase tracking-wider text-amber-500">Turunan NTC</span>
-            </div>
-          </div>
-
-          <div class="sensor-group-label"><span class="material-symbols-outlined">solar_power</span>Energi PLTS</div>
-
-          <!-- CARD 6: ELECTRICAL PLTS (DUMMY VOLT 4-5V, AMPERE 2-3A) -->
-          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
-            <div class="flex items-start justify-between gap-4">
-              <div class="flex flex-col">
-                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Node energi · Firmware</span>
-                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelistrikan PLTS DC</h3>
-              </div>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-500/15 text-amber-500 font-label-telemetry text-label-telemetry uppercase font-semibold border border-amber-500/30">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                Data simulasi
-              </span>
-            </div>
-
-            <!-- Triple Readout Block: Volt (4-5V), Amp (2-3A), Watt -->
-            <div class="my-4 grid grid-cols-3 gap-2 p-3 rounded-DEFAULT bg-surface-container-low border border-[var(--color-card-border)]">
-              <div class="flex flex-col items-center">
-                <span class="font-label-telemetry text-label-telemetry text-on-surface-variant uppercase">VOLT (4-5V)</span>
-                 <span class="font-headline-md text-headline-md text-on-surface font-bold"><span id="valVoltage">--</span> <span class="text-label-caption font-normal text-on-surface-variant">V</span></span>
-              </div>
-              <div class="flex flex-col items-center border-x border-[var(--color-card-border)]">
-                <span class="font-label-telemetry text-label-telemetry text-on-surface-variant uppercase">ARUS (2-3A)</span>
-                 <span class="font-headline-md text-headline-md text-on-surface font-bold"><span id="valCurrent">--</span> <span class="text-label-caption font-normal text-on-surface-variant">A</span></span>
-              </div>
-              <div class="flex flex-col items-center">
-                <span class="font-label-telemetry text-label-telemetry text-on-surface-variant uppercase">DAYA</span>
-                 <span class="font-headline-md text-headline-md text-primary font-bold"><span id="valPower">--</span> <span class="text-label-caption font-normal text-on-surface-variant">W</span></span>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between pt-1">
-              <div class="flex items-center gap-1.5">
-                
-                <span class="font-label-caption text-label-caption text-on-surface-variant">Data Dummy Rentang 4-5V &amp; 2-3A</span>
-              </div>
-              <span class="font-label-telemetry text-label-telemetry text-on-surface-variant font-semibold">DC PLTS</span>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- HARDWARE ACTUATOR CONTROLS: LED D5, POMPA, BUZZER -->
-        <div class="control-panel telemetry-card bg-surface-container-lowest p-5 sm:p-6 flex flex-col gap-5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div>
-              <span class="font-label-telemetry text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">Output digital</span>
-              <h3 class="font-headline-md text-xl text-on-surface mt-1">Kendali perangkat lapangan</h3>
-              <p class="font-body-sm text-sm text-on-surface-variant mt-0.5">Perintah diteruskan melalui USB Serial ke LED D5, relay pompa D6, dan buzzer D9.</p>
-            </div>
-            <span class="source-label">
-              Perintah aktual, bukan status dekoratif
-            </span>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
-            
-            <!-- CONTROLLER 1: LAMPU LED (PIN D5) - FITUR BARU -->
-            <div class="bg-surface-container-low p-5 border border-[var(--color-card-border)] flex flex-col justify-between gap-4">
-              <div class="flex items-start justify-between">
-                <div>
-                  <span class="font-label-telemetry text-label-telemetry uppercase font-bold text-amber-500">LAMPU LED MINIATUR</span>
-                  <h4 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Digital Pin D5</h4>
-                </div>
-                <div id="visualBulbIcon" class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-outline transition-colors duration-300">
-                  <span class="material-symbols-outlined text-[24px]">lightbulb</span>
-                </div>
-              </div>
-
-              <p class="font-body-sm text-body-sm text-on-surface-variant">
-                Status saat ini: <strong id="labelLedStatus" class="text-on-surface font-mono">MATI (LOW)</strong>
-              </p>
-
-              <div class="grid grid-cols-2 gap-2 mt-auto">
-                <button type="button" id="btnLedOn" class="px-3 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-telemetry text-label-telemetry uppercase font-bold border border-[var(--color-card-border)] transition-all cursor-pointer opacity-70">
-                  Nyalakan
-                </button>
-                <button type="button" id="btnLedOff" class="px-3 py-2.5 rounded-lg bg-neutral-600 text-white font-label-telemetry text-label-telemetry uppercase font-bold shadow-md ring-2 ring-neutral-400 transition-all cursor-pointer scale-[1.02]">
-                  Matikan
-                </button>
-              </div>
-            </div>
-
-            <!-- CONTROLLER 2: POMPA AIR (PIN 6) -->
-            <div class="bg-surface-container-low p-5 border border-[var(--color-card-border)] flex flex-col justify-between gap-4">
-              <div>
-                <span class="font-label-telemetry text-label-telemetry uppercase font-bold text-primary">RELAY POMPA AIR</span>
-                <h4 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Digital Pin 6</h4>
-                <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Otomatis menyala saat sensor air A0 &gt; 500, atau paksa manual.</p>
-              </div>
-
-              <div class="grid grid-cols-3 gap-1.5 mt-auto">
-                <button type="button" id="btnPumpAuto" class="px-2 py-2.5 rounded-lg bg-primary text-white font-bold text-xs uppercase cursor-pointer">AUTO</button>
-                <button type="button" id="btnPumpOn" class="px-2 py-2.5 rounded-lg bg-surface-container hover:bg-emerald-600 hover:text-white font-bold text-xs uppercase cursor-pointer">ON</button>
-                <button type="button" id="btnPumpOff" class="px-2 py-2.5 rounded-lg bg-surface-container hover:bg-red-600 hover:text-white font-bold text-xs uppercase cursor-pointer">OFF</button>
-              </div>
-            </div>
-
-            <!-- CONTROLLER 3: BUZZER ALARM (PIN 9 TONE) -->
-            <div class="bg-surface-container-low p-5 border border-[var(--color-card-border)] flex flex-col justify-between gap-4">
-              <div class="flex items-start justify-between">
-                <div>
-                  <span class="font-label-telemetry text-label-telemetry uppercase font-bold text-red-400">SIRINE BUZZER</span>
-                  <h4 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Digital Pin 9 (Tone 65 Hz)</h4>
-                </div>
-                <!-- Visual Glowing Buzzer Icon -->
-                <div id="visualBuzzerIcon" class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-outline transition-colors duration-300">
-                  <span class="material-symbols-outlined text-[24px]" id="iconBuzzerStatus">volume_off</span>
-                </div>
-              </div>
-
-              <p class="font-body-sm text-body-sm text-on-surface-variant">
-                Status saat ini: <strong id="labelBuzzerStatus" class="text-on-surface font-mono">STANDBY (OFF)</strong>
-              </p>
-
-              <div class="grid grid-cols-3 gap-1.5 mt-auto">
-                <button type="button" id="btnBuzzerOn" class="px-2 py-2.5 rounded-lg bg-surface-container hover:bg-red-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all" title="Nyalakan Sirine Sekarang">
-                  ON
-                </button>
-                <button type="button" id="btnBuzzerOff" class="px-2 py-2.5 rounded-lg bg-neutral-600 text-white font-bold text-xs uppercase cursor-pointer transition-all shadow-md" title="Matikan Sirine">
-                  OFF
-                </button>
-                <button type="button" id="btnBuzzerAuto" class="px-2 py-2.5 rounded-lg bg-surface-container hover:bg-amber-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all" title="Mode Otomatis (Sensor Api D7 & Tilt D8)">
-                  AUTO
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- SVG Environmental Trend -->
-        <div class="trend-panel telemetry-card bg-surface-container-lowest p-5 sm:p-6 flex flex-col gap-5">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <div class="flex items-center gap-3 flex-wrap">
-                <h3 class="font-headline-md text-xl text-on-surface">Tren sensor lingkungan</h3>
-                <span class="text-[10px] uppercase tracking-wider text-on-surface-variant">Real-time · 300ms</span>
-              </div>
-              <p class="font-body-sm text-sm text-on-surface-variant mt-0.5">Grafik diperbarui setiap paket telemetry diterima dari Arduino Uno.</p>
-            </div>
-            <div class="flex flex-wrap items-center gap-5">
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-[#f97316]"></span>
-                <span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Suhu (°C)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-secondary"></span>
-                <span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Kelembaban (%)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="w-3 h-3 rounded-full bg-primary-container"></span>
-                <span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Gas (AQI)</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="w-full h-48 sm:h-56 md:h-64 relative">
-            <svg id="liveTrendSvg" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 900 300" style="touch-action: pan-y;">
-              <defs>
-                <linearGradient id="tempArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f97316" stop-opacity="0.25"></stop><stop offset="100%" stop-color="#f97316" stop-opacity="0.0"></stop></linearGradient>
-                <linearGradient id="humidityArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#006a61" stop-opacity="0.25"></stop><stop offset="100%" stop-color="#006a61" stop-opacity="0.0"></stop></linearGradient>
-                <linearGradient id="aqiArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.25"></stop><stop offset="100%" stop-color="#2563eb" stop-opacity="0.0"></stop></linearGradient>
-              </defs>
-              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1.5" x1="0" x2="900" y1="50" y2="50"></line>
-              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1.5" x1="0" x2="900" y1="120" y2="120"></line>
-              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1.5" x1="0" x2="900" y1="190" y2="190"></line>
-              <line stroke="var(--color-chart-grid)" stroke-width="1.5" x1="0" x2="900" y1="260" y2="260"></line>
-
-              <path id="pathTempArea" fill="url(#tempArea)" d=""></path>
-              <path id="pathTempLine" fill="none" stroke="#f97316" stroke-linecap="round" stroke-width="3" d=""></path>
-
-              <path id="pathHumArea" fill="url(#humidityArea)" d=""></path>
-              <path id="pathHumLine" fill="none" stroke="#00eefc" stroke-linecap="round" stroke-width="3" d=""></path>
-
-              <path id="pathAqiArea" fill="url(#aqiArea)" d=""></path>
-              <path id="pathAqiLine" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="3" d=""></path>
-
-              <circle id="dotTempNow" cx="900" cy="150" fill="#f97316" r="5"></circle>
-              <circle id="dotHumNow" cx="900" cy="80" fill="#00eefc" r="5"></circle>
-              <circle id="dotAqiNow" cx="900" cy="200" fill="#2563eb" r="5"></circle>
-            </svg>
-            <div id="trendEmptyState" class="trend-empty">Menunggu sekurangnya dua paket telemetry untuk membentuk tren.</div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ==========================================
-           TAB 2: AI VISION SMART WASTE SORTING
-           (DETEKSI SAMPAH ORGANIK D11 & ANORGANIK D10)
-           ========================================== -->
-      <div id="sectionWaste" class="hidden flex-col gap-8">
-        
-        <!-- Header Section -->
-        <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <div>
-            <div class="flex items-center gap-2">
-               <span class="text-primary font-label-telemetry text-[10px] uppercase tracking-[0.14em] font-semibold">AI Vision / Waste Node</span>
-              <span class="text-outline-variant">•</span>
-               <span class="text-on-surface-variant font-label-caption text-label-caption">Servo D11 (Organik) &amp; D10 (Anorganik)</span>
-            </div>
-             <h2 class="font-headline-lg text-2xl text-on-surface tracking-tight mt-1">Pemilahan sampah berbasis kamera</h2>
-             <p class="font-body-md text-sm text-on-surface-variant mt-1">Hasil klasifikasi kamera diteruskan ke servo organik D11 atau anorganik D10.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span id="badgeWasteAiStatus" class="px-3 py-1 rounded bg-surface-container font-label-telemetry text-label-telemetry uppercase text-on-surface-variant border border-[var(--color-card-border)]">
-              AI Vision: Standby
-            </span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-          
-          <!-- LEFT: LIVE CAMERA FEED (SPAN 8 WIDESCREEN) -->
-          <div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-4">
-             <div class="telemetry-card bg-surface-container-lowest overflow-hidden flex flex-col">
-              <div class="bg-surface-container px-5 py-3.5 flex items-center justify-between border-b border-[var(--color-card-border)]">
-                <div class="flex items-center gap-2">
-                  
-                  <span class="font-label-telemetry text-label-telemetry uppercase font-bold text-on-surface">Kamera Deteksi Sampah Pintar</span>
-                </div>
-                <div class="flex items-center gap-3">
-                  <button type="button" id="btnToggleWasteAspect" onclick="toggleWasteAspect()" class="text-xs px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant flex items-center gap-1 border border-[var(--color-card-border)] transition-colors cursor-pointer" title="Ubah Mode Tampilan Kamera">
-                    
-                    <span id="textWasteAspectMode">Layar Penuh (Cover)</span>
-                  </button>
-                  <div class="flex items-center gap-1.5">
-                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                     <span class="font-mono text-xs text-on-surface-variant font-semibold">Local vision server · localhost:5000</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Stream Viewer Container (Expanded Height & Widescreen) -->
-               <div class="relative w-full h-[260px] sm:h-[380px] md:h-[460px] lg:h-[520px] xl:h-[580px] bg-black flex items-center justify-center overflow-hidden">
-                <img id="imgStreamWaste" src="http://localhost:5000/video_feed/waste" alt="Smart Waste Stream" class="w-full h-full object-cover object-center transition-all duration-300" onerror="handleWasteStreamError(this)"/>
-                
-                <!-- Fallback Container if Python Vision server is not started -->
-                <div id="fallbackWasteContainer" class="hidden absolute inset-0 bg-neutral-900/90 backdrop-blur-sm p-6 flex-col items-center justify-center text-center gap-4">
-                  <div class="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
-                    
-                  </div>
-                  <div>
-                    <h4 class="font-headline-sm text-headline-sm text-white">Server AI Vision Python Siap Dijalankan</h4>
-                    <p class="font-body-sm text-body-sm text-neutral-400 max-w-md mt-1">
-                      Untuk mengaktifkan stream webcam langsung dengan deteksi YOLO, jalankan perintah: <br/>
-                      <code class="px-2 py-1 bg-black rounded text-emerald-400 font-mono text-xs">python app_vision.py</code>
-                    </p>
-                  </div>
-                  <div class="flex gap-2">
-                    <button type="button" onclick="retryWasteStream()" class="px-4 py-2 rounded-lg bg-primary text-white font-label-telemetry text-xs uppercase cursor-pointer">
-                      Coba Hubungkan Ulang
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Overlay Detection Banner -->
-                <div id="overlayDetectionTag" class="absolute bottom-4 left-4 right-4 bg-black/75 backdrop-blur-md border border-white/10 rounded-lg p-3 flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <div id="dotDetectedCat" class="w-3.5 h-3.5 rounded-full bg-emerald-400 animate-ping"></div>
-                    <div>
-                      <span class="font-label-telemetry text-xs uppercase text-neutral-400">Hasil Deteksi Terkini:</span>
-                      <h4 id="labelDetectedObject" class="font-headline-sm text-sm sm:text-base text-white font-bold">Menunggu Objek di Depan Kamera...</h4>
-                    </div>
-                  </div>
-                  <span id="badgeDetectedCategory" class="px-3 py-1 rounded bg-emerald-500 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider">
-                    STANDBY
-                  </span>
-                </div>
-              </div>
-
-              <!-- Quick Test Buttons -->
-              <div class="p-4 bg-surface-container-low flex flex-wrap items-center justify-between gap-3 border-t border-[var(--color-card-border)]">
-                <span class="font-label-caption text-label-caption text-on-surface-variant">Uji Klasifikasi Instan:</span>
-                <div class="flex items-center gap-2">
-                   <button type="button" id="btnTestOrganik" class="px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-600 text-white font-label-telemetry text-xs uppercase font-semibold transition-colors cursor-pointer">
-                      Uji Organik · D11
-                  </button>
-                   <button type="button" id="btnTestAnorganik" class="px-3 py-1.5 rounded bg-cyan-700 hover:bg-cyan-600 text-white font-label-telemetry text-xs uppercase font-semibold transition-colors cursor-pointer">
-                      Uji Anorganik · D10
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- RIGHT: 2 TEMPAT SAMPAH & SERVO HARDWARE STATE (SPAN 4 WIDESCREEN) -->
-          <div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-6">
-            
-            <!-- TEMPAT SAMPAH 1: ORGANIK (SERVO PIN D11) -->
-             <div class="telemetry-card bg-surface-container-lowest p-5 border-l-2 border-l-emerald-600 flex flex-col justify-between gap-4">
-               <div class="flex items-start justify-between">
-                 <div>
-                   <span class="font-label-telemetry text-xs uppercase font-bold text-emerald-500">TEMPAT SAMPAH ORGANIK</span>
-                   <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Servo Digital Pin D11</h3>
-                  <p class="font-body-sm text-xs text-on-surface-variant mt-0.5">Sisa makanan, buah, sayur, daun, kertas organik</p>
-                </div>
-                <div id="iconLidOrganik" class="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-bold">
-                  
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-lg bg-surface-container-low flex items-center justify-between border border-[var(--color-card-border)]">
-                <div>
-                  <span class="font-label-caption text-xs text-on-surface-variant block">Status Tutup Sampah:</span>
-                  <span id="textLidOrganik" class="font-headline-sm text-base font-bold text-emerald-600 dark:text-emerald-400">TERTUTUP (0°)</span>
-                </div>
-                <span id="badgeTimerOrganik" class="hidden px-2.5 py-1 rounded bg-emerald-500 text-white font-mono text-xs font-bold animate-pulse">
-                  TERBUKA (4s)
-                </span>
-              </div>
-
-              <div class="grid grid-cols-2 gap-2 pt-1">
-                <button type="button" id="btnOpenOrganik" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-label-telemetry text-xs uppercase font-bold shadow-sm transition-all cursor-pointer">
-                   Buka Tutup (D10)
-                </button>
-                <button type="button" id="btnCloseOrganik" class="px-3 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-telemetry text-xs uppercase font-bold border border-[var(--color-card-border)] transition-all cursor-pointer">
-                  Tutup Rapat
-                </button>
-              </div>
-            </div>
-
-            <!-- TEMPAT SAMPAH 2: ANORGANIK (SERVO PIN D10) -->
-             <div class="telemetry-card bg-surface-container-lowest p-5 border-l-2 border-l-cyan-600 flex flex-col justify-between gap-4">
-               <div class="flex items-start justify-between">
-                 <div>
-                   <span class="font-label-telemetry text-xs uppercase font-bold text-cyan-500">TEMPAT SAMPAH ANORGANIK</span>
-                   <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Servo Digital Pin D10</h3>
-                  <p class="font-body-sm text-xs text-on-surface-variant mt-0.5">Botol plastik, gelas, kaleng, kantong plastik, metal</p>
-                </div>
-                <div id="iconLidAnorganik" class="w-12 h-12 rounded-full bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-bold">
-                  
-                </div>
-              </div>
-
-              <div class="p-3.5 rounded-lg bg-surface-container-low flex items-center justify-between border border-[var(--color-card-border)]">
-                <div>
-                  <span class="font-label-caption text-xs text-on-surface-variant block">Status Tutup Sampah:</span>
-                  <span id="textLidAnorganik" class="font-headline-sm text-base font-bold text-cyan-600 dark:text-cyan-400">TERTUTUP (0°)</span>
-                </div>
-                <span id="badgeTimerAnorganik" class="hidden px-2.5 py-1 rounded bg-cyan-500 text-white font-mono text-xs font-bold animate-pulse">
-                  TERBUKA (4s)
-                </span>
-              </div>
-
-              <div class="grid grid-cols-2 gap-2 pt-1">
-                <button type="button" id="btnOpenAnorganik" class="px-3 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-label-telemetry text-xs uppercase font-bold shadow-sm transition-all cursor-pointer">
-                  Buka Tutup (D11)
-                </button>
-                <button type="button" id="btnCloseAnorganik" class="px-3 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-telemetry text-xs uppercase font-bold border border-[var(--color-card-border)] transition-all cursor-pointer">
-                  Tutup Rapat
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- RECENT DETECTION HISTORY TABLE -->
-         <div class="telemetry-card bg-surface-container-lowest p-5 flex flex-col gap-4">
-          <div class="flex items-center justify-between border-b border-[var(--color-card-border)] pb-3">
-            <h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Riwayat Pemilahan Sampah Terkini</h3>
-            <span class="font-label-caption text-xs text-on-surface-variant">Tersinkronisasi ke Firebase (/monitoring/waste_events)</span>
-          </div>
-
-          <div class="w-full overflow-x-auto">
-            <table class="w-full text-left font-body-sm text-sm">
-              <thead>
-                <tr class="border-b border-[var(--color-card-border)] text-on-surface-variant font-label-telemetry text-xs uppercase">
-                  <th class="py-2.5 px-3">Waktu</th>
-                  <th class="py-2.5 px-3">Objek Terdeteksi</th>
-                  <th class="py-2.5 px-3">Klasifikasi</th>
-                  <th class="py-2.5 px-3">Akurasi</th>
-                  <th class="py-2.5 px-3">Aksi Servo</th>
-                </tr>
-              </thead>
-              <tbody id="tableWasteHistory" class="divide-y divide-[var(--color-card-border)]">
-                <tr>
-                  <td class="py-3 px-3 font-mono text-xs text-on-surface-variant">--:--:--</td>
-                  <td class="py-3 px-3">Belum ada deteksi baru</td>
-                  <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-surface-container text-xs">Standby</span></td>
-                  <td class="py-3 px-3 font-mono">--%</td>
-                   <td class="py-3 px-3 font-mono text-xs">Pin D11/D10</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ==========================================
-           TAB 3: AI CCTV ROAD TRAFFIC MONITORING
-           (YOUTUBE LIVE STREAM + VEHICLE COUNTER YOLO)
-           ========================================== -->
-      <div id="sectionTraffic" class="hidden flex-col gap-8">
-        
-        <!-- Header Section -->
-        <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <div>
-            <div class="flex items-center gap-2">
-               <span class="text-primary font-label-telemetry text-[10px] uppercase tracking-[0.14em] font-semibold">Vision Node / Traffic</span>
-              <span class="text-outline-variant">•</span>
-              <span class="text-on-surface-variant font-label-caption text-label-caption">Object Detection / Traffic Node</span>
-            </div>
-             <h2 class="font-headline-lg text-2xl text-on-surface tracking-tight mt-1">Monitoring lalu lintas jalan</h2>
-             <p class="font-body-md text-sm text-on-surface-variant mt-1">Jumlah deteksi pada frame terkini dari stream CCTV; bukan hitungan kendaraan unik yang melintas.</p>
-          </div>
-          <div class="flex items-center gap-2">
-            <span id="badgeTrafficDensity" class="px-3.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-telemetry text-xs uppercase tracking-wider border border-[var(--color-card-border)]">
-              Lalu Lintas: --
-            </span>
-          </div>
-        </div>
-
-        <!-- 4 Traffic Metric Pillars -->
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-          <div class="telemetry-card bg-surface-container-lowest p-4 sm:p-5 flex flex-col justify-between">
-            <span class="font-label-telemetry text-[10px] sm:text-xs text-on-surface-variant uppercase">TOTAL KENDARAAN</span>
-            <div class="my-2 flex items-baseline gap-2">
-             <span class="font-headline-metric text-2xl sm:text-headline-metric text-primary tracking-tighter" id="valTotalVehicles">--</span>
-              <span class="font-headline-sm text-xs sm:text-sm text-on-surface-variant font-medium">unit</span>
-            </div>
-            <span class="font-label-caption text-[10px] sm:text-xs text-on-surface-variant">Real-time Counting</span>
-          </div>
-
-          <div class="telemetry-card bg-surface-container-lowest p-4 sm:p-5 flex flex-col justify-between">
-            <span class="font-label-telemetry text-[10px] sm:text-xs text-on-surface-variant uppercase">MOBIL PRIBADI</span>
-            <div class="my-2 flex items-baseline gap-2">
-             <span class="font-headline-metric text-2xl sm:text-headline-metric text-on-surface tracking-tighter" id="valCarsCount">--</span>
-              <span class="font-headline-sm text-xs sm:text-sm text-on-surface-variant font-medium">unit</span>
-            </div>
-            <span class="font-label-caption text-[10px] sm:text-xs text-on-surface-variant">Class: Car</span>
-          </div>
-
-          <div class="telemetry-card bg-surface-container-lowest p-4 sm:p-5 flex flex-col justify-between">
-            <span class="font-label-telemetry text-[10px] sm:text-xs text-on-surface-variant uppercase">SEPEDA MOTOR</span>
-            <div class="my-2 flex items-baseline gap-2">
-             <span class="font-headline-metric text-2xl sm:text-headline-metric text-secondary tracking-tighter" id="valMotosCount">--</span>
-              <span class="font-headline-sm text-xs sm:text-sm text-on-surface-variant font-medium">unit</span>
-            </div>
-            <span class="font-label-caption text-[10px] sm:text-xs text-on-surface-variant">Class: Motorcycle</span>
-          </div>
-
-          <div class="telemetry-card bg-surface-container-lowest p-4 sm:p-5 flex flex-col justify-between">
-            <span class="font-label-telemetry text-[10px] sm:text-xs text-on-surface-variant uppercase">BUS &amp; TRUK</span>
-            <div class="my-2 flex items-baseline gap-2">
-             <span class="font-headline-metric text-2xl sm:text-headline-metric text-on-surface tracking-tighter" id="valHeavyCount">--</span>
-              <span class="font-headline-sm text-xs sm:text-sm text-on-surface-variant font-medium">unit</span>
-            </div>
-            <span class="font-label-caption text-[10px] sm:text-xs text-on-surface-variant">Heavy Transport</span>
-          </div>
-        </div>
-
-        <!-- Video Stream Player Container (Enlarged Command Center Screen) -->
-         <div id="cctvCardContainer" class="telemetry-card bg-surface-container-lowest overflow-hidden flex flex-col">
-          <div class="bg-surface-container px-6 py-3.5 flex items-center justify-between border-b border-[var(--color-card-border)]">
-            <div class="flex items-center gap-3">
-              
-              <span class="font-label-telemetry text-label-telemetry uppercase font-bold text-on-surface">Live CCTV Feed // YouTube: JJ3MWNYVCU4</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <button type="button" id="btnToggleCctvAspect" onclick="toggleCctvAspect()" class="text-xs px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant flex items-center gap-1 border border-[var(--color-card-border)] transition-colors cursor-pointer" title="Ubah Mode Tampilan Layar CCTV">
-                
-                <span id="textCctvAspectMode">Presisi (Fit)</span>
-              </button>
-              <button type="button" onclick="toggleFullscreenCctv()" class="text-xs px-2.5 py-1 rounded bg-surface-container-low hover:bg-surface-container text-on-surface-variant flex items-center gap-1 border border-[var(--color-card-border)] transition-colors cursor-pointer" title="Tampilkan Layar Penuh">
-                
-                <span>Fullscreen</span>
-              </button>
-              <div class="flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                <span class="font-mono text-xs text-emerald-500 font-semibold">STREAM ACTIVE (HD YOLOv8m)</span>
-              </div>
-            </div>
-          </div>
-
-          <div id="cctvPlayerWrapper" class="relative w-full h-[280px] sm:h-[420px] md:h-[520px] lg:h-[640px] xl:h-[720px] 2xl:h-[780px] bg-black flex items-center justify-center overflow-hidden">
-            <img id="imgStreamTraffic" src="http://localhost:5000/video_feed/traffic" alt="CCTV Traffic Stream" class="w-full h-full object-contain transition-all duration-300" onerror="handleTrafficStreamError(this)"/>
-
-            <!-- Fallback Container if Python Vision server is not started -->
-            <div id="fallbackTrafficContainer" class="hidden absolute inset-0 bg-neutral-900/90 backdrop-blur-sm p-6 flex-col items-center justify-center text-center gap-4">
-              <div class="w-16 h-16 rounded-full bg-cyan-500/10 text-cyan-400 flex items-center justify-center">
-                
-              </div>
-              <div>
-                <h4 class="font-headline-sm text-headline-sm text-white">Stream AI CCTV Belum Dijalankan</h4>
-                <p class="font-body-sm text-body-sm text-neutral-400 max-w-md mt-1">
-                  Untuk melihat deteksi kendaraan langsung dari live YouTube CCTV, jalankan server AI: <br/>
-                  <code class="px-2 py-1 bg-black rounded text-cyan-400 font-mono text-xs">python app_vision.py</code>
-                </p>
-              </div>
-              <div class="flex gap-2">
-                <button type="button" onclick="retryTrafficStream()" class="px-4 py-2 rounded-lg bg-primary text-white font-label-telemetry text-xs uppercase cursor-pointer">
-                  Hubungkan Ulang
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-4 bg-surface-container-low flex flex-col sm:flex-row items-center justify-between gap-3 border-t border-[var(--color-card-border)]">
-            <div class="flex items-center gap-2 text-on-surface-variant font-label-caption text-xs">
-              
-             <span>Model dipilih otomatis oleh server berdasarkan berkas yang tersedia · Deteksi mobil, motor, bus, dan truk per frame</span>
-            </div>
-            <a href="https://www.youtube.com/live/JJ3MWNYVCU4?si=00EZLlAVTAP0caTL" target="_blank" rel="noopener noreferrer" class="text-xs text-primary font-semibold hover:underline flex items-center gap-1">
-              Buka Sumber Asli YouTube 
-            </a>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </main>
-
-  <!-- ==========================================
-       MODAL: FIREBASE CONFIGURATION
-       ========================================== -->
-  <div id="modalFirebase" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-surface-container-lowest border border-[var(--color-card-border)] rounded-2xl max-w-xl w-full p-6 shadow-2xl flex flex-col gap-5">
-      <div class="flex items-center justify-between border-b border-[var(--color-card-border)] pb-4">
-        <div class="flex items-center gap-3">
-          
-          <div>
-            <h3 class="font-headline-sm text-headline-sm text-on-surface">Konfigurasi Firebase Realtime DB</h3>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">Sinkronisasi log sensor, sampah, &amp; CCTV ke Firebase</p>
-          </div>
-        </div>
-        <button id="btnCloseFirebaseModal" type="button" class="p-1 rounded-full hover:bg-surface-container text-on-surface-variant cursor-pointer">
-          
-        </button>
-      </div>
-
-      <div class="flex flex-col gap-3 font-body-sm text-body-sm">
-        <div>
-          <label class="block font-label-telemetry text-label-telemetry uppercase text-on-surface mb-1">Database URL (Wajib)</label>
-          <input type="text" id="inputDatabaseUrl" placeholder="https://PROJECT_ID-default-rtdb.firebaseio.com" class="w-full px-3.5 py-2 rounded-lg bg-surface-container-low border border-[var(--color-card-border)] text-on-surface font-mono text-sm focus:outline-primary"/>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block font-label-telemetry text-label-telemetry uppercase text-on-surface mb-1">API Key</label>
-            <input type="text" id="inputApiKey" placeholder="AIzaSy..." class="w-full px-3.5 py-2 rounded-lg bg-surface-container-low border border-[var(--color-card-border)] text-on-surface font-mono text-sm focus:outline-primary"/>
-          </div>
-          <div>
-            <label class="block font-label-telemetry text-label-telemetry uppercase text-on-surface mb-1">Project ID</label>
-            <input type="text" id="inputProjectId" placeholder="project-id" class="w-full px-3.5 py-2 rounded-lg bg-surface-container-low border border-[var(--color-card-border)] text-on-surface font-mono text-sm focus:outline-primary"/>
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-label-telemetry text-label-telemetry uppercase text-on-surface mb-1">Atau Tempel Snippet Konfigurasi Lengkap JSON</label>
-          <textarea id="inputRawConfig" rows="3" placeholder='{ "apiKey": "...", "databaseURL": "...", "projectId": "..." }' class="w-full px-3.5 py-2 rounded-lg bg-surface-container-low border border-[var(--color-card-border)] text-on-surface font-mono text-xs focus:outline-primary"></textarea>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between pt-2 border-t border-[var(--color-card-border)]">
-        <button id="btnResetFirebaseConfig" type="button" class="text-xs text-red-500 hover:underline cursor-pointer">
-          Reset Konfigurasi
-        </button>
-        <div class="flex items-center gap-2">
-          <button id="btnCancelFirebaseModal" type="button" class="px-4 py-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-telemetry text-label-telemetry uppercase cursor-pointer">
-            Batal
-          </button>
-          <button id="btnSaveFirebaseConfig" type="button" class="px-5 py-2 rounded bg-primary hover:opacity-90 text-white font-label-telemetry text-label-telemetry uppercase font-semibold cursor-pointer">
-            Simpan &amp; Hubungkan
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ==========================================
-       MODAL: SERIAL TERMINAL
-       ========================================== -->
-  <div id="modalTerminal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-surface-container-lowest border border-[var(--color-card-border)] rounded-2xl max-w-3xl w-full h-[580px] p-6 shadow-2xl flex flex-col justify-between gap-4">
-      <div class="flex items-center justify-between border-b border-[var(--color-card-border)] pb-3">
-        <div class="flex items-center gap-3">
-          
-          <div>
-            <h3 class="font-headline-sm text-headline-sm text-on-surface text-lg">Serial USB Raw Stream Terminal</h3>
-            <p class="font-body-sm text-body-sm text-on-surface-variant">Log pertukaran paket data JSON langsung dari kabel Arduino Uno</p>
-          </div>
-        </div>
-        <div class="flex items-center gap-2">
-          <button id="btnClearTerminal" type="button" class="px-3 py-1 rounded bg-surface-container text-xs text-on-surface-variant hover:text-on-surface cursor-pointer">Bersihkan</button>
-          <button id="btnExportLog" type="button" class="px-3 py-1 rounded bg-surface-container text-xs text-on-surface-variant hover:text-on-surface cursor-pointer">Export JSON</button>
-          <button id="btnCloseTerminal" type="button" class="p-1 rounded-full hover:bg-surface-container text-on-surface-variant cursor-pointer"></button>
-        </div>
-      </div>
-
-      <div id="terminalScreen" class="w-full flex-1 bg-black/90 text-emerald-400 font-mono text-xs p-4 rounded-xl overflow-y-auto leading-relaxed border border-emerald-950 select-text">
-        <div class="text-neutral-400">[SYSTEM] Terminal diinisialisasi. Menunggu koneksi serial USB...</div>
-      </div>
-
-      <div class="flex items-center gap-2 pt-2 border-t border-[var(--color-card-border)]">
-        <input type="text" id="inputTerminalCmd" placeholder="Ketik perintah (contoh: LED:1, SAMPAH:ORGANIK, PUMP:1)..." class="flex-1 px-4 py-2 rounded-lg bg-surface-container-low border border-[var(--color-card-border)] text-on-surface font-mono text-sm focus:outline-primary"/>
-        <button id="btnSendTerminalCmd" type="button" class="px-5 py-2 rounded-lg bg-primary hover:opacity-90 text-white font-label-telemetry text-label-telemetry uppercase font-semibold cursor-pointer">Kirim</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="w-full bg-surface-container-lowest py-6 border-t border-[var(--color-card-border)] theme-transition mt-auto">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 font-body-sm text-xs text-on-surface-variant">
-      <div><strong class="text-on-surface font-semibold">Smart City Operations Console</strong> · Arduino Uno USB Gateway &amp; Local Vision</div>
-      <div id="footerSystemNote">Status sistem ditampilkan berdasarkan koneksi aktual.</div>
-    </div>
-  </footer>
-
-  <!-- ==========================================
-       MAIN GLUE JAVASCRIPT CONTROLLER
-       ========================================== -->
-  <script>
-    // --- 1. TABS CONTROLLER ---
-    const tabBtnTelemetry = document.getElementById('tabBtnTelemetry');
-    const tabBtnWaste = document.getElementById('tabBtnWaste');
-    const tabBtnTraffic = document.getElementById('tabBtnTraffic');
-
-    const tabMobileTelemetry = document.getElementById('tabMobileTelemetry');
-    const tabMobileWaste = document.getElementById('tabMobileWaste');
-    const tabMobileTraffic = document.getElementById('tabMobileTraffic');
-
-    const sectionTelemetry = document.getElementById('sectionTelemetry');
-    const sectionWaste = document.getElementById('sectionWaste');
-    const sectionTraffic = document.getElementById('sectionTraffic');
-
-    function switchTab(target) {
-      // Hide all sections
-      sectionTelemetry.classList.add('hidden');
-      sectionWaste.classList.add('hidden');
-      sectionTraffic.classList.add('hidden');
-
-      // Reset desktop classes
-      [tabBtnTelemetry, tabBtnWaste, tabBtnTraffic].forEach(btn => {
-        if (!btn) return;
-        btn.className = 'nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider text-on-surface-variant hover:text-on-surface transition-all cursor-pointer';
-      });
-
-      // Reset mobile classes
-      [tabMobileTelemetry, tabMobileWaste, tabMobileTraffic].forEach(btn => {
-        if (!btn) return;
-        btn.className = 'nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase text-on-surface-variant';
-      });
-
-      if (target === 'telemetry') {
-        sectionTelemetry.classList.remove('hidden');
-        if (tabBtnTelemetry) tabBtnTelemetry.className = 'nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider transition-all nav-tab-active cursor-pointer';
-        if (tabMobileTelemetry) tabMobileTelemetry.className = 'nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase nav-tab-active';
-      } else if (target === 'waste') {
-        sectionWaste.classList.remove('hidden');
-        if (tabBtnWaste) tabBtnWaste.className = 'nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider transition-all nav-tab-active cursor-pointer';
-        if (tabMobileWaste) tabMobileWaste.className = 'nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase nav-tab-active';
-        retryWasteStream();
-      } else if (target === 'traffic') {
-        sectionTraffic.classList.remove('hidden');
-        if (tabBtnTraffic) tabBtnTraffic.className = 'nav-tab px-5 py-1.5 text-xs font-label-telemetry uppercase tracking-wider transition-all nav-tab-active cursor-pointer';
-        if (tabMobileTraffic) tabMobileTraffic.className = 'nav-tab px-2 py-1 text-[10px] font-label-telemetry uppercase nav-tab-active';
-        retryTrafficStream();
-      }
-    }
-
-    if (tabBtnTelemetry) tabBtnTelemetry.addEventListener('click', () => switchTab('telemetry'));
-    if (tabBtnWaste) tabBtnWaste.addEventListener('click', () => switchTab('waste'));
-    if (tabBtnTraffic) tabBtnTraffic.addEventListener('click', () => switchTab('traffic'));
-
-    if (tabMobileTelemetry) tabMobileTelemetry.addEventListener('click', () => switchTab('telemetry'));
-    if (tabMobileWaste) tabMobileWaste.addEventListener('click', () => switchTab('waste'));
-    if (tabMobileTraffic) tabMobileTraffic.addEventListener('click', () => switchTab('traffic'));
-
-    // --- 2. THEME & CLOCK ---
-    const htmlEl = document.documentElement;
-    const themeBtn = document.getElementById('themeToggleBtn');
-    const themeIcon = document.getElementById('themeToggleIcon');
-
-    function applyTheme(isDark) {
-      if (isDark) {
-        htmlEl.classList.add('dark');
-        if (themeIcon) themeIcon.textContent = 'light_mode';
-        localStorage.setItem('smart_city_theme', 'dark');
-      } else {
-        htmlEl.classList.remove('dark');
-        if (themeIcon) themeIcon.textContent = 'dark_mode';
-        localStorage.setItem('smart_city_theme', 'light');
-      }
-    }
-    const savedTheme = localStorage.getItem('smart_city_theme');
-    if (savedTheme) applyTheme(savedTheme === 'dark');
-    else applyTheme(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
-
-    if (themeBtn) themeBtn.addEventListener('click', () => applyTheme(!htmlEl.classList.contains('dark')));
-
-    function updateClock() {
-      const now = new Date();
-      const el = document.getElementById('lastUpdatedClock');
-      if (el) el.textContent = now.toLocaleTimeString('id-ID', { hour12: false });
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // --- 3. TREND GRAPH BUFFER ---
-    const historyPoints = { temp: [], hum: [], aqi: [] };
+  <!-- Firebase SDK (module, read-only, no auth needed for public RTDB) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiVhNjZ7mBlZUI3_ModDujSxXKPPqm_js",
+      authDomain: "skatelplus-smart-city.firebaseapp.com",
+      databaseURL: "https://skatelplus-smart-city-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "skatelplus-smart-city",
+      storageBucket: "skatelplus-smart-city.firebasestorage.app",
+      messagingSenderId: "610042872625",
+      appId: "1:610042872625:web:dd16f546b8e9bc6c532610",
+      measurementId: "G-SWC4XYEH4R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // --- SMOOTHING ---
+    const smoothSensors = { temp:null, tempPct:0, waterPct:null, aqi:null, hum:null, tds:null };
+
+    // --- TREND CHART BUFFER ---
+    const historyPoints = { temp:[], hum:[], aqi:[] };
     const maxPoints = 25;
 
     function renderTrendChart() {
@@ -1302,7 +190,7 @@
       const stepX = 900 / (maxPoints - 1);
 
       function buildPath(dataArr, minVal, maxVal) {
-        const points = dataArr.map((v, i) => {
+        const points = dataArr.map((v,i) => {
           const x = Math.round((maxPoints - len + i) * stepX);
           const clamped = Math.max(minVal, Math.min(maxVal, v));
           const normalized = (clamped - minVal) / (maxVal - minVal || 1);
@@ -1311,12 +199,11 @@
         });
         let d = `M ${points[0].x},${points[0].y}`;
         for (let i = 1; i < points.length; i++) {
-          const prev = points[i - 1];
-          const curr = points[i];
+          const prev = points[i-1], curr = points[i];
           const cx1 = (prev.x + curr.x) / 2;
           d += ` C ${cx1},${prev.y} ${cx1},${curr.y} ${curr.x},${curr.y}`;
         }
-        return { lineD: d, lastPoint: points[points.length - 1], firstPoint: points[0] };
+        return { lineD:d, lastPoint:points[points.length-1], firstPoint:points[0] };
       }
 
       const tempRes = buildPath(historyPoints.temp, 20, 45);
@@ -1344,944 +231,503 @@
       if (dotAqiNow) { dotAqiNow.setAttribute('cx', aqiRes.lastPoint.x); dotAqiNow.setAttribute('cy', aqiRes.lastPoint.y); }
     }
 
-    // --- 3B. FILTER SMOOTHING / LERP UNTUK PERGERAKAN INDIKATOR HALUS TANPA GLITCH ---
-    const smoothSensors = {
-      temp: null,
-      tempPct: 0,
-      waterPct: null,
-      aqi: null,
-      hum: null,
-      tds: null
-    };
-
-    // --- 4. REAL-TIME SENSOR TELEMETRY UPDATER ---
-    function updateDashboardWithSensorData(data) {
+    // --- UPDATE DASHBOARD FROM FIREBASE DATA ---
+    function updateDashboard(data) {
       if (!data) return;
-      // Hanya proses paket telemetry lengkap. ACK perintah tidak boleh mengubah angka sensor.
-      const telemetryKeys = ['water', 'mq', 'tds', 'ntc', 'volt', 'ampere', 'power', 'fire', 'tilt', 'pump'];
-      if (!telemetryKeys.some(key => data[key] !== undefined)) return;
 
-      // 1. Water Level & Pump (Transisi Halus Pelan-Pelan)
+      // Water Level
       const waterRaw = data.water !== undefined ? data.water : 0;
-      const elWaterRaw = document.getElementById('valWaterRaw');
-      if (elWaterRaw) elWaterRaw.textContent = waterRaw;
+      document.getElementById('valWaterRaw').textContent = waterRaw;
       const targetWaterPct = Math.min(100, Math.max(0, Math.round((waterRaw / 650) * 100)));
       if (smoothSensors.waterPct === null) smoothSensors.waterPct = targetWaterPct;
       else smoothSensors.waterPct += (targetWaterPct - smoothSensors.waterPct) * 0.25;
       const displayWaterPct = Math.round(smoothSensors.waterPct);
-      const elWaterLvl = document.getElementById('valWaterLvl');
-      const elWaterBar = document.getElementById('waterLevelBar');
-      if (elWaterLvl) elWaterLvl.textContent = displayWaterPct;
-      if (elWaterBar) elWaterBar.style.width = displayWaterPct + '%';
+      document.getElementById('valWaterLvl').textContent = displayWaterPct;
+      document.getElementById('waterLevelBar').style.width = displayWaterPct + '%';
 
       const pumpState = Number(data.pump) === 1;
-      const dotPump = document.getElementById('dotPump');
-      const textPump = document.getElementById('textPump');
-      if (textPump) textPump.textContent = pumpState ? 'POMPA: AKTIF' : 'POMPA: STANDBY';
-      if (dotPump) dotPump.className = pumpState ? 'w-2 h-2 rounded-full bg-emerald-500' : 'w-2 h-2 rounded-full bg-outline';
+      document.getElementById('textPump').textContent = pumpState ? 'POMPA: AKTIF' : 'POMPA: STANDBY';
+      document.getElementById('dotPump').className = pumpState ? 'w-2 h-2 rounded-full bg-emerald-500' : 'w-2 h-2 rounded-full bg-outline';
 
-      const badgeWater = document.getElementById('badgeWaterStatus');
-      if (badgeWater) {
-        const waterLabel = waterRaw > 500 ? 'Di atas threshold' : 'Di bawah threshold';
-        badgeWater.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${waterRaw > 500 ? 'bg-amber-500' : 'bg-secondary'}"></span>${waterLabel}`;
-      }
-
-      // 2. TDS (Kualitas Air)
+      // TDS
       const tdsVal = data.tds !== undefined ? data.tds : 0;
       if (smoothSensors.tds === null) smoothSensors.tds = tdsVal;
       else smoothSensors.tds += (tdsVal - smoothSensors.tds) * 0.25;
       const displayTds = Math.round(smoothSensors.tds);
-      const elTdsRaw = document.getElementById('valTdsRaw');
-      const elTds = document.getElementById('valTds');
-      if (elTdsRaw) elTdsRaw.textContent = tdsVal;
-      if (elTds) elTds.textContent = displayTds;
-      const badgeTds = document.getElementById('badgeTdsStatus');
-      if (badgeTds) {
-        const tdsState = displayTds < 300 ? 'Dalam batas' : 'Periksa nilai';
-        badgeTds.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${displayTds < 300 ? 'bg-secondary' : 'bg-amber-500'}"></span>${tdsState}`;
-      }
+      document.getElementById('valTdsRaw').textContent = tdsVal;
+      document.getElementById('valTds').textContent = displayTds;
 
-      // 3. MQ Gas Sensor (Pin A5)
+      // MQ Gas
       const mqRaw = data.mq !== undefined ? data.mq : 0;
-      const elMqRaw = document.getElementById('valMqRaw');
-      const elAqi = document.getElementById('valAqi');
-      const circleAqi = document.getElementById('circleAqi');
-      if (elMqRaw) elMqRaw.textContent = mqRaw;
+      document.getElementById('valMqRaw').textContent = mqRaw;
       const targetAqi = Math.min(200, Math.max(10, Math.round((mqRaw / 600) * 100)));
       if (smoothSensors.aqi === null) smoothSensors.aqi = targetAqi;
       else smoothSensors.aqi += (targetAqi - smoothSensors.aqi) * 0.20;
       const displayAqi = Math.round(smoothSensors.aqi);
-      if (elAqi) elAqi.textContent = displayAqi;
+      document.getElementById('valAqi').textContent = displayAqi;
+      const circleAqi = document.getElementById('circleAqi');
       if (circleAqi) {
         const circleDash = Math.min(100, Math.round((displayAqi / 200) * 100));
         circleAqi.setAttribute('stroke-dasharray', `${circleDash}, 100`);
       }
-      const badgeAqi = document.getElementById('badgeAqiStatus');
-      if (badgeAqi) {
-        const gasState = mqRaw < 300 ? 'Normal' : (mqRaw < 500 ? 'Peringatan' : 'Bahaya');
-        const gasDot = mqRaw < 300 ? 'bg-secondary' : (mqRaw < 500 ? 'bg-amber-500' : 'bg-red-500');
-        badgeAqi.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${gasDot}"></span>${gasState}`;
-      }
 
-      // 4. NTC Temperature (Pin A3) - PERGERAKAN PELAN-PELAN NAIK & TURUN TANPA GLITCH
+      // NTC Temperature
       const ntcRaw = data.ntc !== undefined ? data.ntc : 512;
-      const elNtcRaw = document.getElementById('valNtcRaw');
-      const elTemp = document.getElementById('valTemp');
-      const elTempBar = document.getElementById('tempBar');
-      if (elNtcRaw) elNtcRaw.textContent = ntcRaw;
-
-      // Hitung suhu target
+      document.getElementById('valNtcRaw').textContent = ntcRaw;
       const targetTemp = 28.5 + (512 - ntcRaw) * 0.025;
-      // Low-Pass smoothing: transisi halus pelan-pelan
       if (smoothSensors.temp === null) smoothSensors.temp = targetTemp;
       else smoothSensors.temp += (targetTemp - smoothSensors.temp) * 0.18;
       const displayTemp = smoothSensors.temp.toFixed(1);
-      if (elTemp) elTemp.textContent = displayTemp;
-      const badgeTemp = document.getElementById('badgeTempStatus');
-      if (badgeTemp) {
-        const tempState = smoothSensors.temp <= 35 ? 'Normal' : (smoothSensors.temp <= 40 ? 'Peringatan' : 'Bahaya');
-        const tempDot = smoothSensors.temp <= 35 ? 'bg-secondary' : (smoothSensors.temp <= 40 ? 'bg-amber-500' : 'bg-red-500');
-        badgeTemp.innerHTML = `<span class="w-1.5 h-1.5 rounded-full ${tempDot}"></span>${tempState}`;
-      }
+      document.getElementById('valTemp').textContent = displayTemp;
+      const targetTempPct = Math.min(100, Math.max(0, ((smoothSensors.temp - 20) / 25) * 100));
+      smoothSensors.tempPct += (targetTempPct - smoothSensors.tempPct) * 0.22;
+      document.getElementById('tempBar').style.width = Math.max(0, Math.min(100, Math.round(smoothSensors.tempPct))) + '%';
 
-      // Garis bar persentase (20°C - 45°C) bergerak pelan dan halus
-      if (elTempBar) {
-        const targetTempPct = Math.min(100, Math.max(0, ((smoothSensors.temp - 20) / 25) * 100));
-        smoothSensors.tempPct += (targetTempPct - smoothSensors.tempPct) * 0.22;
-        const displayTempPct = Math.max(0, Math.min(100, Math.round(smoothSensors.tempPct)));
-        elTempBar.style.width = displayTempPct + '%';
-      }
-
-      // 5. Humidity
+      // Humidity (derived)
       const rawHum = 65 + Math.round((512 - ntcRaw) * 0.015);
       if (smoothSensors.hum === null) smoothSensors.hum = rawHum;
       else smoothSensors.hum += (rawHum - smoothSensors.hum) * 0.20;
-      const displayHum = Math.round(smoothSensors.hum);
-      const elHum = document.getElementById('valHum');
-      if (elHum) elHum.textContent = displayHum;
+      document.getElementById('valHum').textContent = Math.round(smoothSensors.hum);
 
-      // 6. Kelistrikan PLTS: DUMMY DATA VOLT 4-5V, AMPERE 2-3A
-      const voltVal = data.volt !== undefined ? parseFloat(data.volt).toFixed(2) : '--';
+      // PLTS
+      document.getElementById('valVoltage').textContent = data.volt !== undefined ? parseFloat(data.volt).toFixed(2) : '--';
+      document.getElementById('valCurrent').textContent = data.ampere !== undefined ? parseFloat(data.ampere).toFixed(2) : '--';
+      const powerVal = data.power !== undefined ? parseFloat(data.power).toFixed(1)
+        : (data.volt !== undefined && data.ampere !== undefined ? (parseFloat(data.volt) * parseFloat(data.ampere)).toFixed(1) : '--');
+      document.getElementById('valPower').textContent = powerVal;
 
-      const ampVal = data.ampere !== undefined ? parseFloat(data.ampere).toFixed(2) : '--';
-
-      const powerVal = data.power !== undefined
-        ? parseFloat(data.power).toFixed(1)
-        : (Number.isFinite(Number(voltVal)) && Number.isFinite(Number(ampVal)) ? (Number(voltVal) * Number(ampVal)).toFixed(1) : '--');
-
-      const elVoltage = document.getElementById('valVoltage');
-      const elCurrent = document.getElementById('valCurrent');
-      const elPower = document.getElementById('valPower');
-      if (elVoltage) elVoltage.textContent = voltVal;
-      if (elCurrent) elCurrent.textContent = ampVal;
-      if (elPower) elPower.textContent = powerVal;
-
-      // 7. LED State (Pin D5) - Kunci sementara jika user baru saja klik
-      const nowTelemetry = Date.now();
-      if (data.led !== undefined && (nowTelemetry - userLedIntentTime > 2500)) {
-        updateLedVisual(data.led === 1);
+      // LED & Buzzer status (read-only display)
+      const labelLed = document.getElementById('labelLedStatus');
+      if (labelLed) {
+        labelLed.textContent = Number(data.led) === 1 ? 'MENYALA (5V HIGH)' : 'MATI (LOW)';
+        labelLed.className = Number(data.led) === 1 ? 'text-amber-400 font-mono' : 'text-on-surface font-mono';
+      }
+      const labelBuzzer = document.getElementById('labelBuzzerStatus');
+      if (labelBuzzer) {
+        labelBuzzer.textContent = Number(data.buzzer) === 1 ? 'BUNYI (TONE 65 Hz)' : 'STANDBY';
+        labelBuzzer.className = Number(data.buzzer) === 1 ? 'text-red-400 font-mono' : 'text-on-surface font-mono';
       }
 
-      // 8. Buzzer Sirine State (Pin D9 Tone 65Hz)
-      if (data.buzzer !== undefined && (nowTelemetry - userBuzzerIntentTime > 2500)) {
-        updateBuzzerVisual(data.buzzer === 1);
-      }
-
-      // Relay Pompa State (Pin D6)
-      if (data.pump !== undefined && (nowTelemetry - userPumpIntentTime > 2500)) {
-        if (currentPumpMode !== 'auto') {
-          updatePumpVisual(data.pump === 1 ? 'on' : 'off');
-        }
-      }
-
-      // 9. Servo Tempat Sampah State (D11 Organik & D10 Anorganik)
+      // Servo waste status
       if (data.servo_organik !== undefined) {
-        updateLidState('organik', data.servo_organik > 30);
+        const organikOpen = data.servo_organik > 30;
+        const textOrg = document.getElementById('textLidOrganik');
+        if (textOrg) textOrg.textContent = organikOpen ? 'TERBUKA (45°)' : 'TERTUTUP (0°)';
       }
       if (data.servo_anorganik !== undefined) {
-        updateLidState('anorganik', data.servo_anorganik > 30);
+        const anorgOpen = data.servo_anorganik > 30;
+        const textAnorg = document.getElementById('textLidAnorganik');
+        if (textAnorg) textAnorg.textContent = anorgOpen ? 'TERBUKA (45°)' : 'TERTUTUP (0°)';
       }
 
-      // 10. Fire & Tilt Emergency
-      const alertFireBanner = document.getElementById('alertFireBanner');
-      const alertTiltBanner = document.getElementById('alertTiltBanner');
-      if (alertFireBanner) {
-        if (data.fire === 1) alertFireBanner.classList.remove('hidden');
-        else alertFireBanner.classList.add('hidden');
-      }
-      if (alertTiltBanner) {
-        if (data.tilt === 1) alertTiltBanner.classList.remove('hidden');
-        else alertTiltBanner.classList.add('hidden');
-      }
+      // Emergency banners
+      const alertFire = document.getElementById('alertFireBanner');
+      if (alertFire) alertFire.classList.toggle('hidden', Number(data.fire) !== 1);
+      const alertTilt = document.getElementById('alertTiltBanner');
+      if (alertTilt) alertTilt.classList.toggle('hidden', Number(data.tilt) !== 1);
 
-      // 11. Update Trend Chart setiap paket telemetry (~300ms) agar grafik benar-benar real-time
+      // Trend chart
       historyPoints.temp.push(parseFloat(displayTemp));
       if (historyPoints.temp.length > maxPoints) historyPoints.temp.shift();
-      historyPoints.hum.push(displayHum);
+      historyPoints.hum.push(Math.round(smoothSensors.hum));
       if (historyPoints.hum.length > maxPoints) historyPoints.hum.shift();
       historyPoints.aqi.push(displayAqi);
       if (historyPoints.aqi.length > maxPoints) historyPoints.aqi.shift();
       renderTrendChart();
-    }
 
-    // --- TOAST NOTIFIKASI HARDWARE ---
-    function showHardwareToast(message, type = 'warning') {
-      let toast = document.getElementById('hardwareToast');
-      if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'hardwareToast';
-        document.body.appendChild(toast);
-      }
-      const isWarn = type === 'warning';
-      toast.className = `fixed bottom-6 right-6 z-50 max-w-sm px-4 py-3 rounded-xl shadow-2xl flex items-start gap-3 border transition-all duration-300 transform translate-y-0 opacity-100 backdrop-blur-md ${
-        isWarn 
-          ? 'bg-amber-950/95 border-amber-500/80 text-amber-200' 
-          : 'bg-emerald-950/95 border-emerald-500/80 text-emerald-200'
-      }`;
-      toast.innerHTML = `
-        
-        <div class="text-xs">
-          <p class="font-bold text-sm leading-tight text-white">${isWarn ? 'Hardware Belum Terhubung' : 'Perintah Berhasil'}</p>
-          <p class="mt-1 leading-relaxed opacity-95">${message}</p>
-        </div>
-      `;
-      clearTimeout(toast._timer);
-      toast._timer = setTimeout(() => {
-        toast.className = 'fixed bottom-6 right-6 z-50 max-w-sm px-4 py-3 rounded-xl shadow-2xl flex items-start gap-3 border transition-all duration-300 opacity-0 translate-y-4 pointer-events-none';
-      }, 4000);
-    }
-
-    // Helper kirim perintah aman dengan feedback
-    function sendActuatorCommand(cmd, label) {
-      if (!window.arduinoSerial.isConnected && !window.arduinoSerial.isSimulationMode) {
-        showHardwareToast(`Colokkan kabel USB ke Arduino Uno lalu klik tombol <strong>"Hubungkan USB"</strong> di navbar atas untuk mengontrol ${label}.`, 'warning');
-      }
-      window.arduinoSerial.sendCommand(cmd);
-    }
-
-    // Kunci intent pengguna sementara (2 detik) agar tidak tertimpa data serial lama saat diklik
-    let userLedIntentTime = 0;
-    let userPumpIntentTime = 0;
-    let userBuzzerIntentTime = 0;
-
-    // --- 5. LED D5 VISUAL & CONTROLLER ---
-    function updateLedVisual(isOn) {
-      const visualBulb = document.getElementById('visualBulbIcon');
-      const labelLed = document.getElementById('labelLedStatus');
-      const btnOn = document.getElementById('btnLedOn');
-      const btnOff = document.getElementById('btnLedOff');
-
-      if (labelLed) {
-        labelLed.textContent = isOn ? 'MENYALA (5V HIGH)' : 'MATI (LOW)';
-        labelLed.className = isOn ? 'text-amber-400 font-mono font-bold' : 'text-on-surface font-mono';
-      }
-
-      if (visualBulb) {
-        if (isOn) {
-          visualBulb.className = 'w-10 h-10 rounded bg-amber-500 text-white flex items-center justify-center';
-        } else {
-          visualBulb.className = 'w-10 h-10 rounded bg-surface-container flex items-center justify-center text-outline';
-        }
-      }
-
-      // Highlight tombol aktif vs nonaktif
-      if (btnOn && btnOff) {
-        if (isOn) {
-          btnOn.className = 'px-3 py-2.5 rounded-lg bg-amber-500 text-white font-label-telemetry text-label-telemetry uppercase font-bold shadow-md ring-2 ring-amber-400 transition-all cursor-pointer scale-[1.02]';
-          btnOff.className = 'px-3 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-telemetry text-label-telemetry uppercase font-bold border border-[var(--color-card-border)] transition-all cursor-pointer opacity-70';
-        } else {
-          btnOn.className = 'px-3 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant font-label-telemetry text-label-telemetry uppercase font-bold border border-[var(--color-card-border)] transition-all cursor-pointer opacity-70';
-          btnOff.className = 'px-3 py-2.5 rounded-lg bg-neutral-600 text-white font-label-telemetry text-label-telemetry uppercase font-bold shadow-md ring-2 ring-neutral-400 transition-all cursor-pointer scale-[1.02]';
-        }
+      // Last updated timestamp
+      const ts = document.getElementById('lastUpdatedTime');
+      if (ts) {
+        const time = data.timestamp || data.isoTime;
+        if (time) ts.textContent = new Date(time).toLocaleTimeString('id-ID', { hour12: false });
       }
     }
 
-    // --- 5B. RELAY POMPA AIR (PIN 6) VISUAL & CONTROLLER ---
-    let currentPumpMode = 'auto';
-
-    function updatePumpVisual(mode) {
-      if (mode) currentPumpMode = mode;
-      const btnAuto = document.getElementById('btnPumpAuto');
-      const btnOn = document.getElementById('btnPumpOn');
-      const btnOff = document.getElementById('btnPumpOff');
-
-      if (!btnAuto || !btnOn || !btnOff) return;
-
-      if (currentPumpMode === 'auto') {
-        btnAuto.className = 'px-2 py-2.5 rounded-lg bg-primary text-black font-bold text-xs uppercase cursor-pointer shadow-md ring-2 ring-primary/40 scale-[1.02]';
-        btnOn.className = 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-emerald-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-        btnOff.className = 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-red-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-      } else if (currentPumpMode === 'on') {
-        btnAuto.className = 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-primary hover:text-black text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-        btnOn.className = 'px-2 py-2.5 rounded-lg bg-emerald-600 text-white font-bold text-xs uppercase cursor-pointer shadow-md ring-2 ring-emerald-400 scale-[1.02]';
-        btnOff.className = 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-red-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-      } else if (currentPumpMode === 'off') {
-        btnAuto.className = 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-primary hover:text-black text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-        btnOn.className = 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-emerald-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-        btnOff.className = 'px-2 py-2.5 rounded-lg bg-red-600 text-white font-bold text-xs uppercase cursor-pointer shadow-md ring-2 ring-red-400 scale-[1.02]';
-      }
-    }
-
-    // --- 5C. BUZZER SIRINE D9 VISUAL & CONTROLLER (TONE 65 HZ) ---
-    let currentBuzzerMode = 'off';
-
-    function updateBuzzerVisual(isOn, activeMode = null) {
-      if (activeMode) currentBuzzerMode = activeMode;
-
-      const visualBuzzer = document.getElementById('visualBuzzerIcon');
-      const iconBuzzer = document.getElementById('iconBuzzerStatus');
-      const labelBuzzer = document.getElementById('labelBuzzerStatus');
-      const btnOn = document.getElementById('btnBuzzerOn');
-      const btnOff = document.getElementById('btnBuzzerOff');
-      const btnAuto = document.getElementById('btnBuzzerAuto');
-
-      if (isOn) {
-        if (labelBuzzer) {
-          labelBuzzer.textContent = 'BUNYI (TONE 65 Hz)';
-          labelBuzzer.className = 'text-red-400 font-mono font-bold';
-        }
-        if (iconBuzzer) iconBuzzer.textContent = 'volume_up';
-        if (visualBuzzer) {
-          visualBuzzer.className = 'w-10 h-10 rounded bg-red-600 text-white flex items-center justify-center';
-        }
-      } else {
-        if (labelBuzzer) {
-          labelBuzzer.textContent = currentBuzzerMode === 'auto' ? 'STANDBY (AUTO SENSOR)' : 'STANDBY (OFF)';
-          labelBuzzer.className = 'text-on-surface font-mono';
-        }
-        if (iconBuzzer) {
-          iconBuzzer.textContent = currentBuzzerMode === 'auto' ? 'notifications_active' : 'volume_off';
-        }
-        if (visualBuzzer) {
-          visualBuzzer.className = 'w-10 h-10 rounded bg-surface-container flex items-center justify-center text-outline';
-        }
-      }
-
-      // Update highlight tombol kontrol
-      if (btnOn) {
-        btnOn.className = (currentBuzzerMode === 'on' || (isOn && currentBuzzerMode !== 'auto'))
-          ? 'px-2 py-2.5 rounded-lg bg-red-600 text-white font-bold text-xs uppercase cursor-pointer shadow-md ring-2 ring-red-400 scale-[1.02]'
-          : 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-red-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-      }
-      if (btnOff) {
-        btnOff.className = (currentBuzzerMode === 'off' && !isOn)
-          ? 'px-2 py-2.5 rounded-lg bg-neutral-600 text-white font-bold text-xs uppercase cursor-pointer shadow-md ring-2 ring-neutral-400 scale-[1.02]'
-          : 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-neutral-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-      }
-      if (btnAuto) {
-        btnAuto.className = (currentBuzzerMode === 'auto')
-          ? 'px-2 py-2.5 rounded-lg bg-amber-500 text-white font-bold text-xs uppercase cursor-pointer shadow-md ring-2 ring-amber-400 scale-[1.02]'
-          : 'px-2 py-2.5 rounded-lg bg-surface-container hover:bg-amber-600 hover:text-white text-on-surface font-bold text-xs uppercase cursor-pointer transition-all opacity-70';
-      }
-    }
-
-    // Event listener kendali Buzzer
-    const btnBuzzerOn = document.getElementById('btnBuzzerOn');
-    const btnBuzzerOff = document.getElementById('btnBuzzerOff');
-    const btnBuzzerAuto = document.getElementById('btnBuzzerAuto');
-
-    if (btnBuzzerOn) {
-      btnBuzzerOn.addEventListener('click', () => {
-        userBuzzerIntentTime = Date.now();
-        updateBuzzerVisual(true, 'on');
-        sendActuatorCommand('BUZZER:1', 'Sirine Buzzer D9');
-      });
-    }
-    if (btnBuzzerOff) {
-      btnBuzzerOff.addEventListener('click', () => {
-        userBuzzerIntentTime = Date.now();
-        updateBuzzerVisual(false, 'off');
-        sendActuatorCommand('BUZZER:0', 'Sirine Buzzer D9');
-      });
-    }
-    if (btnBuzzerAuto) {
-      btnBuzzerAuto.addEventListener('click', () => {
-        userBuzzerIntentTime = Date.now();
-        updateBuzzerVisual(false, 'auto');
-        sendActuatorCommand('BUZZER:AUTO', 'Sirine Buzzer D9');
-      });
-    }
-
-    // Event listener kendali LED D5
-    const btnLedOn = document.getElementById('btnLedOn');
-    const btnLedOff = document.getElementById('btnLedOff');
-    if (btnLedOn) {
-      btnLedOn.addEventListener('click', () => {
-        userLedIntentTime = Date.now();
-        updateLedVisual(true);
-        sendActuatorCommand('LED:1', 'Lampu LED D5');
-      });
-    }
-    if (btnLedOff) {
-      btnLedOff.addEventListener('click', () => {
-        userLedIntentTime = Date.now();
-        updateLedVisual(false);
-        sendActuatorCommand('LED:0', 'Lampu LED D5');
-      });
-    }
-
-    // Event listener kendali Pompa Air D6
-    const btnPumpAuto = document.getElementById('btnPumpAuto');
-    const btnPumpOn = document.getElementById('btnPumpOn');
-    const btnPumpOff = document.getElementById('btnPumpOff');
-    if (btnPumpAuto) {
-      btnPumpAuto.addEventListener('click', () => {
-        userPumpIntentTime = Date.now();
-        updatePumpVisual('auto');
-        sendActuatorCommand('PUMP:AUTO', 'Relay Pompa Air D6');
-      });
-    }
-    if (btnPumpOn) {
-      btnPumpOn.addEventListener('click', () => {
-        userPumpIntentTime = Date.now();
-        updatePumpVisual('on');
-        sendActuatorCommand('PUMP:1', 'Relay Pompa Air D6');
-      });
-    }
-    if (btnPumpOff) {
-      btnPumpOff.addEventListener('click', () => {
-        userPumpIntentTime = Date.now();
-        updatePumpVisual('off');
-        sendActuatorCommand('PUMP:0', 'Relay Pompa Air D6');
-      });
-    }
-
-    // --- 6. SMART WASTE (SERVO D10 & D11) CONTROLS ---
-    function updateLidState(type, isOpen) {
-      if (type === 'organik') {
-        const text = document.getElementById('textLidOrganik');
-        const badge = document.getElementById('badgeTimerOrganik');
-        const icon = document.getElementById('iconLidOrganik');
-        if (text) text.textContent = isOpen ? 'TERBUKA (45°)' : 'TERTUTUP (0°)';
-        if (badge) {
-          if (isOpen) badge.classList.remove('hidden');
-          else badge.classList.add('hidden');
-        }
-        if (icon) {
-          icon.className = isOpen 
-            ? 'w-12 h-12 rounded bg-emerald-600 text-white flex items-center justify-center font-bold'
-            : 'w-12 h-12 rounded bg-emerald-500/10 text-emerald-500 flex items-center justify-center font-semibold';
-        }
-      } else {
-        const text = document.getElementById('textLidAnorganik');
-        const badge = document.getElementById('badgeTimerAnorganik');
-        const icon = document.getElementById('iconLidAnorganik');
-        if (text) text.textContent = isOpen ? 'TERBUKA (45°)' : 'TERTUTUP (0°)';
-        if (badge) {
-          if (isOpen) badge.classList.remove('hidden');
-          else badge.classList.add('hidden');
-        }
-        if (icon) {
-          icon.className = isOpen
-            ? 'w-12 h-12 rounded bg-cyan-600 text-white flex items-center justify-center font-bold'
-            : 'w-12 h-12 rounded bg-cyan-500/10 text-cyan-500 flex items-center justify-center font-semibold';
-        }
-      }
-    }
-
-    const btnOpenOrganik = document.getElementById('btnOpenOrganik');
-    const btnCloseOrganik = document.getElementById('btnCloseOrganik');
-    const btnOpenAnorganik = document.getElementById('btnOpenAnorganik');
-    const btnCloseAnorganik = document.getElementById('btnCloseAnorganik');
-
-    if (btnOpenOrganik) btnOpenOrganik.addEventListener('click', () => {
-      window.arduinoSerial.sendCommand('SAMPAH:ORGANIK');
-      updateLidState('organik', true);
-      setTimeout(() => updateLidState('organik', false), 4000);
-    });
-    if (btnCloseOrganik) btnCloseOrganik.addEventListener('click', () => {
-      window.arduinoSerial.sendCommand('SERVO_ORGANIK:CLOSE');
-      updateLidState('organik', false);
-    });
-
-    if (btnOpenAnorganik) btnOpenAnorganik.addEventListener('click', () => {
-      window.arduinoSerial.sendCommand('SAMPAH:ANORGANIK');
-      updateLidState('anorganik', true);
-      setTimeout(() => updateLidState('anorganik', false), 4000);
-    });
-    if (btnCloseAnorganik) btnCloseAnorganik.addEventListener('click', () => {
-      window.arduinoSerial.sendCommand('SERVO_ANORGANIK:CLOSE');
-      updateLidState('anorganik', false);
-    });
-
-    // Uji Tombol Sampah Cepat
-    const btnTestOrganik = document.getElementById('btnTestOrganik');
-    const btnTestAnorganik = document.getElementById('btnTestAnorganik');
-
-    function recordWasteEvent(item, cat, conf, servo) {
-      const labelObj = document.getElementById('labelDetectedObject');
-      const badgeCat = document.getElementById('badgeDetectedCategory');
-      if (labelObj) labelObj.textContent = `${item} (${conf}%)`;
-      if (badgeCat) {
-        badgeCat.textContent = cat;
-        badgeCat.className = cat === 'ORGANIK' 
-          ? 'px-3 py-1 rounded bg-emerald-600 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider'
-          : 'px-3 py-1 rounded bg-cyan-600 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider';
-      }
-
-      // Buka servo yang bersesuaian
-      if (cat === 'ORGANIK') {
-        window.arduinoSerial.sendCommand('SAMPAH:ORGANIK');
-        updateLidState('organik', true);
-        setTimeout(() => updateLidState('organik', false), 4000);
-      } else {
-        window.arduinoSerial.sendCommand('SAMPAH:ANORGANIK');
-        updateLidState('anorganik', true);
-        setTimeout(() => updateLidState('anorganik', false), 4000);
-      }
-
-      // Tambahkan ke tabel riwayat
-      const tbody = document.getElementById('tableWasteHistory');
-      if (tbody) {
-        const now = new Date().toLocaleTimeString('id-ID', { hour12: false });
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td class="py-3 px-3 font-mono text-xs text-on-surface-variant">${now}</td>
-          <td class="py-3 px-3 font-semibold">${item}</td>
-          <td class="py-3 px-3"><span class="px-2 py-0.5 rounded text-xs font-bold ${cat==='ORGANIK'?'bg-emerald-500/20 text-emerald-500':'bg-cyan-500/20 text-cyan-500'}">${cat}</span></td>
-          <td class="py-3 px-3 font-mono">${conf}%</td>
-          <td class="py-3 px-3 font-mono text-xs text-primary font-bold">Servo ${servo} Buka</td>
-        `;
-        tbody.insertBefore(tr, tbody.firstChild);
-      }
-
-      // Sync ke Firebase
-      if (window.firebaseMonitoring && window.firebaseMonitoring.pushWasteEvent) {
-        window.firebaseMonitoring.pushWasteEvent({ item, category: cat, confidence: conf, servo });
-      }
-    }
-
-    if (btnTestOrganik) btnTestOrganik.addEventListener('click', () => {
-      recordWasteEvent('Apel / Sisa Makanan', 'ORGANIK', 96, 'D11');
-    });
-    if (btnTestAnorganik) btnTestAnorganik.addEventListener('click', () => {
-      recordWasteEvent('Botol Plastik Bekas', 'ANORGANIK', 93, 'D10');
-    });
-
-    // --- 7. POLLING DARI PYTHON AI VISION SERVER (PORT 5000) ---
-    let visionFailCount = 0;
-    let isPollingVision = false;
-    let lastWasteEventKey = '';
-
-    function getWasteEventKey(state) {
-      if (!state || !state.category || state.category === 'STANDBY') return '';
-      const history = Array.isArray(state.history) ? state.history : [];
-      // Backend Python menyisipkan event terbaru pada index 0.
-      const latest = history.length ? history[0] : null;
-      return String(
-        (latest && (latest.timestamp || latest.time || latest.id)) ||
-        `${state.category}|${state.latest_item}|${state.confidence}`
-      );
-    }
-
-    async function pollVisionServer() {
-      if (isPollingVision) return;
-      isPollingVision = true;
-
-      try {
-        // Polling paralel dengan timeout 700ms agar tidak memblokir event loop serial
-        const [resTraffic, resWaste] = await Promise.allSettled([
-          fetch('http://localhost:5000/api/traffic/stats', { signal: AbortSignal.timeout(700) }),
-          fetch('http://localhost:5000/api/waste/status', { signal: AbortSignal.timeout(700) })
-        ]);
-
-        let hadSuccess = false;
-
-        // 1. Update Traffic Stats jika ada
-        if (resTraffic.status === 'fulfilled' && resTraffic.value.ok) {
-          hadSuccess = true;
-          const stats = await resTraffic.value.json();
-          const totalEl = document.getElementById('valTotalVehicles');
-          const carsEl = document.getElementById('valCarsCount');
-          const motosEl = document.getElementById('valMotosCount');
-          const heavyEl = document.getElementById('valHeavyCount');
-          const densityBadge = document.getElementById('badgeTrafficDensity');
-
-          if (totalEl) totalEl.textContent = stats.total_vehicles || 0;
-          if (carsEl) carsEl.textContent = stats.cars || 0;
-          if (motosEl) motosEl.textContent = stats.motorcycles || 0;
-          if (heavyEl) heavyEl.textContent = (stats.buses || 0) + (stats.trucks || 0);
-
-          if (densityBadge) {
-            densityBadge.textContent = `Lalu Lintas: ${stats.density || 'Lancar'}`;
-            if (stats.density === 'Padat Merayap') {
-              densityBadge.className = 'px-3.5 py-1 rounded bg-red-500/15 text-red-500 border border-red-500/30 font-label-telemetry text-xs uppercase font-semibold tracking-wider';
-            } else if (stats.density === 'Ramai Lancar') {
-              densityBadge.className = 'px-3.5 py-1 rounded bg-amber-500/15 text-amber-500 border border-amber-500/30 font-label-telemetry text-xs uppercase font-semibold tracking-wider';
-            } else {
-              densityBadge.className = 'px-3.5 py-1 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 font-label-telemetry text-xs uppercase font-semibold tracking-wider';
-            }
-          }
-        }
-
-        // 2. Update Waste Status jika ada
-        if (resWaste.status === 'fulfilled' && resWaste.value.ok) {
-          hadSuccess = true;
-          const wState = await resWaste.value.json();
-          const badgeWasteAi = document.getElementById('badgeWasteAiStatus');
-          if (badgeWasteAi) {
-            if (wState.device && wState.device !== 'CPU') {
-              badgeWasteAi.textContent = `AI Vision: ${wState.device}`;
-              badgeWasteAi.className = 'px-3 py-1 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/40 font-label-telemetry text-label-telemetry uppercase font-semibold';
-            } else {
-              badgeWasteAi.textContent = 'AI Vision: Online';
-              badgeWasteAi.className = 'px-3 py-1 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30 font-label-telemetry text-label-telemetry uppercase font-semibold';
-            }
-          }
-
-          if (wState.category && wState.category !== 'STANDBY') {
-            const labelObj = document.getElementById('labelDetectedObject');
-            const badgeCat = document.getElementById('badgeDetectedCategory');
-            if (labelObj) labelObj.textContent = `${wState.latest_item} (${parseInt(wState.confidence * 100)}%)`;
-            if (badgeCat) {
-              badgeCat.textContent = wState.category;
-              badgeCat.className = wState.category === 'ORGANIK'
-                ? 'px-3 py-1 rounded bg-emerald-600 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider'
-                : 'px-3 py-1 rounded bg-cyan-600 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider';
-            }
-
-            // Jalankan aksi hardware satu kali per event, bukan di setiap siklus polling.
-            const eventKey = getWasteEventKey(wState);
-            if (eventKey && eventKey !== lastWasteEventKey) {
-              lastWasteEventKey = eventKey;
-              if (wState.category === 'ORGANIK') {
-                window.arduinoSerial.sendCommand('SAMPAH:ORGANIK');
-                updateLidState('organik', true);
-                setTimeout(() => updateLidState('organik', false), 4000);
-              } else if (wState.category === 'ANORGANIK') {
-                window.arduinoSerial.sendCommand('SAMPAH:ANORGANIK');
-                updateLidState('anorganik', true);
-                setTimeout(() => updateLidState('anorganik', false), 4000);
-              }
-            }
-          }
-        }
-
-        if (hadSuccess) {
-          visionFailCount = 0;
-        } else {
-          visionFailCount++;
-        }
-      } catch (e) {
-        visionFailCount++;
-      } finally {
-        isPollingVision = false;
-        // Polling ultra-responsif (350ms) agar deteksi sampah dan aksi servo langsung terasa instan tanpa delay
-        const nextDelay = visionFailCount > 2 ? 5000 : 350;
-        setTimeout(pollVisionServer, nextDelay);
-      }
-    }
-    // Mulai polling pertama setelah UI siap
-    setTimeout(pollVisionServer, 1500);
-
-    // Fallback stream error handlers
-    function handleWasteStreamError(img) {
-      const fb = document.getElementById('fallbackWasteContainer');
-      if (fb) fb.classList.remove('hidden');
-    }
-    function retryWasteStream() {
-      const img = document.getElementById('imgStreamWaste');
-      const fb = document.getElementById('fallbackWasteContainer');
-      if (fb) fb.classList.add('hidden');
-      if (img) img.src = `http://localhost:5000/video_feed/waste?t=${Date.now()}`;
-    }
-
-    function handleTrafficStreamError(img) {
-      const fb = document.getElementById('fallbackTrafficContainer');
-      if (fb) fb.classList.remove('hidden');
-    }
-    function retryTrafficStream() {
-      const img = document.getElementById('imgStreamTraffic');
-      const fb = document.getElementById('fallbackTrafficContainer');
-      if (fb) fb.classList.add('hidden');
-      if (img) img.src = `http://localhost:5000/video_feed/traffic?t=${Date.now()}`;
-    }
-
-    // --- MODE TAMPILAN KAMERA & CCTV (ASPECT RATIO & FULLSCREEN) ---
-    let wasteAspectCover = true;
-    function toggleWasteAspect() {
-      const img = document.getElementById('imgStreamWaste');
-      const text = document.getElementById('textWasteAspectMode');
-      if (!img) return;
-      wasteAspectCover = !wasteAspectCover;
-      if (wasteAspectCover) {
-        img.className = 'w-full h-full object-cover object-center transition-all duration-300';
-        if (text) text.textContent = 'Layar Penuh (Cover)';
-      } else {
-        img.className = 'w-full h-full object-contain object-center transition-all duration-300';
-        if (text) text.textContent = 'Presisi (Fit)';
-      }
-    }
-
-    let cctvAspectFit = true;
-    function toggleCctvAspect() {
-      const img = document.getElementById('imgStreamTraffic');
-      const text = document.getElementById('textCctvAspectMode');
-      if (!img) return;
-      cctvAspectFit = !cctvAspectFit;
-      if (cctvAspectFit) {
-        img.className = 'w-full h-full object-contain transition-all duration-300';
-        if (text) text.textContent = 'Presisi (Fit)';
-      } else {
-        img.className = 'w-full h-full object-cover object-center transition-all duration-300';
-        if (text) text.textContent = 'Layar Penuh (Cover)';
-      }
-    }
-
-    function toggleFullscreenCctv() {
-      const el = document.getElementById('cctvPlayerWrapper');
-      if (!el) return;
-      if (!document.fullscreenElement) {
-        el.requestFullscreen().catch(err => console.log('Fullscreen error:', err));
-      } else {
-        document.exitFullscreen().catch(err => console.log('Exit fullscreen error:', err));
-      }
-    }
-
-    // --- 8. SERIAL SERVICE & FIREBASE LISTENERS ---
-    const btnSerialConnect = document.getElementById('btnSerialConnect');
-    const textSerialBtn = document.getElementById('textSerialBtn');
-    const iconSerialBtn = document.getElementById('iconSerialBtn');
-    const btnQuickConnect = document.getElementById('btnQuickConnect');
-    const labelMeshStatus = document.getElementById('labelMeshStatus');
-    const dotMesh = document.getElementById('dotMesh');
-    const labelFirebaseSystem = document.getElementById('labelFirebaseSystem');
-    const dotFirebaseSystem = document.getElementById('dotFirebaseSystem');
-    const labelSimulationSystem = document.getElementById('labelSimulationSystem');
-    const dotSimulationSystem = document.getElementById('dotSimulationSystem');
-
-    window.arduinoSerial.onData((data) => {
-      updateDashboardWithSensorData(data);
-      if (window.firebaseMonitoring && window.firebaseMonitoring.isInitialized) {
-        window.firebaseMonitoring.pushTelemetry(data);
-      }
-    });
-
-    window.arduinoSerial.onStatusChange((status) => {
-      if (status === 'connected') {
-        const isSimulation = window.arduinoSerial.isSimulationMode;
-        textSerialBtn.textContent = 'Putus USB';
-        iconSerialBtn.textContent = 'usb_off';
-        btnSerialConnect.className = 'inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded bg-emerald-700 hover:bg-red-700 text-white font-label-telemetry text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer';
-
-        if (labelMeshStatus) labelMeshStatus.textContent = isSimulation ? 'Data simulasi aktif' : 'Online · USB Serial';
-        if (dotMesh) dotMesh.className = 'status-dot is-active';
-        if (labelSimulationSystem) labelSimulationSystem.textContent = isSimulation ? 'Simulasi aktif' : 'Perangkat fisik';
-        if (dotSimulationSystem) dotSimulationSystem.className = isSimulation ? 'status-dot bg-amber-500' : 'status-dot is-active';
-        const prompt = document.getElementById('connectionPromptBanner');
+    // --- LISTEN TO FIREBASE REALTIME ---
+    const realtimeRef = ref(db, 'monitoring/realtime');
+    onValue(realtimeRef, (snapshot) => {
+      const data = snapshot.val();
+      const liveBadge = document.getElementById('liveBadge');
+      const prompt = document.getElementById('connectionPromptBanner');
+      if (data) {
+        updateDashboard(data);
+        if (liveBadge) { liveBadge.className = 'live-badge is-live'; liveBadge.innerHTML = '<span class="live-dot"></span>Live'; }
         if (prompt) prompt.classList.add('hidden');
       } else {
-        textSerialBtn.textContent = 'Hubungkan USB';
-        iconSerialBtn.textContent = 'cable';
-        btnSerialConnect.className = 'inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-2 rounded bg-primary/10 hover:bg-primary/20 text-primary border border-primary/30 font-label-telemetry text-xs uppercase tracking-wider font-semibold transition-colors cursor-pointer';
-
-        if (labelMeshStatus) labelMeshStatus.textContent = 'Belum terhubung';
-        if (dotMesh) dotMesh.className = 'status-dot';
-        if (labelSimulationSystem) labelSimulationSystem.textContent = 'Perangkat fisik';
-        if (dotSimulationSystem) dotSimulationSystem.className = 'status-dot';
-        const prompt = document.getElementById('connectionPromptBanner');
+        if (liveBadge) { liveBadge.className = 'live-badge is-offline'; liveBadge.innerHTML = '<span class="live-dot"></span>Menunggu gateway'; }
         if (prompt) prompt.classList.remove('hidden');
       }
     });
 
-    async function handleConnectToggle() {
-      if (window.arduinoSerial.isSimulationMode) {
-        window.arduinoSerial.stopSimulation();
-        const demoButton = document.getElementById('btnDemoModeToggle');
-        if (demoButton) demoButton.textContent = 'Mulai Simulasi';
-      }
-      else if (window.arduinoSerial.isConnected) await window.arduinoSerial.disconnect();
-      else await window.arduinoSerial.connect();
+    // --- CLOCK ---
+    setInterval(() => {
+      const el = document.getElementById('lastUpdatedClock');
+      if (el) el.textContent = new Date().toLocaleTimeString('id-ID', { hour12: false });
+    }, 1000);
+
+    // --- THEME ---
+    const htmlEl = document.documentElement;
+    function applyThemeIcon() {
+      const icon = document.getElementById('themeToggleIcon');
+      if (icon) icon.textContent = htmlEl.classList.contains('dark') ? 'light_mode' : 'dark_mode';
     }
-    if (btnSerialConnect) btnSerialConnect.addEventListener('click', handleConnectToggle);
-    if (btnQuickConnect) btnQuickConnect.addEventListener('click', handleConnectToggle);
-
-    // Simulation toggle
-    const btnDemoModeToggle = document.getElementById('btnDemoModeToggle');
-    if (btnDemoModeToggle) {
-      btnDemoModeToggle.addEventListener('click', () => {
-        if (window.arduinoSerial.isSimulationMode) {
-          window.arduinoSerial.stopSimulation();
-          btnDemoModeToggle.textContent = 'Mulai Simulasi';
-        } else {
-          window.arduinoSerial.startSimulation();
-          btnDemoModeToggle.textContent = 'Hentikan Simulasi';
-        }
-      });
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      htmlEl.classList.add('dark');
     }
-
-    // Terminal Modal
-    const modalTerminal = document.getElementById('modalTerminal');
-    const btnOpenTerminal = document.getElementById('btnOpenTerminal');
-    const btnCloseTerminal = document.getElementById('btnCloseTerminal');
-    const terminalScreen = document.getElementById('terminalScreen');
-    const btnClearTerminal = document.getElementById('btnClearTerminal');
-    const btnExportLog = document.getElementById('btnExportLog');
-    const inputTerminalCmd = document.getElementById('inputTerminalCmd');
-    const btnSendTerminalCmd = document.getElementById('btnSendTerminalCmd');
-    const logHistory = [];
-
-    if (btnOpenTerminal) {
-      btnOpenTerminal.addEventListener('click', () => {
-        modalTerminal.classList.replace('hidden', 'flex');
-        // Render riwayat log saat modal dibuka
-        if (terminalScreen) {
-          terminalScreen.innerHTML = '';
-          const recentLogs = logHistory.slice(-80);
-          recentLogs.forEach(({ direction, message, timestamp }) => {
-            const line = document.createElement('div');
-            if (direction === 'IN') line.className = 'text-emerald-400';
-            else if (direction === 'OUT') line.className = 'text-cyan-400 font-bold';
-            else line.className = 'text-amber-300';
-            line.textContent = `[${timestamp}] ${direction === 'IN' ? '📥 <-' : (direction === 'OUT' ? '📤 ->' : 'ℹ️ [SYS]')} ${message}`;
-            terminalScreen.appendChild(line);
-          });
-          terminalScreen.scrollTop = terminalScreen.scrollHeight;
-        }
-      });
-    }
-    if (btnCloseTerminal) btnCloseTerminal.addEventListener('click', () => modalTerminal.classList.replace('flex', 'hidden'));
-    if (btnClearTerminal) btnClearTerminal.addEventListener('click', () => terminalScreen.innerHTML = '<div class="text-neutral-400">[SYSTEM] Terminal dibersihkan.</div>');
-
-    window.arduinoSerial.onLog(({ direction, message, timestamp }) => {
-      logHistory.push({ direction, message, timestamp });
-      if (logHistory.length > 500) logHistory.shift();
-
-      // Hanya manipulasi DOM jika modal terminal sedang aktif ditampilkan
-      if (!modalTerminal || modalTerminal.classList.contains('hidden') || !terminalScreen) return;
-
-      const line = document.createElement('div');
-      if (direction === 'IN') line.className = 'text-emerald-400';
-      else if (direction === 'OUT') line.className = 'text-cyan-400 font-bold';
-      else line.className = 'text-amber-300';
-      line.textContent = `[${timestamp}] ${direction === 'IN' ? '📥 <-' : (direction === 'OUT' ? '📤 ->' : 'ℹ️ [SYS]')} ${message}`;
-      terminalScreen.appendChild(line);
-
-      if (terminalScreen.children.length > 150) {
-        terminalScreen.removeChild(terminalScreen.firstChild);
-      }
-      terminalScreen.scrollTop = terminalScreen.scrollHeight;
+    applyThemeIcon();
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+      applyThemeIcon();
     });
 
-    function sendTerminalInput() {
-      const cmd = inputTerminalCmd.value.trim();
-      if (!cmd) return;
-      window.arduinoSerial.sendCommand(cmd);
-      inputTerminalCmd.value = '';
-    }
-    if (btnSendTerminalCmd) btnSendTerminalCmd.addEventListener('click', sendTerminalInput);
-    if (inputTerminalCmd) inputTerminalCmd.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendTerminalInput(); });
-
-    if (btnExportLog) {
-      btnExportLog.addEventListener('click', () => {
-        const blob = new Blob([JSON.stringify(logHistory, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `log_serial_arduino_${Date.now()}.json`;
-        a.click();
-      });
-    }
-
-
-    // Firebase Modal
-    const modalFirebase = document.getElementById('modalFirebase');
-    const btnOpenFirebaseModal = document.getElementById('btnOpenFirebaseModal');
-    const btnCloseFirebaseModal = document.getElementById('btnCloseFirebaseModal');
-    const btnCancelFirebaseModal = document.getElementById('btnCancelFirebaseModal');
-    const btnSaveFirebaseConfig = document.getElementById('btnSaveFirebaseConfig');
-    const btnResetFirebaseConfig = document.getElementById('btnResetFirebaseConfig');
-    const inputDatabaseUrl = document.getElementById('inputDatabaseUrl');
-    const inputApiKey = document.getElementById('inputApiKey');
-    const inputProjectId = document.getElementById('inputProjectId');
-    const inputRawConfig = document.getElementById('inputRawConfig');
-
-    if (btnOpenFirebaseModal) btnOpenFirebaseModal.addEventListener('click', () => {
-      const cfg = typeof getActiveFirebaseConfig === 'function' ? getActiveFirebaseConfig() : window.FIREBASE_CONFIG;
-      if (cfg) {
-        inputDatabaseUrl.value = cfg.databaseURL && !cfg.databaseURL.includes('YOUR_PROJECT_ID') ? cfg.databaseURL : '';
-        inputApiKey.value = cfg.apiKey && !cfg.apiKey.includes('YOUR_API_KEY') ? cfg.apiKey : '';
-        inputProjectId.value = cfg.projectId && !cfg.projectId.includes('YOUR_PROJECT_ID') ? cfg.projectId : '';
-      }
-      modalFirebase.classList.replace('hidden', 'flex');
-    });
-    function closeFirebase() { modalFirebase.classList.replace('flex', 'hidden'); }
-    if (btnCloseFirebaseModal) btnCloseFirebaseModal.addEventListener('click', closeFirebase);
-    if (btnCancelFirebaseModal) btnCancelFirebaseModal.addEventListener('click', closeFirebase);
-
-    if (btnSaveFirebaseConfig) {
-      btnSaveFirebaseConfig.addEventListener('click', async () => {
-        let finalConfig = {};
-        const rawText = inputRawConfig.value.trim();
-        if (rawText) {
-          try {
-            const m = rawText.match(/\{[\s\S]*\}/);
-            if (m) finalConfig = JSON.parse(m[0]);
-          } catch (e) { alert('Format JSON salah: ' + e.message); return; }
-        } else {
-          finalConfig = {
-            databaseURL: inputDatabaseUrl.value.trim(),
-            apiKey: inputApiKey.value.trim(),
-            projectId: inputProjectId.value.trim()
-          };
-        }
-        if (!finalConfig.databaseURL) { alert('Mohon isi Database URL!'); return; }
-        localStorage.setItem('smart_city_firebase_config', JSON.stringify(finalConfig));
-        closeFirebase();
-        await window.firebaseMonitoring.init(finalConfig);
-      });
-    }
-
-    if (btnResetFirebaseConfig) {
-      btnResetFirebaseConfig.addEventListener('click', () => {
-        if (confirm('Hapus konfigurasi Firebase tersimpan?')) {
-          localStorage.removeItem('smart_city_firebase_config');
-          alert('Konfigurasi direset.');
-        }
-      });
-    }
-
-    // Status indicator Firebase di Navbar
-    const textFirebaseBadge = document.getElementById('textFirebaseBadge');
-    if (window.firebaseMonitoring) {
-      window.firebaseMonitoring.onStatusChange((status) => {
-        if (!textFirebaseBadge) return;
-        if (status === 'connected') {
-          textFirebaseBadge.textContent = 'Firebase: Sync';
-          textFirebaseBadge.className = 'hidden xl:inline text-emerald-400 font-bold';
-          if (labelFirebaseSystem) labelFirebaseSystem.textContent = 'Terhubung · sinkron';
-          if (dotFirebaseSystem) dotFirebaseSystem.className = 'status-dot is-active';
-        } else if (status === 'connecting') {
-          textFirebaseBadge.textContent = 'Firebase: Syncing...';
-          textFirebaseBadge.className = 'hidden xl:inline text-amber-400';
-          if (labelFirebaseSystem) labelFirebaseSystem.textContent = 'Menghubungkan…';
-          if (dotFirebaseSystem) dotFirebaseSystem.className = 'status-dot bg-amber-500';
-        } else {
-          textFirebaseBadge.textContent = 'Firebase';
-          textFirebaseBadge.className = 'hidden xl:inline text-on-surface';
-          if (labelFirebaseSystem) labelFirebaseSystem.textContent = status === 'error' ? 'Koneksi bermasalah' : 'Belum dikonfigurasi';
-          if (dotFirebaseSystem) dotFirebaseSystem.className = status === 'error' ? 'status-dot bg-red-500' : 'status-dot';
-        }
-      });
-    }
-
-    // Remote data listener from Firebase
-    window.firebaseMonitoring.onRemoteData((remoteData) => {
-      if (!window.arduinoSerial.isConnected && !window.arduinoSerial.isSimulationMode) {
-        updateDashboardWithSensorData(remoteData);
-      }
-    });
-
-    window.addEventListener('DOMContentLoaded', () => {
-      // Set visual awal agar sinkron (Default: LED MATI, POMPA AUTO, BUZZER OFF)
-      updateLedVisual(false);
-      updatePumpVisual('auto');
-      updateBuzzerVisual(false, 'off');
-      renderTrendChart();
-      if (typeof isFirebaseConfigured === 'function' && isFirebaseConfigured()) {
-        window.firebaseMonitoring.init();
-      }
-    });
+    renderTrendChart();
   </script>
+</head>
+
+<body class="bg-surface font-body-md text-on-surface antialiased theme-transition min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 theme-transition border-b border-[var(--color-card-border)]" style="background-color: var(--color-header-bg);">
+    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 shrink-0">
+        <img alt="Skatelplus Smart City Logo" class="h-9 sm:h-11 w-auto object-contain" src="./asset/logo.png" onerror="this.src='./asset/logo.jfif'"/>
+        <div class="header-brand-copy flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="font-headline-sm text-sm sm:text-base font-semibold text-on-surface tracking-tight leading-none theme-transition">SKATELPLUS SMART CITY</span>
+            <span class="hidden md:inline-block px-1.5 py-0.5 rounded-sm text-[9px] font-mono font-semibold bg-surface-container text-on-surface-variant border border-[var(--color-card-border)]">PUBLIC</span>
+          </div>
+          <span class="hidden sm:inline font-label-caption text-[10px] text-on-surface-variant mt-1 theme-transition">Live monitoring · Firebase Realtime Database</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <span id="liveBadge" class="live-badge is-offline"><span class="live-dot"></span>Menunggu gateway</span>
+        <div class="hidden 2xl:inline-flex items-center px-3 py-2 rounded bg-surface-container-low text-on-surface-variant font-label-telemetry text-xs font-mono border border-[var(--color-card-border)]">
+          <span class="font-mono text-on-surface font-semibold" id="lastUpdatedClock">00:00:00</span>
+        </div>
+        <button id="themeToggleBtn" class="flex items-center justify-center w-9 h-9 rounded bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors border border-[var(--color-card-border)] cursor-pointer" title="Toggle Tema">
+          <span class="material-symbols-outlined text-[19px]" id="themeToggleIcon">dark_mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="w-full pt-24 sm:pt-28 lg:pt-28 pb-16 flex-1 theme-transition">
+    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- TELEMETRY -->
+      <div id="sectionTelemetry" class="flex flex-col gap-8">
+
+        <!-- Emergency alerts -->
+        <div class="flex flex-col gap-3 w-full">
+          <div id="alertFireBanner" class="hidden w-full bg-red-600/10 border border-red-500 p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shrink-0">
+                
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-base text-red-500 font-semibold tracking-tight">Bahaya kebakaran terdeteksi</h3>
+                <p class="font-body-sm text-sm text-on-surface">Sensor flame D7 mendeteksi nyala api.</p>
+              </div>
+            </div>
+            <span class="px-3.5 py-1.5 rounded bg-red-600 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider shrink-0">CRITICAL</span>
+          </div>
+          <div id="alertTiltBanner" class="hidden w-full bg-amber-500/10 border border-amber-500 p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-white shrink-0">
+                
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-base text-amber-500 font-semibold tracking-tight">Peringatan guncangan atau kemiringan</h3>
+                <p class="font-body-sm text-sm text-on-surface">Sensor tilt D8 aktif.</p>
+              </div>
+            </div>
+            <span class="px-3.5 py-1.5 rounded bg-amber-500 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider shrink-0">WARNING</span>
+          </div>
+        </div>
+
+        <!-- Waiting for gateway -->
+        <div id="connectionPromptBanner" class="system-strip w-full bg-surface-container-low border border-[var(--color-card-border)] flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              
+            </div>
+            <div>
+              <h4 class="font-headline-sm text-sm text-on-surface font-semibold">Menunggu gateway Arduino mengirim data</h4>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-0.5">Data akan otomatis muncul saat perangkat gateway terhubung ke Firebase.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section title -->
+        <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4 border-b border-[var(--color-card-border)] pb-4">
+          <div>
+            <span class="font-label-telemetry text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">Node lapangan / 01</span>
+            <h2 class="font-headline-lg text-2xl text-on-surface tracking-tight mt-1">Telemetri lingkungan dan energi</h2>
+            <p class="font-body-md text-sm text-on-surface-variant mt-1">Data real-time dari Firebase Realtime Database. Update terakhir: <span id="lastUpdatedTime" class="font-mono text-on-surface">--</span></p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-0">
+            <div class="system-state">
+              <span class="status-dot" id="dotFirebaseSystem"></span>
+              <div><div class="system-state-label">Sumber data</div><div class="system-state-value" id="labelFirebaseSystem">Firebase RTDB</div></div>
+            </div>
+            <div class="system-state">
+              <span class="status-dot is-active"></span>
+              <div><div class="system-state-label">Mode</div><div class="system-state-value">Read-only publik</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensor grid -->
+        <div class="sensor-grid">
+          <div class="sensor-group-label"><span class="material-symbols-outlined">water_drop</span>Kualitas dan distribusi air</div>
+
+          <!-- TDS -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor TDS · Pin A2</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Air (TDS)</h3>
+              </div>
+              <span id="badgeTdsStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-5 flex items-baseline gap-2">
+              <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valTds">--</span>
+              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">ppm</span>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-caption text-xs text-on-surface-variant">Batas: &lt; 300 ppm</span>
+              <span class="font-label-caption font-mono text-on-surface-variant">ADC: <span id="valTdsRaw">--</span></span>
+            </div>
+          </div>
+
+          <!-- Water Level -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Water Level · Pin A0</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Ketinggian Air &amp; Pompa</h3>
+              </div>
+              <span id="badgeWaterStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-4 flex items-baseline justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
+              </div>
+              <div class="status-readout">
+                <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
+                <span class="font-label-telemetry uppercase text-on-surface" id="textPump">POMPA: STANDBY</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 pt-1">
+              <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
+                <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
+              </div>
+              <div class="flex justify-between font-label-caption text-on-surface-variant">
+                <span>Threshold: &gt; 500</span>
+                <span class="font-mono">ADC: <span id="valWaterRaw">--</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sensor-group-label"><span class="material-symbols-outlined">air</span>Kondisi lingkungan</div>
+
+          <!-- MQ Gas -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor MQ-2 · Pin A5</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Udara &amp; Gas</h3>
+              </div>
+              <span id="badgeAqiStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-5 flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valAqi">--</span>
+                <span class="font-headline-sm text-sm text-on-surface-variant font-medium">indeks</span>
+              </div>
+              <div class="relative w-14 h-14 flex items-center justify-center">
+                <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                  <path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+                  <path id="circleAqi" class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="0, 100" stroke-width="3.5"></path>
+                </svg>
+                
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-caption text-on-surface-variant">Pin A5</span>
+              <span class="font-label-caption font-mono text-on-surface-variant">ADC: <span id="valMqRaw">--</span></span>
+            </div>
+          </div>
+
+          <!-- Temperature -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor NTC · Pin A3</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Suhu Lingkungan</h3>
+              </div>
+              <span id="badgeTempStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-5 flex items-baseline gap-2">
+              <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valTemp">--</span>
+              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">°C</span>
+            </div>
+            <div class="flex flex-col gap-2 pt-1">
+              <div class="relative w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+                <div id="tempBar" class="absolute left-0 top-0 bottom-0 bg-primary-container rounded-full transition-all duration-500" style="width:0%;"></div>
+              </div>
+              <div class="flex justify-between font-label-caption text-on-surface-variant">
+                <span>Rentang: 20°C - 45°C</span>
+                <span class="font-mono">ADC: <span id="valNtcRaw">--</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Nilai estimasi · bukan sensor RH</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelembaban Relatif</h3>
+              </div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Estimasi
+              </span>
+            </div>
+            <div class="my-5 flex items-baseline gap-2">
+              <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valHum">--</span>
+              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">% RH</span>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-caption text-on-surface-variant">Turunan dari NTC</span>
+              <span class="text-[10px] uppercase tracking-wider text-amber-500">Derived</span>
+            </div>
+          </div>
+
+          <div class="sensor-group-label"><span class="material-symbols-outlined">solar_power</span>Energi PLTS</div>
+
+          <!-- PLTS -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Node energi · Firmware</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelistrikan PLTS DC</h3>
+              </div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-500/15 text-amber-500 font-label-telemetry text-label-telemetry uppercase font-semibold border border-amber-500/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Simulasi
+              </span>
+            </div>
+            <div class="my-4 grid grid-cols-3 gap-2 p-3 bg-surface-container-low border border-[var(--color-card-border)]">
+              <div class="flex flex-col items-center">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">VOLT</span>
+                <span class="font-headline-md text-on-surface font-bold"><span id="valVoltage">--</span> <span class="text-[10px] font-normal text-on-surface-variant">V</span></span>
+              </div>
+              <div class="flex flex-col items-center border-x border-[var(--color-card-border)]">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">ARUS</span>
+                <span class="font-headline-md text-on-surface font-bold"><span id="valCurrent">--</span> <span class="text-[10px] font-normal text-on-surface-variant">A</span></span>
+              </div>
+              <div class="flex flex-col items-center">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">DAYA</span>
+                <span class="font-headline-md text-primary font-bold"><span id="valPower">--</span> <span class="text-[10px] font-normal text-on-surface-variant">W</span></span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <span class="font-label-caption text-on-surface-variant">Rentang 4-5V &amp; 2-3A</span>
+              <span class="font-label-telemetry text-on-surface-variant font-semibold">DC PLTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status readout panel (read-only) -->
+        <div class="trend-panel telemetry-card bg-surface-container-lowest p-5 sm:p-6 flex flex-col gap-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="font-label-telemetry text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">Status perangkat</span>
+              <h3 class="font-headline-md text-xl text-on-surface mt-1">Status output digital</h3>
+              <p class="font-body-sm text-sm text-on-surface-variant mt-0.5">Status aktual dari Arduino Uno via Firebase.</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="status-readout flex-col items-start gap-2">
+              <span class="font-label-telemetry text-[10px] uppercase text-amber-500 font-semibold">LAMPU LED D5</span>
+              <span id="labelLedStatus" class="text-on-surface font-mono">MATI (LOW)</span>
+            </div>
+            <div class="status-readout flex-col items-start gap-2">
+              <span class="font-label-telemetry text-[10px] uppercase text-primary font-semibold">POMPA AIR D6</span>
+              <span id="textPump2" class="text-on-surface font-mono">STANDBY</span>
+            </div>
+            <div class="status-readout flex-col items-start gap-2">
+              <span class="font-label-telemetry text-[10px] uppercase text-red-400 font-semibold">BUZZER D9</span>
+              <span id="labelBuzzerStatus" class="text-on-surface font-mono">STANDBY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SVG Trend -->
+        <div class="trend-panel telemetry-card bg-surface-container-lowest p-5 sm:p-6 flex flex-col gap-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-3 flex-wrap">
+                <h3 class="font-headline-md text-xl text-on-surface">Tren sensor lingkungan</h3>
+                <span class="text-[10px] uppercase tracking-wider text-on-surface-variant">Real-time · Firebase</span>
+              </div>
+              <p class="font-body-sm text-sm text-on-surface-variant mt-0.5">Grafik diperbarui setiap data telemetry diterima.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-5">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#f97316]"></span><span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Suhu</span></div>
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-secondary"></span><span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Kelembaban</span></div>
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary-container"></span><span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Gas</span></div>
+            </div>
+          </div>
+          <div class="w-full h-48 sm:h-56 md:h-64 relative">
+            <svg id="liveTrendSvg" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 900 300" style="touch-action:pan-y;">
+              <defs>
+                <linearGradient id="tempArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f97316" stop-opacity="0.25"/><stop offset="100%" stop-color="#f97316" stop-opacity="0"/></linearGradient>
+                <linearGradient id="humidityArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#006a61" stop-opacity="0.25"/><stop offset="100%" stop-color="#006a61" stop-opacity="0"/></linearGradient>
+                <linearGradient id="aqiArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.25"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0"/></linearGradient>
+              </defs>
+              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1" x1="0" x2="900" y1="50" y2="50"/>
+              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1" x1="0" x2="900" y1="120" y2="120"/>
+              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1" x1="0" x2="900" y1="190" y2="190"/>
+              <line stroke="var(--color-chart-grid)" stroke-width="1" x1="0" x2="900" y1="260" y2="260"/>
+              <path id="pathTempArea" fill="url(#tempArea)" d=""/>
+              <path id="pathTempLine" fill="none" stroke="#f97316" stroke-linecap="round" stroke-width="3" d=""/>
+              <path id="pathHumArea" fill="url(#humidityArea)" d=""/>
+              <path id="pathHumLine" fill="none" stroke="#006a61" stroke-linecap="round" stroke-width="3" d=""/>
+              <path id="pathAqiArea" fill="url(#aqiArea)" d=""/>
+              <path id="pathAqiLine" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="3" d=""/>
+              <circle id="dotTempNow" cx="900" cy="150" fill="#f97316" r="5"/>
+              <circle id="dotHumNow" cx="900" cy="80" fill="#006a61" r="5"/>
+              <circle id="dotAqiNow" cx="900" cy="200" fill="#2563eb" r="5"/>
+            </svg>
+            <div id="trendEmptyState" class="trend-empty">Menunggu data telemetry dari gateway.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="w-full border-t border-[var(--color-card-border)] bg-surface px-4 py-4 theme-transition">
+    <div class="w-full max-w-[1600px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div><strong class="text-on-surface font-semibold">Smart City Live Monitor</strong> · Read-only public dashboard</div>
+      <div class="text-on-surface-variant text-xs">Data dari Firebase Realtime Database</div>
+    </div>
+  </footer>
 
 </body>
 </html>
