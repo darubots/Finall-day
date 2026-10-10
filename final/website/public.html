@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+  <meta content="web_standard" name="shell-type"/>
+  <meta content="#091217" name="theme-color"/>
+  <meta content="yes" name="apple-mobile-web-app-capable"/>
+  <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="Smart City Live Monitor" name="apple-mobile-web-app-title"/>
+  <title>Smart City Live — Monitoring Publik</title>
+  <link rel="icon" type="image/png" href="./asset/logo.png"/>
+  <link rel="apple-touch-icon" href="./asset/logo.png"/>
+
+  <!-- Google Fonts — IBM Plex untuk kesan teknis/engineering -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Theme Color Palette -->
+  <style>
+    :root {
+      --color-surface: #f3f6f7; --color-surface-dim: #e4e9eb; --color-surface-bright: #ffffff;
+      --color-surface-container-lowest: #ffffff; --color-surface-container-low: #edf1f2;
+      --color-surface-container: #e4eaec; --color-surface-container-high: #d9e1e3; --color-surface-container-highest: #cdd8db;
+      --color-on-surface: #182326; --color-on-surface-variant: #526267;
+      --color-primary: #087f82; --color-primary-container: #087f82; --color-secondary: #157d83;
+      --color-secondary-container: rgba(8,127,130,0.12); --color-on-secondary-container: #075f62;
+      --color-tertiary: #326b78; --color-outline: #718186; --color-outline-variant: #c5d0d3;
+      --color-card-border: #d3dcde; --color-chart-grid: #dce4e6;
+      --color-header-bg: var(--color-surface); --color-pill-bg: transparent;
+    }
+    html.dark {
+      --color-surface: #091217; --color-surface-dim: #071015; --color-surface-bright: #17262c;
+      --color-surface-container-lowest: #0d181e; --color-surface-container-low: #111e24;
+      --color-surface-container: #16252b; --color-surface-container-high: #1c2d34; --color-surface-container-highest: #24373e;
+      --color-on-surface: #dbe5e7; --color-on-surface-variant: #91a4aa;
+      --color-primary: #42b8b5; --color-primary-container: #248d8c; --color-secondary: #57b7bd;
+      --color-secondary-container: rgba(66,184,181,0.12); --color-on-secondary-container: #7bc8c6;
+      --color-tertiary: #75abb7; --color-outline: #64777c; --color-outline-variant: #293b42;
+      --color-card-border: #24353b; --color-chart-grid: #203138;
+      --color-header-bg: var(--color-surface); --color-pill-bg: transparent;
+    }
+    html,body { margin:0; padding:0; }
+    body { overscroll-behavior:none; letter-spacing:0; }
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-thumb { background:rgba(100,100,100,0.3); border-radius:999px; }
+    .theme-transition { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+    .telemetry-card { transition: background-color 0.2s ease, border-color 0.2s ease; border:1px solid var(--color-card-border); border-radius:6px; }
+    .nav-tab-active { background-color:var(--color-surface-container-high) !important; color:var(--color-on-surface) !important; box-shadow:inset 0 -2px 0 var(--color-primary) !important; font-weight:600 !important; }
+    #tempBar,#waterLevelBar { transition:width 0.9s cubic-bezier(0.25,1,0.5,1) !important; will-change:width; }
+    #pathTempLine,#pathHumLine,#pathAqiLine,#pathTempArea,#pathHumArea,#pathAqiArea { transition:d 0.3s ease-out; }
+    header { backdrop-filter:none !important; box-shadow:none !important; }
+    header > div { height:64px !important; }
+    header img { filter:none !important; }
+    header button,header nav { border-radius:4px !important; box-shadow:none !important; }
+    .nav-tab { min-height:38px; border-radius:2px !important; cursor:pointer; }
+    main { padding-top:92px !important; padding-bottom:40px !important; }
+    #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:24px !important; }
+    .sensor-grid { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:12px; }
+    .sensor-group-label { grid-column:1/-1; display:flex; align-items:center; gap:10px; margin-top:8px; padding-bottom:7px; border-bottom:1px solid var(--color-card-border); color:var(--color-on-surface-variant); font:600 11px/1 "IBM Plex Sans",sans-serif; letter-spacing:.12em; text-transform:uppercase; }
+    .sensor-group-label:first-child { margin-top:0; }
+    .sensor-group-label .material-symbols-outlined { font-size:16px; color:var(--color-on-surface-variant); }
+    .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 300,'GRAD' 0,'opsz' 20; color:var(--color-on-surface-variant); font-size:19px; }
+    .sensor-group-label::before { display:none; }
+    .sensor-panel { padding:20px !important; min-height:184px; grid-column:span 4; }
+    .sensor-grid > .sensor-panel:nth-child(2), .sensor-grid > .sensor-panel:nth-child(3) { grid-column:span 6; }
+    .sensor-grid > .sensor-panel:nth-child(9) { grid-column:1/-1; min-height:154px; }
+    .sensor-panel [id^="val"] { font-variant-numeric:tabular-nums; }
+    .sensor-panel .font-headline-metric { font-size:clamp(2.1rem,3vw,3.25rem); line-height:1; }
+    .system-strip { border-left:3px solid var(--color-outline-variant) !important; border-radius:3px !important; padding:14px 16px !important; }
+    .system-state { display:inline-flex; align-items:center; gap:8px; min-width:175px; padding-left:16px; border-left:1px solid var(--color-card-border); }
+    .system-state-label { color:var(--color-on-surface-variant); font-size:10px; letter-spacing:.12em; text-transform:uppercase; }
+    .system-state-value { color:var(--color-on-surface); font:600 12px/1.3 "IBM Plex Sans",sans-serif; }
+    .status-dot { width:7px; height:7px; border-radius:50%; background:var(--color-outline); flex:none; }
+    .status-dot.is-active { background:var(--color-primary); }
+    #waterLevelBar,#tempBar { border-radius:1px !important; background:var(--color-primary-container) !important; }
+    #circleAqi { stroke-linecap:butt; }
+    button:focus-visible,a:focus-visible { outline:2px solid var(--color-primary); outline-offset:2px; }
+    .trend-panel { border-top:2px solid var(--color-outline-variant) !important; }
+    .trend-empty { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:var(--color-on-surface-variant); font-size:12px; }
+    .trend-empty.hidden { display:none; }
+    footer { padding-top:18px !important; padding-bottom:18px !important; }
+    .live-badge { display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:4px; background:var(--color-surface-container); border:1px solid var(--color-card-border); font:600 11px/1 "IBM Plex Sans",sans-serif; text-transform:uppercase; letter-spacing:.06em; color:var(--color-on-surface-variant); }
+    .live-badge.is-live { color:#10b981; border-color:rgba(16,185,129,0.3); }
+    .live-badge.is-offline { color:var(--color-outline); }
+    .live-dot { width:7px; height:7px; border-radius:50%; background:currentColor; flex:none; }
+    .status-readout { display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:4px; border:1px solid var(--color-card-border); background:var(--color-surface-container-low); font:600 12px/1.3 "IBM Plex Sans",sans-serif; }
+    @media (max-width:1023px) {
+      main { padding-top:116px !important; }
+      .sensor-grid > .sensor-panel { grid-column:span 6; }
+      .sensor-grid > .sensor-panel:nth-child(9) { grid-column:1/-1; }
+      .system-state { min-width:150px; }
+    }
+    @media (max-width:700px) {
+      header > div { height:60px !important; padding-left:12px !important; padding-right:12px !important; }
+      main { padding-top:108px !important; padding-bottom:24px !important; }
+      .sensor-grid > .sensor-panel { grid-column:1/-1; }
+      .sensor-panel { min-height:auto; padding:17px !important; }
+      .system-state { width:100%; padding:10px 0 0; border-left:0; border-top:1px solid var(--color-card-border); }
+      header .header-brand-copy { display:none; }
+      header img { width:30px !important; height:30px !important; }
+      #themeToggleBtn { width:32px; height:32px; padding:0 !important; justify-content:center; }
+      .sensor-panel .font-headline-metric { font-size:2rem; }
+      #sectionTelemetry,#sectionWaste,#sectionTraffic { gap:16px !important; }
+      .trend-panel { padding:14px !important; }
+    }
+    @media (max-width:430px) {
+      main { padding-top:100px !important; padding-left:10px !important; padding-right:10px !important; }
+      .sensor-panel { padding:14px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.75rem; }
+      .telemetry-card { padding:14px !important; }
+      #sectionTraffic .grid-cols-2 { grid-template-columns:1fr 1fr; gap:8px; }
+      #sectionTraffic .grid-cols-2 > div { padding:12px !important; }
+      #sectionTraffic .grid-cols-2 .font-headline-metric { font-size:1.5rem; }
+      #cctvPlayerWrapper { height:240px !important; }
+      .trend-panel svg { height:200px !important; }
+      footer { padding:14px 10px !important; font-size:10px; }
+    }
+    @media (max-width:360px) {
+      header > div { padding-left:8px !important; padding-right:8px !important; }
+      header img { width:26px !important; height:26px !important; }
+      .sensor-panel .font-headline-metric { font-size:1.6rem; }
+      #sectionTraffic .grid-cols-2 { grid-template-columns:1fr; }
+      .nav-tab { font-size:9px !important; padding:4px 2px !important; }
+    }
+  </style>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface":"var(--color-surface)","surface-dim":"var(--color-surface-dim)","surface-bright":"var(--color-surface-bright)",
+            "surface-container-lowest":"var(--color-surface-container-lowest)","surface-container-low":"var(--color-surface-container-low)",
+            "surface-container":"var(--color-surface-container)","surface-container-high":"var(--color-surface-container-high)",
+            "surface-container-highest":"var(--color-surface-container-highest)","on-surface":"var(--color-on-surface)",
+            "on-surface-variant":"var(--color-on-surface-variant)","primary":"var(--color-primary)","primary-container":"var(--color-primary-container)",
+            "secondary":"var(--color-secondary)","secondary-container":"var(--color-secondary-container)",
+            "on-secondary-container":"var(--color-on-secondary-container)","tertiary":"var(--color-tertiary)",
+            "outline":"var(--color-outline)","outline-variant":"var(--color-outline-variant)"
+          },
+          fontFamily: {
+            "headline-metric":["IBM Plex Mono","monospace"],"headline-lg":["IBM Plex Sans","sans-serif"],
+            "headline-md":["IBM Plex Sans","sans-serif"],"headline-sm":["IBM Plex Sans","sans-serif"],
+            "body-lg":["IBM Plex Sans","sans-serif"],"body-md":["IBM Plex Sans","sans-serif"],"body-sm":["IBM Plex Sans","sans-serif"],
+            "label-telemetry":["IBM Plex Sans","sans-serif"],"label-caption":["IBM Plex Sans","sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Firebase SDK (module, read-only, no auth needed for public RTDB) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBiVhNjZ7mBlZUI3_ModDujSxXKPPqm_js",
+      authDomain: "skatelplus-smart-city.firebaseapp.com",
+      databaseURL: "https://skatelplus-smart-city-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "skatelplus-smart-city",
+      storageBucket: "skatelplus-smart-city.firebasestorage.app",
+      messagingSenderId: "610042872625",
+      appId: "1:610042872625:web:dd16f546b8e9bc6c532610",
+      measurementId: "G-SWC4XYEH4R"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // --- SMOOTHING ---
+    const smoothSensors = { temp:null, tempPct:0, waterPct:null, aqi:null, hum:null, tds:null };
+
+    // --- TREND CHART BUFFER ---
+    const historyPoints = { temp:[], hum:[], aqi:[] };
+    const maxPoints = 25;
+
+    function renderTrendChart() {
+      const len = historyPoints.temp.length;
+      const emptyState = document.getElementById('trendEmptyState');
+      if (emptyState) emptyState.classList.toggle('hidden', len >= 2);
+      if (len < 2) return;
+      const stepX = 900 / (maxPoints - 1);
+
+      function buildPath(dataArr, minVal, maxVal) {
+        const points = dataArr.map((v,i) => {
+          const x = Math.round((maxPoints - len + i) * stepX);
+          const clamped = Math.max(minVal, Math.min(maxVal, v));
+          const normalized = (clamped - minVal) / (maxVal - minVal || 1);
+          const y = Math.round(250 - normalized * 200);
+          return { x, y };
+        });
+        let d = `M ${points[0].x},${points[0].y}`;
+        for (let i = 1; i < points.length; i++) {
+          const prev = points[i-1], curr = points[i];
+          const cx1 = (prev.x + curr.x) / 2;
+          d += ` C ${cx1},${prev.y} ${cx1},${curr.y} ${curr.x},${curr.y}`;
+        }
+        return { lineD:d, lastPoint:points[points.length-1], firstPoint:points[0] };
+      }
+
+      const tempRes = buildPath(historyPoints.temp, 20, 45);
+      const pathTempLine = document.getElementById('pathTempLine');
+      const pathTempArea = document.getElementById('pathTempArea');
+      const dotTempNow = document.getElementById('dotTempNow');
+      if (pathTempLine) pathTempLine.setAttribute('d', tempRes.lineD);
+      if (pathTempArea) pathTempArea.setAttribute('d', `${tempRes.lineD} L ${tempRes.lastPoint.x},260 L ${tempRes.firstPoint.x},260 Z`);
+      if (dotTempNow) { dotTempNow.setAttribute('cx', tempRes.lastPoint.x); dotTempNow.setAttribute('cy', tempRes.lastPoint.y); }
+
+      const humRes = buildPath(historyPoints.hum, 30, 100);
+      const pathHumLine = document.getElementById('pathHumLine');
+      const pathHumArea = document.getElementById('pathHumArea');
+      const dotHumNow = document.getElementById('dotHumNow');
+      if (pathHumLine) pathHumLine.setAttribute('d', humRes.lineD);
+      if (pathHumArea) pathHumArea.setAttribute('d', `${humRes.lineD} L ${humRes.lastPoint.x},260 L ${humRes.firstPoint.x},260 Z`);
+      if (dotHumNow) { dotHumNow.setAttribute('cx', humRes.lastPoint.x); dotHumNow.setAttribute('cy', humRes.lastPoint.y); }
+
+      const aqiRes = buildPath(historyPoints.aqi, 0, 200);
+      const pathAqiLine = document.getElementById('pathAqiLine');
+      const pathAqiArea = document.getElementById('pathAqiArea');
+      const dotAqiNow = document.getElementById('dotAqiNow');
+      if (pathAqiLine) pathAqiLine.setAttribute('d', aqiRes.lineD);
+      if (pathAqiArea) pathAqiArea.setAttribute('d', `${aqiRes.lineD} L ${aqiRes.lastPoint.x},260 L ${aqiRes.firstPoint.x},260 Z`);
+      if (dotAqiNow) { dotAqiNow.setAttribute('cx', aqiRes.lastPoint.x); dotAqiNow.setAttribute('cy', aqiRes.lastPoint.y); }
+    }
+
+    // --- UPDATE DASHBOARD FROM FIREBASE DATA ---
+    function updateDashboard(data) {
+      if (!data) return;
+
+      // Water Level
+      const waterRaw = data.water !== undefined ? data.water : 0;
+      document.getElementById('valWaterRaw').textContent = waterRaw;
+      const targetWaterPct = Math.min(100, Math.max(0, Math.round((waterRaw / 650) * 100)));
+      if (smoothSensors.waterPct === null) smoothSensors.waterPct = targetWaterPct;
+      else smoothSensors.waterPct += (targetWaterPct - smoothSensors.waterPct) * 0.25;
+      const displayWaterPct = Math.round(smoothSensors.waterPct);
+      document.getElementById('valWaterLvl').textContent = displayWaterPct;
+      document.getElementById('waterLevelBar').style.width = displayWaterPct + '%';
+
+      const pumpState = Number(data.pump) === 1;
+      document.getElementById('textPump').textContent = pumpState ? 'POMPA: AKTIF' : 'POMPA: STANDBY';
+      document.getElementById('dotPump').className = pumpState ? 'w-2 h-2 rounded-full bg-emerald-500' : 'w-2 h-2 rounded-full bg-outline';
+
+      // TDS
+      const tdsVal = data.tds !== undefined ? data.tds : 0;
+      if (smoothSensors.tds === null) smoothSensors.tds = tdsVal;
+      else smoothSensors.tds += (tdsVal - smoothSensors.tds) * 0.25;
+      const displayTds = Math.round(smoothSensors.tds);
+      document.getElementById('valTdsRaw').textContent = tdsVal;
+      document.getElementById('valTds').textContent = displayTds;
+
+      // MQ Gas
+      const mqRaw = data.mq !== undefined ? data.mq : 0;
+      document.getElementById('valMqRaw').textContent = mqRaw;
+      const targetAqi = Math.min(200, Math.max(10, Math.round((mqRaw / 600) * 100)));
+      if (smoothSensors.aqi === null) smoothSensors.aqi = targetAqi;
+      else smoothSensors.aqi += (targetAqi - smoothSensors.aqi) * 0.20;
+      const displayAqi = Math.round(smoothSensors.aqi);
+      document.getElementById('valAqi').textContent = displayAqi;
+      const circleAqi = document.getElementById('circleAqi');
+      if (circleAqi) {
+        const circleDash = Math.min(100, Math.round((displayAqi / 200) * 100));
+        circleAqi.setAttribute('stroke-dasharray', `${circleDash}, 100`);
+      }
+
+      // NTC Temperature
+      const ntcRaw = data.ntc !== undefined ? data.ntc : 512;
+      document.getElementById('valNtcRaw').textContent = ntcRaw;
+      const targetTemp = 28.5 + (512 - ntcRaw) * 0.025;
+      if (smoothSensors.temp === null) smoothSensors.temp = targetTemp;
+      else smoothSensors.temp += (targetTemp - smoothSensors.temp) * 0.18;
+      const displayTemp = smoothSensors.temp.toFixed(1);
+      document.getElementById('valTemp').textContent = displayTemp;
+      const targetTempPct = Math.min(100, Math.max(0, ((smoothSensors.temp - 20) / 25) * 100));
+      smoothSensors.tempPct += (targetTempPct - smoothSensors.tempPct) * 0.22;
+      document.getElementById('tempBar').style.width = Math.max(0, Math.min(100, Math.round(smoothSensors.tempPct))) + '%';
+
+      // Humidity (derived)
+      const rawHum = 65 + Math.round((512 - ntcRaw) * 0.015);
+      if (smoothSensors.hum === null) smoothSensors.hum = rawHum;
+      else smoothSensors.hum += (rawHum - smoothSensors.hum) * 0.20;
+      document.getElementById('valHum').textContent = Math.round(smoothSensors.hum);
+
+      // PLTS
+      document.getElementById('valVoltage').textContent = data.volt !== undefined ? parseFloat(data.volt).toFixed(2) : '--';
+      document.getElementById('valCurrent').textContent = data.ampere !== undefined ? parseFloat(data.ampere).toFixed(2) : '--';
+      const powerVal = data.power !== undefined ? parseFloat(data.power).toFixed(1)
+        : (data.volt !== undefined && data.ampere !== undefined ? (parseFloat(data.volt) * parseFloat(data.ampere)).toFixed(1) : '--');
+      document.getElementById('valPower').textContent = powerVal;
+
+      // LED & Buzzer status (read-only display)
+      const labelLed = document.getElementById('labelLedStatus');
+      if (labelLed) {
+        labelLed.textContent = Number(data.led) === 1 ? 'MENYALA (5V HIGH)' : 'MATI (LOW)';
+        labelLed.className = Number(data.led) === 1 ? 'text-amber-400 font-mono' : 'text-on-surface font-mono';
+      }
+      const labelBuzzer = document.getElementById('labelBuzzerStatus');
+      if (labelBuzzer) {
+        labelBuzzer.textContent = Number(data.buzzer) === 1 ? 'BUNYI (TONE 65 Hz)' : 'STANDBY';
+        labelBuzzer.className = Number(data.buzzer) === 1 ? 'text-red-400 font-mono' : 'text-on-surface font-mono';
+      }
+
+      // Servo waste status
+      if (data.servo_organik !== undefined) {
+        const organikOpen = data.servo_organik > 30;
+        const textOrg = document.getElementById('textLidOrganik');
+        if (textOrg) textOrg.textContent = organikOpen ? 'TERBUKA (45°)' : 'TERTUTUP (0°)';
+      }
+      if (data.servo_anorganik !== undefined) {
+        const anorgOpen = data.servo_anorganik > 30;
+        const textAnorg = document.getElementById('textLidAnorganik');
+        if (textAnorg) textAnorg.textContent = anorgOpen ? 'TERBUKA (45°)' : 'TERTUTUP (0°)';
+      }
+
+      // Emergency banners
+      const alertFire = document.getElementById('alertFireBanner');
+      if (alertFire) alertFire.classList.toggle('hidden', Number(data.fire) !== 1);
+      const alertTilt = document.getElementById('alertTiltBanner');
+      if (alertTilt) alertTilt.classList.toggle('hidden', Number(data.tilt) !== 1);
+
+      // Trend chart
+      historyPoints.temp.push(parseFloat(displayTemp));
+      if (historyPoints.temp.length > maxPoints) historyPoints.temp.shift();
+      historyPoints.hum.push(Math.round(smoothSensors.hum));
+      if (historyPoints.hum.length > maxPoints) historyPoints.hum.shift();
+      historyPoints.aqi.push(displayAqi);
+      if (historyPoints.aqi.length > maxPoints) historyPoints.aqi.shift();
+      renderTrendChart();
+
+      // Last updated timestamp
+      const ts = document.getElementById('lastUpdatedTime');
+      if (ts) {
+        const time = data.timestamp || data.isoTime;
+        if (time) ts.textContent = new Date(time).toLocaleTimeString('id-ID', { hour12: false });
+      }
+    }
+
+    // --- LISTEN TO FIREBASE REALTIME ---
+    const realtimeRef = ref(db, 'monitoring/realtime');
+    onValue(realtimeRef, (snapshot) => {
+      const data = snapshot.val();
+      const liveBadge = document.getElementById('liveBadge');
+      const prompt = document.getElementById('connectionPromptBanner');
+      if (data) {
+        updateDashboard(data);
+        if (liveBadge) { liveBadge.className = 'live-badge is-live'; liveBadge.innerHTML = '<span class="live-dot"></span>Live'; }
+        if (prompt) prompt.classList.add('hidden');
+      } else {
+        if (liveBadge) { liveBadge.className = 'live-badge is-offline'; liveBadge.innerHTML = '<span class="live-dot"></span>Menunggu gateway'; }
+        if (prompt) prompt.classList.remove('hidden');
+      }
+    });
+
+    // --- CLOCK ---
+    setInterval(() => {
+      const el = document.getElementById('lastUpdatedClock');
+      if (el) el.textContent = new Date().toLocaleTimeString('id-ID', { hour12: false });
+    }, 1000);
+
+    // --- THEME ---
+    const htmlEl = document.documentElement;
+    function applyThemeIcon() {
+      const icon = document.getElementById('themeToggleIcon');
+      if (icon) icon.textContent = htmlEl.classList.contains('dark') ? 'light_mode' : 'dark_mode';
+    }
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      htmlEl.classList.add('dark');
+    }
+    applyThemeIcon();
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) themeBtn.addEventListener('click', () => {
+      htmlEl.classList.toggle('dark');
+      localStorage.setItem('theme', htmlEl.classList.contains('dark') ? 'dark' : 'light');
+      applyThemeIcon();
+    });
+
+    renderTrendChart();
+  </script>
+</head>
+
+<body class="bg-surface font-body-md text-on-surface antialiased theme-transition min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="fixed top-0 left-0 right-0 z-50 theme-transition border-b border-[var(--color-card-border)]" style="background-color: var(--color-header-bg);">
+    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 shrink-0">
+        <img alt="Skatelplus Smart City Logo" class="h-9 sm:h-11 w-auto object-contain" src="./asset/logo.png" onerror="this.src='./asset/logo.jfif'"/>
+        <div class="header-brand-copy flex flex-col">
+          <div class="flex items-center gap-2">
+            <span class="font-headline-sm text-sm sm:text-base font-semibold text-on-surface tracking-tight leading-none theme-transition">SKATELPLUS SMART CITY</span>
+            <span class="hidden md:inline-block px-1.5 py-0.5 rounded-sm text-[9px] font-mono font-semibold bg-surface-container text-on-surface-variant border border-[var(--color-card-border)]">PUBLIC</span>
+          </div>
+          <span class="hidden sm:inline font-label-caption text-[10px] text-on-surface-variant mt-1 theme-transition">Live monitoring · Firebase Realtime Database</span>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 shrink-0">
+        <span id="liveBadge" class="live-badge is-offline"><span class="live-dot"></span>Menunggu gateway</span>
+        <div class="hidden 2xl:inline-flex items-center px-3 py-2 rounded bg-surface-container-low text-on-surface-variant font-label-telemetry text-xs font-mono border border-[var(--color-card-border)]">
+          <span class="font-mono text-on-surface font-semibold" id="lastUpdatedClock">00:00:00</span>
+        </div>
+        <button id="themeToggleBtn" class="flex items-center justify-center w-9 h-9 rounded bg-surface-container-low hover:bg-surface-container text-on-surface transition-colors border border-[var(--color-card-border)] cursor-pointer" title="Toggle Tema">
+          <span class="material-symbols-outlined text-[19px]" id="themeToggleIcon">dark_mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="w-full pt-24 sm:pt-28 lg:pt-28 pb-16 flex-1 theme-transition">
+    <div class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- TELEMETRY -->
+      <div id="sectionTelemetry" class="flex flex-col gap-8">
+
+        <!-- Emergency alerts -->
+        <div class="flex flex-col gap-3 w-full">
+          <div id="alertFireBanner" class="hidden w-full bg-red-600/10 border border-red-500 p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center text-white shrink-0">
+                
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-base text-red-500 font-semibold tracking-tight">Bahaya kebakaran terdeteksi</h3>
+                <p class="font-body-sm text-sm text-on-surface">Sensor flame D7 mendeteksi nyala api.</p>
+              </div>
+            </div>
+            <span class="px-3.5 py-1.5 rounded bg-red-600 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider shrink-0">CRITICAL</span>
+          </div>
+          <div id="alertTiltBanner" class="hidden w-full bg-amber-500/10 border border-amber-500 p-4 flex items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center text-white shrink-0">
+                
+              </div>
+              <div>
+                <h3 class="font-headline-sm text-base text-amber-500 font-semibold tracking-tight">Peringatan guncangan atau kemiringan</h3>
+                <p class="font-body-sm text-sm text-on-surface">Sensor tilt D8 aktif.</p>
+              </div>
+            </div>
+            <span class="px-3.5 py-1.5 rounded bg-amber-500 text-white font-label-telemetry text-xs uppercase font-semibold tracking-wider shrink-0">WARNING</span>
+          </div>
+        </div>
+
+        <!-- Waiting for gateway -->
+        <div id="connectionPromptBanner" class="system-strip w-full bg-surface-container-low border border-[var(--color-card-border)] flex items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              
+            </div>
+            <div>
+              <h4 class="font-headline-sm text-sm text-on-surface font-semibold">Menunggu gateway Arduino mengirim data</h4>
+              <p class="font-body-sm text-xs text-on-surface-variant mt-0.5">Data akan otomatis muncul saat perangkat gateway terhubung ke Firebase.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section title -->
+        <div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4 border-b border-[var(--color-card-border)] pb-4">
+          <div>
+            <span class="font-label-telemetry text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">Node lapangan / 01</span>
+            <h2 class="font-headline-lg text-2xl text-on-surface tracking-tight mt-1">Telemetri lingkungan dan energi</h2>
+            <p class="font-body-md text-sm text-on-surface-variant mt-1">Data real-time dari Firebase Realtime Database. Update terakhir: <span id="lastUpdatedTime" class="font-mono text-on-surface">--</span></p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 sm:gap-0">
+            <div class="system-state">
+              <span class="status-dot" id="dotFirebaseSystem"></span>
+              <div><div class="system-state-label">Sumber data</div><div class="system-state-value" id="labelFirebaseSystem">Firebase RTDB</div></div>
+            </div>
+            <div class="system-state">
+              <span class="status-dot is-active"></span>
+              <div><div class="system-state-label">Mode</div><div class="system-state-value">Read-only publik</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sensor grid -->
+        <div class="sensor-grid">
+          <div class="sensor-group-label"><span class="material-symbols-outlined">water_drop</span>Kualitas dan distribusi air</div>
+
+          <!-- TDS -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor TDS · Pin A2</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Air (TDS)</h3>
+              </div>
+              <span id="badgeTdsStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-5 flex items-baseline gap-2">
+              <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valTds">--</span>
+              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">ppm</span>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-caption text-xs text-on-surface-variant">Batas: &lt; 300 ppm</span>
+              <span class="font-label-caption font-mono text-on-surface-variant">ADC: <span id="valTdsRaw">--</span></span>
+            </div>
+          </div>
+
+          <!-- Water Level -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Water Level · Pin A0</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Ketinggian Air &amp; Pompa</h3>
+              </div>
+              <span id="badgeWaterStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-4 flex items-baseline justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valWaterLvl">--</span>
+                <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">%</span>
+              </div>
+              <div class="status-readout">
+                <span class="w-2 h-2 rounded-full bg-outline" id="dotPump"></span>
+                <span class="font-label-telemetry uppercase text-on-surface" id="textPump">POMPA: STANDBY</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2 pt-1">
+              <div class="w-full h-3 rounded-full bg-surface-container-high overflow-hidden">
+                <div id="waterLevelBar" class="h-full transition-all duration-500" style="width:0%;"></div>
+              </div>
+              <div class="flex justify-between font-label-caption text-on-surface-variant">
+                <span>Threshold: &gt; 500</span>
+                <span class="font-mono">ADC: <span id="valWaterRaw">--</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sensor-group-label"><span class="material-symbols-outlined">air</span>Kondisi lingkungan</div>
+
+          <!-- MQ Gas -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor MQ-2 · Pin A5</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kualitas Udara &amp; Gas</h3>
+              </div>
+              <span id="badgeAqiStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-5 flex items-center justify-between">
+              <div class="flex items-baseline gap-2">
+                <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valAqi">--</span>
+                <span class="font-headline-sm text-sm text-on-surface-variant font-medium">indeks</span>
+              </div>
+              <div class="relative w-14 h-14 flex items-center justify-center">
+                <svg class="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                  <path class="text-surface-container-high" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>
+                  <path id="circleAqi" class="text-secondary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="0, 100" stroke-width="3.5"></path>
+                </svg>
+                
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-caption text-on-surface-variant">Pin A5</span>
+              <span class="font-label-caption font-mono text-on-surface-variant">ADC: <span id="valMqRaw">--</span></span>
+            </div>
+          </div>
+
+          <!-- Temperature -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Sensor NTC · Pin A3</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Suhu Lingkungan</h3>
+              </div>
+              <span id="badgeTempStatus" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Menunggu
+              </span>
+            </div>
+            <div class="my-5 flex items-baseline gap-2">
+              <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valTemp">--</span>
+              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">°C</span>
+            </div>
+            <div class="flex flex-col gap-2 pt-1">
+              <div class="relative w-full h-2 rounded-full bg-surface-container-high overflow-hidden">
+                <div id="tempBar" class="absolute left-0 top-0 bottom-0 bg-primary-container rounded-full transition-all duration-500" style="width:0%;"></div>
+              </div>
+              <div class="flex justify-between font-label-caption text-on-surface-variant">
+                <span>Rentang: 20°C - 45°C</span>
+                <span class="font-mono">ADC: <span id="valNtcRaw">--</span></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Humidity -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Nilai estimasi · bukan sensor RH</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelembaban Relatif</h3>
+              </div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-secondary-container text-on-secondary-container font-label-telemetry text-label-telemetry uppercase font-semibold">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>Estimasi
+              </span>
+            </div>
+            <div class="my-5 flex items-baseline gap-2">
+              <span class="font-headline-metric text-headline-metric text-on-surface tracking-tighter" id="valHum">--</span>
+              <span class="font-headline-sm text-headline-sm text-on-surface-variant font-medium">% RH</span>
+            </div>
+            <div class="flex items-center justify-between pt-2">
+              <span class="font-label-caption text-on-surface-variant">Turunan dari NTC</span>
+              <span class="text-[10px] uppercase tracking-wider text-amber-500">Derived</span>
+            </div>
+          </div>
+
+          <div class="sensor-group-label"><span class="material-symbols-outlined">solar_power</span>Energi PLTS</div>
+
+          <!-- PLTS -->
+          <div class="sensor-panel telemetry-card flex flex-col justify-between bg-surface-container-lowest">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex flex-col">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase tracking-wider">Node energi · Firmware</span>
+                <h3 class="font-headline-sm text-headline-sm text-on-surface mt-0.5">Kelistrikan PLTS DC</h3>
+              </div>
+              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-amber-500/15 text-amber-500 font-label-telemetry text-label-telemetry uppercase font-semibold border border-amber-500/30">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Simulasi
+              </span>
+            </div>
+            <div class="my-4 grid grid-cols-3 gap-2 p-3 bg-surface-container-low border border-[var(--color-card-border)]">
+              <div class="flex flex-col items-center">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">VOLT</span>
+                <span class="font-headline-md text-on-surface font-bold"><span id="valVoltage">--</span> <span class="text-[10px] font-normal text-on-surface-variant">V</span></span>
+              </div>
+              <div class="flex flex-col items-center border-x border-[var(--color-card-border)]">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">ARUS</span>
+                <span class="font-headline-md text-on-surface font-bold"><span id="valCurrent">--</span> <span class="text-[10px] font-normal text-on-surface-variant">A</span></span>
+              </div>
+              <div class="flex flex-col items-center">
+                <span class="font-label-telemetry text-[10px] text-on-surface-variant uppercase">DAYA</span>
+                <span class="font-headline-md text-primary font-bold"><span id="valPower">--</span> <span class="text-[10px] font-normal text-on-surface-variant">W</span></span>
+              </div>
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <span class="font-label-caption text-on-surface-variant">Rentang 4-5V &amp; 2-3A</span>
+              <span class="font-label-telemetry text-on-surface-variant font-semibold">DC PLTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Status readout panel (read-only) -->
+        <div class="trend-panel telemetry-card bg-surface-container-lowest p-5 sm:p-6 flex flex-col gap-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="font-label-telemetry text-[10px] uppercase tracking-[0.14em] text-primary font-semibold">Status perangkat</span>
+              <h3 class="font-headline-md text-xl text-on-surface mt-1">Status output digital</h3>
+              <p class="font-body-sm text-sm text-on-surface-variant mt-0.5">Status aktual dari Arduino Uno via Firebase.</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="status-readout flex-col items-start gap-2">
+              <span class="font-label-telemetry text-[10px] uppercase text-amber-500 font-semibold">LAMPU LED D5</span>
+              <span id="labelLedStatus" class="text-on-surface font-mono">MATI (LOW)</span>
+            </div>
+            <div class="status-readout flex-col items-start gap-2">
+              <span class="font-label-telemetry text-[10px] uppercase text-primary font-semibold">POMPA AIR D6</span>
+              <span id="textPump2" class="text-on-surface font-mono">STANDBY</span>
+            </div>
+            <div class="status-readout flex-col items-start gap-2">
+              <span class="font-label-telemetry text-[10px] uppercase text-red-400 font-semibold">BUZZER D9</span>
+              <span id="labelBuzzerStatus" class="text-on-surface font-mono">STANDBY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SVG Trend -->
+        <div class="trend-panel telemetry-card bg-surface-container-lowest p-5 sm:p-6 flex flex-col gap-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-3 flex-wrap">
+                <h3 class="font-headline-md text-xl text-on-surface">Tren sensor lingkungan</h3>
+                <span class="text-[10px] uppercase tracking-wider text-on-surface-variant">Real-time · Firebase</span>
+              </div>
+              <p class="font-body-sm text-sm text-on-surface-variant mt-0.5">Grafik diperbarui setiap data telemetry diterima.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-5">
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-[#f97316]"></span><span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Suhu</span></div>
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-secondary"></span><span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Kelembaban</span></div>
+              <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-primary-container"></span><span class="font-label-telemetry text-label-telemetry text-on-surface uppercase">Gas</span></div>
+            </div>
+          </div>
+          <div class="w-full h-48 sm:h-56 md:h-64 relative">
+            <svg id="liveTrendSvg" class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 900 300" style="touch-action:pan-y;">
+              <defs>
+                <linearGradient id="tempArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#f97316" stop-opacity="0.25"/><stop offset="100%" stop-color="#f97316" stop-opacity="0"/></linearGradient>
+                <linearGradient id="humidityArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#006a61" stop-opacity="0.25"/><stop offset="100%" stop-color="#006a61" stop-opacity="0"/></linearGradient>
+                <linearGradient id="aqiArea" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#2563eb" stop-opacity="0.25"/><stop offset="100%" stop-color="#2563eb" stop-opacity="0"/></linearGradient>
+              </defs>
+              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1" x1="0" x2="900" y1="50" y2="50"/>
+              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1" x1="0" x2="900" y1="120" y2="120"/>
+              <line stroke="var(--color-chart-grid)" stroke-dasharray="4 6" stroke-width="1" x1="0" x2="900" y1="190" y2="190"/>
+              <line stroke="var(--color-chart-grid)" stroke-width="1" x1="0" x2="900" y1="260" y2="260"/>
+              <path id="pathTempArea" fill="url(#tempArea)" d=""/>
+              <path id="pathTempLine" fill="none" stroke="#f97316" stroke-linecap="round" stroke-width="3" d=""/>
+              <path id="pathHumArea" fill="url(#humidityArea)" d=""/>
+              <path id="pathHumLine" fill="none" stroke="#006a61" stroke-linecap="round" stroke-width="3" d=""/>
+              <path id="pathAqiArea" fill="url(#aqiArea)" d=""/>
+              <path id="pathAqiLine" fill="none" stroke="#2563eb" stroke-linecap="round" stroke-width="3" d=""/>
+              <circle id="dotTempNow" cx="900" cy="150" fill="#f97316" r="5"/>
+              <circle id="dotHumNow" cx="900" cy="80" fill="#006a61" r="5"/>
+              <circle id="dotAqiNow" cx="900" cy="200" fill="#2563eb" r="5"/>
+            </svg>
+            <div id="trendEmptyState" class="trend-empty">Menunggu data telemetry dari gateway.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="w-full border-t border-[var(--color-card-border)] bg-surface px-4 py-4 theme-transition">
+    <div class="w-full max-w-[1600px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+      <div><strong class="text-on-surface font-semibold">Smart City Live Monitor</strong> · Read-only public dashboard</div>
+      <div class="text-on-surface-variant text-xs">Data dari Firebase Realtime Database</div>
+    </div>
+  </footer>
+
+</body>
+</html>

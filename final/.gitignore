@@ -1,0 +1,21 @@
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+
+# Temporary / OS
+.DS_Store
+Thumbs.db
+*.log
+
+# Large weight models (opsional, jika ingin git repo tetap ringan)
+# Model akan otomatis di-download oleh Ultralytics saat pertama kali dijalankan
+yolov8m.pt
+*.rar
+*.zip

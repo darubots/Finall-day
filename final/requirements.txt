@@ -1,0 +1,25 @@
+# =========================================================================
+# DEPENDENSI PYTHON: SMART CITY AI VISION & MONITORING DASHBOARD
+# =========================================================================
+
+# Web Server & Telemetri
+flask>=2.3.0
+requests>=2.31.0
+pyserial>=3.5
+
+# Computer Vision & Video Stream
+opencv-python>=4.8.0
+numpy>=1.24.0
+streamlink>=6.0.0
+
+# AI Object Detection (YOLOv8)
+ultralytics>=8.0.0
+
+# -------------------------------------------------------------------------
+# CATATAN KHUSUS UNTUK LAPTOP DENGAN NVIDIA GPU (RTX 2050):
+# -------------------------------------------------------------------------
+# Agar deteksi berjalan di GPU NVIDIA RTX 2050 (Akselerasi CUDA 12.1):
+# Jalankan perintah instalasi PyTorch CUDA di bawah ini:
+#
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+# -------------------------------------------------------------------------
